@@ -1,0 +1,142 @@
+%!TEX root = philo.tex
+\documentclass[10pt,a5paper,fleqn,titlepage]{book}
+
+\usepackage{iftex}
+\ifLuaTeX
+\usepackage{fontspec}
+% \setmainfont{Roboto}
+\setmainfont{Roboto}[
+    Extension=.ttf,
+    Path=./font/Roboto/,
+    UprightFont=*-Regular,
+    BoldFont=*-Black,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-BlackItalic
+]
+\setmonofont{RobotoMono}[
+    Extension=.ttf,
+    Path=./font/Roboto_Mono/,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-BoldItalic
+]
+\else
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\fi
+
+\usepackage{titling}
+
+\usepackage[english]{babel}
+\usepackage{csquotes}
+
+\usepackage{marginnote}
+\usepackage[hmargin=1.8cm,vmargin=2cm]{geometry}
+
+\usepackage[backend=biber,citestyle=verbose-inote]{biblatex}
+\addbibresource{philo.bib}
+
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{bm}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage{mathrsfs,mathtools}
+\usepackage{multicol}
+\usepackage[super,negative]{nth}
+\usepackage{setspace}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{fancyvrb,fancyhdr}
+\usepackage{titlesec}
+\usepackage{epigraph}
+\usepackage{subfiles}
+
+\usepackage{verse}
+\usepackage{dramatist}
+
+\usepackage{bookmark}
+\hypersetup{colorlinks=false,linkbordercolor=white,pdfborder=0 0 0}
+
+\graphicspath{ {images/} }
+
+\everymath{\displaystyle}
+
+\DeclareMathOperator{\sinc}{sinc}
+\newcommand{\boph}[1]{\emph{\textbf{#1}}} % bold and emph
+\newcommand{\defItem}{\itemsep1pt \parsep0pt \parskip0pt}
+\newcommand{\tbul}{\textbullet}
+
+\newcommand{\minus}{\scalebox{0.8}{$-$}}
+\newcommand{\plus}{\scalebox{0.6}{$+$}}
+
+\newcommand{\oneover}[1]{\frac{1}{#1}}
+
+\newcommand{\br}[1]{\ensuremath{\left\{ #1 \right\}}}
+\newcommand{\adpar}[1]{\ensuremath{\left( #1 \right)}}
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
+
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{2}
+
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+
+\renewcommand{\floatpagefraction}{0.7}
+\renewcommand{\dblfloatpagefraction}{0.7}
+
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\thesubsection.\roman{subsubsection}}
+
+\newcommand{\impword}[1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\movie}[1]{{\itshape #1}}
+\newcommand{\tvshow}[1]{{\itshape #1}}
+
+\newcommand{\unnumsection}[1]{\section*{#1}\markright{#1}\addcontentsline{toc}{section}{#1}}
+
+\setlength{\fboxsep}{5pt}
+\newcommand{\textbox}[1]{\vspace{0em}\noindent\hfil\fbox{\parbox[c][1.1\height][c]{0.9\textwidth}{\small\scshape {#1}}}\vspace{1em}}
+
+% Division Formatting/Styling
+\addtolength{\headheight}{\baselineskip}
+
+\renewcommand*{\marginfont}{\scriptsize}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
+
+% Some Epigraph Stuff
+\renewcommand{\epigraphflush}{center}
+\renewcommand{\epigraphsize}{\small}
+\setlength{\epigraphwidth}{0.8\textwidth}
+\newcommand{\attrib}[3]{\textsc{#1}, \textit{#2} (#3)}
+
+% Space between title elements
+\newlength{\titlevspace}
+\setlength{\titlevspace}{1cm}
+
+\newcommand*{\customtitlepage}{%
+\begin{center}\scshape
+\begin{spacing}{2.0}
+    \vspace{3cm}
+    {\huge A Personal Philosophy;} \\
+    \vspace*{\titlevspace}
+    {\Large or,} \\
+    \vspace{\titlevspace}
+    {\huge An Ethical Codification Meant for Exactly One Person (Me)} \\
+\end{spacing}
+{\vspace*{\fill}}
+{\large\bfseries Michael Van Wickle} \\
+\end{center}}
+
+\newcommand*{\posttitlepage}{%
+\vspace*{0.15\paperheight}
+{\hfil\footnotesize\ttfamily \underline{Last Compiled: \today}\hfil}
+\vspace*{\fill}}
+
+\newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
