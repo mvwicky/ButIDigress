@@ -21,8 +21,6 @@
 \newpage
 
 \DefineFNsymbols{custom}{*\maltese\textdollar\textdagger\textparagraph\pounds\#\ddag{**}\S{\textdollar\textdollar}{\textdagger\textdagger}{\ddag\ddag}}
-\renewcommand{\textbardbl}{\pounds}
-% \setfnsymbol{lamport-robust}
 \setfnsymbol{custom}
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \pagestyle{fancy}
@@ -36,7 +34,7 @@
 \setlength{\parskip}{\baselineskip}
 \newcommand{\editorsnote}{Disclaimer}
 {\centering\bfseries\Large \editorsnote}
-\markright{\editorsnote}\addcontentsline{toc}{chapter}{\editorsnote}
+\markright{\editorsnote}\addcontentsline{toc}{chapter}{\editorsnote}\label{chap:disclaimer}
 
 \vspace*{\fill}
 {\normalsize Some additional disclaimers will certainly be necessary overall, but a blanket one is clearly necessary up front.
@@ -79,18 +77,18 @@ It's a fuckin' memoir, like, conceited much?}
 
 \setcounter{section}{1}
 
-\subfile{sections/introduction}
+\subfile{introduction}
 
 \mainmatter
 \renewcommand{\thefootnote}{\arabic{footnote}}
 
-\subfile{sections/knowledge}
-
-\subfile{sections/sincerity}
-
 \subfile{sections/empathy}
 
 \subfile{sections/immutable}
+
+\subfile{sections/knowledge}
+
+\subfile{sections/sincerity}
 
 \subfile{sections/thevoid}
 
