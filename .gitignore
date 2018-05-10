@@ -1,7 +1,7 @@
 *.sublime-workspace
 
-# Output File
-philo.pdf
+# Output File(s)
+*.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
