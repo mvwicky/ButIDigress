@@ -20,15 +20,17 @@
 \posttitlepage
 \newpage
 
-\DefineFNsymbols{custom}{{\normalsize *}\maltese\textdollar\textdagger\textparagraph\pounds\#\ddag{\normalsize **}\S{\textdollar\textdollar}{\textdagger\textdagger}{\ddag\ddag}{\maltese\maltese}{\pounds\pounds}{\textparagraph\textparagraph}}
+\DefineFNsymbols{custom}{{\normalsize *}\maltese\textdollar\textdagger\textparagraph\pounds\#\ddag{\normalsize **}\S{\textdollar\textdollar}{\textdagger\textdagger}{\ddag\ddag}{\maltese\maltese}{\pounds\pounds}{\textparagraph\textparagraph}{\#\#}}
 \setfnsymbol{custom}
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
 \pagestyle{fancy}
 \fancyhf{}
+\renewcommand{\headrule}{}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\sectionmark}[1]{\markright{#1}}
-\fancyhead[ER]{\nouppercase{\rightmark}}
-\fancyhead[OL]{\nouppercase{\leftmark}}
+\fancyhead[C]{\nouppercase{\footnotesize\itshape\rightmark}}
+\fancyfoot[ER,OL]{\nouppercase{\itshape\leftmark}}
 \fancyfoot[EL,OR]{\thepage}
 
 \setlength{\parskip}{\baselineskip}
@@ -73,7 +75,7 @@ It's a fuckin' memoir, like, conceited much?}
 \tableofcontents
 \newpage
 \titleformat{\chapter}[frame]{\Large}{\filright\enspace\thechapter\enspace}{2.5cm}{\Large\bfseries\filcenter}
-\setlength{\parskip}{0.25em}
+\setlength{\parskip}{0.4em}
 
 \setcounter{section}{1}
 

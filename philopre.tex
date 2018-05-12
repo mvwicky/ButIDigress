@@ -3,7 +3,7 @@
 \setlength{\paperheight}{9in}
 \setlength{\paperwidth}{6in}
 \usepackage{marginnote}
-\usepackage[top=1in,bottom=1.4in,outer=1in,inner=0.8in,marginparwidth=2cm,marginparsep=3mm]{geometry}
+\usepackage[top=0.75in,bottom=1.3in,outer=1.1in,inner=0.7in,marginparwidth=2cm,marginparsep=3mm]{geometry}
 
 \usepackage[T1]{fontenc}
 
@@ -135,5 +135,10 @@
 \newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
 
 \newcommand{\margincol}[2][red]{\marginnote{\textcolor{#1}{#2}}}
+\newcommand{\marginred}[1]{\marginnote{\textcolor{red}{#1}}}
+
+\newcommand{\margincomm}[1]{\marginnote{\scshape\textcolor{MidnightBlue}{#1}}}                 % Commentary on this particular section
+\newcommand{\margintodo}[1]{\marginnote{\textcolor{red}{#1}}}                                    % TODO note
+\newcommand{\margindate}[1]{\reversemarginpar\marginnote{\textcolor{Olive}{#1}}\normalmarginpar} % A last modifed date
 
 \newcommand{\wrt}{w.r.t.}
