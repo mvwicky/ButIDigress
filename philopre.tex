@@ -137,8 +137,13 @@
 \newcommand{\margincol}[2][red]{\marginnote{\textcolor{#1}{#2}}}
 \newcommand{\marginred}[1]{\marginnote{\textcolor{red}{#1}}}
 
-\newcommand{\margincomm}[1]{\marginnote{\scshape\textcolor{MidnightBlue}{#1}}}                 % Commentary on this particular section
-\newcommand{\margintodo}[1]{\marginnote{\textcolor{red}{#1}}}                                    % TODO note
-\newcommand{\margindate}[1]{\reversemarginpar\marginnote{\textcolor{Olive}{#1}}\normalmarginpar} % A last modifed date
+% Commentary on this particular section
+\newcommand{\margincomm}[1]{\marginnote{\scshape\textcolor{MidnightBlue}{#1}}}
+% TODO note
+\newcommand{\margintodo}[1]{\marginnote{\bfseries\textcolor{red}{#1}}}
+% A last modifed date
+\newcommand{\margindate}[1]{\reversemarginpar\marginnote{\textcolor{Olive}{#1}}\normalmarginpar}
+% A random thought
+\newcommand{\marginthought}[1]{\marginnote{\itshape\textcolor{Goldenrod}{#1}}}
 
 \newcommand{\wrt}{w.r.t.}
