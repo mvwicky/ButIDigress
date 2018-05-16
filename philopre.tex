@@ -10,8 +10,22 @@
 \usepackage{iftex}
 \ifLuaTeX
 \usepackage{fontspec}
-\setmainfont{Roboto}
-\setmonofont{RobotoMono}
+\setmainfont{Roboto}[
+    Extension=.ttf,
+    Path=./font/Roboto/,
+    UprightFont=*-Regular,
+    BoldFont=*-Black,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-BlackItalic
+]
+\setmonofont{RobotoMono}[
+    Extension=.ttf,
+    Path=./font/Roboto_Mono/,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic,
+    BoldItalicFont=*-BoldItalic
+]
 \else
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
