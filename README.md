@@ -21,3 +21,4 @@ I compiled the book successfully using LuaLatex with a full installation of TexL
 - [ ] Add the pdf to the .gitignore
 - [ ] Move discussions of _The 100_ to the proper section
 - [ ] Find all the times where I use quotations marks and change them to the `\say` command
+- [ ] Make or find a hat that says "pedant" or "pedantic" across the front
