@@ -14,3 +14,8 @@ My personal philosophy type thing, basically a bunch of Latex files
 
 # TODO
 - [ ] Clean up language generally
+- [ ] Add the margin notes explanations to the book
+- [ ] Start doing releases of the pdf
+- [ ] Add the pdf to the .gitignore
+- [ ] Move discussions of _The 100_ to the proper section
+- [ ] Find all the times where I use quotations marks and change them to the `\say` command
