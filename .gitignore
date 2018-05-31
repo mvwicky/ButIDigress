@@ -2,7 +2,7 @@
 *.sublime-workspace
 
 # Output File(s)
-# *.pdf
+*.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
