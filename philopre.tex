@@ -35,7 +35,8 @@
 
 \usepackage[english]{babel}
 \usepackage{csquotes}
-\usepackage[left=`,right=',leftsub=``,rightsub='']{dirtytalk}
+% \usepackage[left=`,right=',leftsub=``,rightsub='']{dirtytalk}
+\usepackage{dirtytalk}
 
 \usepackage[backend=biber,citestyle=numeric,bibstyle=numeric]{biblatex}
 \addbibresource{butidigress.bib}
@@ -134,7 +135,7 @@
 \begin{center}\scshape
 \begin{spacing}{2.0}
     \vspace{3cm}
-    {\huge But I Digress \ldots} \\
+    {\huge But I Digress\ldots} \\
     \vspace*{\titlevspace}
     {\large An Ethical Codification for Exactly One Person (Me)} \\
 \end{spacing}
@@ -164,3 +165,5 @@
 \newcommand{\wrt}{w.r.t.}
 
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
+
+\newcommand{\cref}[1]{chapter \ref{#1} starting on page~\pageref{#1}}
