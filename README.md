@@ -17,8 +17,8 @@ I compiled the book successfully using LuaLatex with a full installation of TexL
 # TODO
 - [ ] Clean up language generally
 - [ ] Add the margin notes explanations to the book
-- [ ] Start doing releases of the pdf
-- [ ] Add the pdf to the .gitignore
+- [x] Start doing releases of the pdf
+- [x] Add the pdf to the .gitignore
 - [ ] Move discussions of _The 100_ to the proper section
 - [x] Find all the times where I use quotations marks and change them to the `\say` command
 - [ ] Make or find a hat that says "pedant" or "pedantic" across the front
