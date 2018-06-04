@@ -43,7 +43,7 @@ def cli():
 
 
 @cli.command()
-@click.option('--word-count/--no-word-count', default=False)
+@click.option('--word-count/--no-word-count', default=True)
 def ls(word_count):
     tex_files = []
     for root, dirs, files in os.walk('.'):
