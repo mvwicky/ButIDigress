@@ -28,13 +28,10 @@ def word_counts():
         for file in files:
             if file.endswith('.tex'):
                 tex_files.append(os.path.join(root, file))
-
+    counts = []
     for file in tex_files:
-        s = subprocess.run(['texcount', file], stdout=subprocess.PIPE)
-        res = WORDS_RE.search(s.stdout.decode())
-        if res:
-            print(file)
-            print(res.group(1))
+        counts.append((file, wc(file)))
+    return counts
 
 
 @click.group()
@@ -50,11 +47,18 @@ def ls(word_count):
         for file in files:
             if file.endswith('.tex'):
                 tex_files.append(os.path.join(root, file))
-    longest = max(tex_files, key=lambda x: len(x))
+    longest = len(max(tex_files, key=lambda x: len(x)))
     tex_files.sort(key=lambda p: os.path.getmtime(p), reverse=True)
     total_wc = 0
+    dt_len = len('YYYY-MM-DD HH:MM:SS')
+    m1, m2 = 'File Name', 'Last Mod. Date'
+    msg = '{0}{1}-- {2}{3} -- WC'.format(
+        m1, ' ' * (longest - len(m1) - 1), m2, ' ' * (dt_len - len(m2))
+    )
+    click.secho(msg, fg='red')
+    click.echo('-' * len(msg))
     for elem in tex_files:
-        pad = ' ' * (len(longest) - len(elem))
+        pad = ' ' * (longest - len(elem))
         msg = '{0}{2} -- {1:%Y-%m-%d %H:%M:%S}'.format(
             os.path.relpath(elem),
             datetime.fromtimestamp(os.path.getmtime(elem)),
