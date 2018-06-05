@@ -157,8 +157,9 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
 
-\newcommand{\margincol}[2][red]{\marginnote{\textcolor{#1}{#2}}}
-\newcommand{\marginred}[1]{\marginnote{\textcolor{red}{#1}}}
+\newcounter{footcounter}
+\setcounter{footcounter}{0}
+\newcommand{\ftnote}[1]{\footnote{#1}\stepcounter{footcounter}}
 
 % Commentary on this particular section
 \newcounter{commcounter}
