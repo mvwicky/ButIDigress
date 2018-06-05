@@ -16,7 +16,7 @@ I compiled the book successfully using LuaLatex with a full installation of TexL
 
 # TODO
 - [ ] Clean up language generally
-- [ ] Add the margin notes explanations to the book
+- [x] Add the margin notes explanations to the book
 - [x] Start doing releases of the pdf
 - [x] Add the pdf to the .gitignore
 - [ ] Move discussions of _The 100_ to the proper section
