@@ -61,6 +61,8 @@
 \usepackage{verse}
 \usepackage{dramatist}
 
+\usepackage{enumitem}
+
 \usepackage[unicode]{hyperref}
 \usepackage{bookmark}
 \hypersetup{
@@ -193,3 +195,6 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
 
 \newcommand{\cref}[1]{chapter \ref{#1} starting on page~\pageref{#1}}
+
+\newcommand{\notescolor}{teal}
+\newenvironment{somenotes}[1]{\subsection*{\scshape Notes: #1}\begin{itemize}[parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
