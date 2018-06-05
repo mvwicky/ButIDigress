@@ -162,16 +162,20 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 % Commentary on this particular section
 \newcommand{\commcolor}{MidnightBlue}
-\newcommand{\margincomm}[1]{\marginnote{\scshape\textcolor{\commcolor}{#1}}}
+\newcommand{\commstyle}{\scshape}
+\newcommand{\margincomm}[1]{\marginnote{\commstyle\textcolor{\commcolor}{#1}}}
 % TODO note
 \newcommand{\todocolor}{red}
-\newcommand{\margintodo}[1]{\marginnote{\bfseries\textcolor{\todocolor}{TODO: #1}}}
+\newcommand{\todostyle}{\bfseries}
+\newcommand{\margintodo}[1]{\marginnote{\todostyle\textcolor{\todocolor}{TODO: #1}}}
 % A last modifed date
 \newcommand{\datecolor}{Olive}
-\newcommand{\margindate}[1]{\reversemarginpar\marginnote{\textcolor{\datecolor}{#1}}\normalmarginpar}
+\newcommand{\datestyle}{\mdseries}
+\newcommand{\margindate}[1]{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{#1}}\normalmarginpar}
 % A random thought
 \newcommand{\thoughtcolor}{Goldenrod}
-\newcommand{\marginthought}[1]{\marginnote{\itshape\textcolor{\thoughtcolor}{#1}}}
+\newcommand{\thoughtstyle}{\itshape}
+\newcommand{\marginthought}[1]{\marginnote{\thoughtstyle\textcolor{\thoughtcolor}{#1}}}
 
 \newcommand{\todobrak}[1]{\texttt{\textcolor{\todocolor}{<{#1}>}}}
 
