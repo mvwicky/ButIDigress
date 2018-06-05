@@ -161,21 +161,29 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\marginred}[1]{\marginnote{\textcolor{red}{#1}}}
 
 % Commentary on this particular section
+\newcounter{commcounter}
+\setcounter{commcounter}{0}
 \newcommand{\commcolor}{MidnightBlue}
 \newcommand{\commstyle}{\scshape}
-\newcommand{\margincomm}[1]{\marginnote{\commstyle\textcolor{\commcolor}{#1}}}
+\newcommand{\margincomm}[1]{\marginnote{\commstyle\textcolor{\commcolor}{#1}}\stepcounter{commcounter}}
 % TODO note
+\newcounter{todocounter}
+\setcounter{todocounter}{0}
 \newcommand{\todocolor}{red}
 \newcommand{\todostyle}{\bfseries}
-\newcommand{\margintodo}[1]{\marginnote{\todostyle\textcolor{\todocolor}{TODO: #1}}}
+\newcommand{\margintodo}[1]{\marginnote{\todostyle\textcolor{\todocolor}{TODO: #1}}\stepcounter{todocounter}}
 % A last modifed date
+\newcounter{datecounter}
+\setcounter{datecounter}{0}
 \newcommand{\datecolor}{Olive}
 \newcommand{\datestyle}{\mdseries}
-\newcommand{\margindate}[1]{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{#1}}\normalmarginpar}
+\newcommand{\margindate}[1]{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{#1}}\normalmarginpar\stepcounter{datecounter}}
 % A random thought
+\newcounter{thoughtcounter}
+\setcounter{thoughtcounter}{0}
 \newcommand{\thoughtcolor}{Goldenrod}
 \newcommand{\thoughtstyle}{\itshape}
-\newcommand{\marginthought}[1]{\marginnote{\thoughtstyle\textcolor{\thoughtcolor}{#1}}}
+\newcommand{\marginthought}[1]{\marginnote{\thoughtstyle\textcolor{\thoughtcolor}{#1}}\stepcounter{thoughtcounter}}
 
 \newcommand{\todobrak}[1]{\texttt{\textcolor{\todocolor}{<{#1}>}}}
 
