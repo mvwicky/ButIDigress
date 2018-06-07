@@ -158,6 +158,8 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 {\hfil\footnotesize\ttfamily \underline{Last Compiled: \today}\hfil}
 \vspace*{\fill}}
 
+\NewDocumentCommand\digsec{mm}{\section{#1}\margindate{#2}\label{sec:\MakeLowerCase{#1}}}
+
 \newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
 
 \newcounter{footcounter}
