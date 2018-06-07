@@ -1,8 +1,8 @@
-"""TODO: Make this watch the word counts among the respective files
+"""wc.py: a CLI tool with functionality about/around word counts in TeX files
 
-Also, make this a sublime text plugin
-
-word count command: `command: latex_word_count`
+TODO: save each word count to a JSON file
+    - each entry would have a datetime and the word counts of each file
+    - then we could, in some way, compare across runs
 """
 from datetime import datetime
 import os
