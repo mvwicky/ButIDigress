@@ -25,7 +25,8 @@
     UprightFont=*-Regular,
     BoldFont=*-Bold,
     ItalicFont=*-Italic,
-    BoldItalicFont=*-BoldItalic
+    BoldItalicFont=*-BoldItalic,
+    Scale=MatchLowercase
 ]
 \else
 \usepackage[utf8]{inputenc}
@@ -184,7 +185,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcounter{datecounter}
 \setcounter{datecounter}{0}
 \newcommand{\datecolor}{Olive}
-\newcommand{\datestyle}{\mdseries}
+\newcommand{\datestyle}{\ttfamily}
 \newcommand{\margindate}[1]{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{#1}}\normalmarginpar\stepcounter{datecounter}}
 % A random thought
 \newcounter{thoughtcounter}
