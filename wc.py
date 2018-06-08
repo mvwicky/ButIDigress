@@ -56,9 +56,9 @@ def find_tex_files(path):
     return tex_files
 
 
-def word_counts():
+def word_counts(path):
     counts = []
-    for file in find_tex_files():
+    for file in find_tex_files(path):
         counts.append((file, wc(file)))
     return counts
 
@@ -73,7 +73,7 @@ def cli():
     '--path',
     '-f',
     default='.',
-    type=str,
+    type=click.Path(),
     help='the path to search for LaTeX files',
 )
 @click.option(
@@ -116,7 +116,11 @@ def ls(path, word_count):
 
 @cli.command()
 @click.option(
-    '--file', '-f', type=str, default=log_file, help='path to the output file'
+    '--file',
+    '-f',
+    type=click.Path(),
+    default=log_file,
+    help='path to the output file',
 )
 def log(file):
     """Save all word counts to a log"""
@@ -125,7 +129,7 @@ def log(file):
     entry['datetime'] = DT_FMT.format(now)
     entry['files'] = {}
     total = 0
-    for file, count in word_counts():
+    for file, count in word_counts('.'):
         entry['files'][file] = count
         total += count
     entry['total'] = total
