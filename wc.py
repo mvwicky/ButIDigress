@@ -11,7 +11,30 @@ import subprocess
 
 import click
 
+try:
+    import ujson as json
+except ImportError:
+    import json
+
+
 WORDS_RE = re.compile(r'Words in text: (\d+)')
+
+HERE = os.path.split(os.path.abspath(__file__))[0]
+log_file = os.path.join(HERE, 'counts.json')
+
+DT_FMT = '{0:%Y-%m-%d %H:%M:%S}'
+STRP_FMT = DT_FMT[3:-1]
+
+
+def save_log(entries):
+    with open(log_file, 'wt') as f:
+        json.dump(entries, f, indent=4)
+    return os.path.isfile(log_file) and os.path.getsize(log_file)
+
+
+def get_log():
+    with open(log_file, 'rt') as f:
+        return json.load(f)
 
 
 def wc(file: str) -> int:
@@ -23,13 +46,8 @@ def wc(file: str) -> int:
 
 
 def word_counts():
-    tex_files = []
-    for root, dirs, files in os.walk('.'):
-        for file in files:
-            if file.endswith('.tex'):
-                tex_files.append(os.path.join(root, file))
     counts = []
-    for file in tex_files:
+    for file in find_tex_files():
         counts.append((file, wc(file)))
     return counts
 
@@ -67,7 +85,8 @@ def ls(word_count):
         msg = '{0}{2} -- {1:%Y-%m-%d %H:%M:%S}'.format(
             os.path.relpath(elem),
             datetime.fromtimestamp(os.path.getmtime(elem)),
-            pad)
+            pad
+        )
         if word_count:
             count = wc(elem)
             msg = msg + ' -- {0}'.format(count)
@@ -80,7 +99,25 @@ def ls(word_count):
 @cli.command()
 def log():
     """Save all the word counts to a log"""
-    pass
+    now = datetime.utcnow()
+    entry = {}
+    entry['datetime'] = DT_FMT.format(now)
+    entry['files'] = {}
+    total = 0
+    for file, count in word_counts():
+        entry['files'][file] = count
+        total += count
+    entry['total'] = total
+    if not os.path.isfile(log_file):
+        log_cts = []
+    else:
+        log_cts = get_log()
+    if log_cts:
+        last_ent = datetime.strptime(log_cts[-1]['datetime'], STRP_FMT)
+        if last_ent.day == now.day:
+            log_cts.pop()
+    log_cts.append(entry)
+    save_log(log_cts)
 
 
 if __name__ == '__main__':
