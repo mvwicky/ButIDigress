@@ -43,12 +43,13 @@ def wc(file: str) -> int:
     res = WORDS_RE.search(s.stdout.decode())
     if res:
         return int(res.group(1))
+
     return 0
 
 
-def find_tex_files():
+def find_tex_files(path):
     tex_files = []
-    for root, dirs, files in os.walk('.'):
+    for root, dirs, files in os.walk(path):
         for file in files:
             if file.endswith('.tex'):
                 tex_files.append(os.path.join(root, file))
@@ -68,21 +69,33 @@ def cli():
 
 
 @cli.command()
-@click.option('--word-count/--no-word-count', default=True)
-def ls(word_count):
+@click.option(
+    '--path',
+    '-f',
+    default='.',
+    type=str,
+    help='the path to search for LaTeX files',
+)
+@click.option(
+    '--word-count/--no-word-count', default=True, help='toggle word counting'
+)
+def ls(path, word_count):
+    """Print out TeX files"""
     tex_files = sorted(
-        find_tex_files(), key=lambda p: os.path.getmtime(p), reverse=True
+        find_tex_files(path), key=lambda p: os.path.getmtime(p), reverse=True
     )
     longest = len(max(tex_files, key=lambda x: len(x)))
     total_wc = 0
-    msg_1, msg_2, msg_3 = 'File Name', 'Last Mod. Date', 'Word Count'
-    msg = '{0}{1} --- {2}{3} --- {4}'.format(
+    msg_1, msg_2 = 'File Name', 'Last Mod. Date'
+    msg = '{0}{1} --- {2}{3}'.format(
         msg_1,
         ' ' * (longest - len(msg_1) - 2),
         msg_2,
-        ' ' * (DT_LEN - len(msg_2)),
-        msg_3
+        ' ' * (DT_LEN - len(msg_2))
     )
+    if word_count:
+        msg_3 = ' --- Word Count'
+        msg = msg + msg_3
     click.secho(msg, fg='red')
     click.echo('-' * len(msg))
     for elem in tex_files:
@@ -90,7 +103,7 @@ def ls(word_count):
         msg = '{0}{2} --- {1:%Y-%m-%d %H:%M:%S}'.format(
             os.path.relpath(elem),
             datetime.fromtimestamp(os.path.getmtime(elem)),
-            pad
+            pad,
         )
         if word_count:
             count = wc(elem)
@@ -102,8 +115,11 @@ def ls(word_count):
 
 
 @cli.command()
-def log():
-    """Save all the word counts to a log"""
+@click.option(
+    '--file', '-f', type=str, default=log_file, help='path to the output file'
+)
+def log(file):
+    """Save all word counts to a log"""
     now = datetime.utcnow()
     entry = {}
     entry['datetime'] = DT_FMT.format(now)
