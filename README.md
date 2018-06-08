@@ -22,4 +22,6 @@ I compiled the book successfully using LuaLatex with a full installation of TexL
 - [ ] Move discussions of _The 100_ to the proper section
 - [x] Find all the times where I use quotations marks and change them to the `\say` command
 - [ ] Make or find a hat that says "pedant" or "pedantic" across the front
-- [ ] Use the `\movie` and `\tvshow` and `\book` commands (and make more as appropriate)
+- [x] Use the `\movie` and `\tvshow` and `\book` commands (and make more as appropriate)
+- [ ] Maybe add a sections breakdown to the beginning of each chapter
+- [ ] Copy over existing release notes to CHANGELOG.md
