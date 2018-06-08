@@ -1,5 +1,17 @@
 # Release History
 
+## NOTE: Until v1.0.0 (probably never), just increment the patch version 
+
+## UNRELEASED --- v0.7.0 --- Pre-release 10
+
+## wc.py
+- check command
+- path argument
+    + allows one to check specific folders for TeX files
+
+## Misc
+- CHANGELOG.md contains all previous release notes
+
 ## v0.6.1 --- Pre-Release 9
 
 This release contains, _inter alia_, an environment for (hopefully) temporary notes, improvements/additions to the Mike Schur discussion, a new source, better monospaced font scaling, and some custom commands.
