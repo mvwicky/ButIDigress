@@ -182,13 +182,13 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \setcounter{commcounter}{0}
 \newcommand{\commcolor}{MidnightBlue}
 \newcommand{\commstyle}{\scshape}
-\newcommand{\margincomm}[1]{\marginnote{\commstyle\textcolor{\commcolor}{#1}}\stepcounter{commcounter}}
+\newcommand{\margincomm}[1]{\marginnote{\singlespace\commstyle\textcolor{\commcolor}{#1}}\stepcounter{commcounter}}
 % TODO note
 \newcounter{todocounter}
 \setcounter{todocounter}{0}
 \newcommand{\todocolor}{red}
 \newcommand{\todostyle}{\bfseries}
-\newcommand{\margintodo}[1]{\marginnote{\todostyle\textcolor{\todocolor}{TODO: #1}}\stepcounter{todocounter}}
+\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{TODO: #1}}\stepcounter{todocounter}}
 % A last modifed date
 \newcounter{datecounter}
 \setcounter{datecounter}{0}
@@ -200,7 +200,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \setcounter{thoughtcounter}{0}
 \newcommand{\thoughtcolor}{Sepia}
 \newcommand{\thoughtstyle}{\itshape}
-\newcommand{\marginthought}[1]{\marginnote{\thoughtstyle\textcolor{\thoughtcolor}{#1}}\stepcounter{thoughtcounter}}
+\newcommand{\marginthought}[1]{\marginnote{\singlespace\thoughtstyle\textcolor{\thoughtcolor}{#1}}\stepcounter{thoughtcounter}}
 
 \newcommand{\todobrak}[1]{\texttt{\textcolor{\todocolor}{<{#1}>}}}
 
