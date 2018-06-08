@@ -4,12 +4,12 @@
 
 ## UNRELEASED --- v0.7.0 --- Pre-release 10
 
-## wc.py
+### wc.py
 - check command
 - path argument
     + allows one to check specific folders for TeX files
 
-## Misc
+### Misc
 - CHANGELOG.md contains all previous release notes
 
 ## v0.6.1 --- Pre-Release 9
