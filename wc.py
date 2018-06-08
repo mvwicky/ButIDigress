@@ -24,6 +24,7 @@ log_file = os.path.join(HERE, 'counts.json')
 
 DT_FMT = '{0:%Y-%m-%d %H:%M:%S}'
 STRP_FMT = DT_FMT[3:-1]
+DT_LEN = len('YYYY-MM-DD HH:MM:SS')
 
 
 def save_log(entries):
@@ -45,13 +46,6 @@ def wc(file: str) -> int:
     return 0
 
 
-def word_counts():
-    counts = []
-    for file in find_tex_files():
-        counts.append((file, wc(file)))
-    return counts
-
-
 def find_tex_files():
     tex_files = []
     for root, dirs, files in os.walk('.'):
@@ -59,6 +53,13 @@ def find_tex_files():
             if file.endswith('.tex'):
                 tex_files.append(os.path.join(root, file))
     return tex_files
+
+
+def word_counts():
+    counts = []
+    for file in find_tex_files():
+        counts.append((file, wc(file)))
+    return counts
 
 
 @click.group()
@@ -69,27 +70,31 @@ def cli():
 @cli.command()
 @click.option('--word-count/--no-word-count', default=True)
 def ls(word_count):
-    tex_files = find_tex_files()
+    tex_files = sorted(
+        find_tex_files(), key=lambda p: os.path.getmtime(p), reverse=True
+    )
     longest = len(max(tex_files, key=lambda x: len(x)))
-    tex_files.sort(key=lambda p: os.path.getmtime(p), reverse=True)
     total_wc = 0
-    dt_len = len('YYYY-MM-DD HH:MM:SS')
-    m1, m2 = 'File Name', 'Last Mod. Date'
-    msg = '{0}{1}-- {2}{3} -- WC'.format(
-        m1, ' ' * (longest - len(m1) - 1), m2, ' ' * (dt_len - len(m2))
+    msg_1, msg_2, msg_3 = 'File Name', 'Last Mod. Date', 'Word Count'
+    msg = '{0}{1} --- {2}{3} --- {4}'.format(
+        msg_1,
+        ' ' * (longest - len(msg_1) - 2),
+        msg_2,
+        ' ' * (DT_LEN - len(msg_2)),
+        msg_3
     )
     click.secho(msg, fg='red')
     click.echo('-' * len(msg))
     for elem in tex_files:
         pad = ' ' * (longest - len(elem))
-        msg = '{0}{2} -- {1:%Y-%m-%d %H:%M:%S}'.format(
+        msg = '{0}{2} --- {1:%Y-%m-%d %H:%M:%S}'.format(
             os.path.relpath(elem),
             datetime.fromtimestamp(os.path.getmtime(elem)),
             pad
         )
         if word_count:
             count = wc(elem)
-            msg = msg + ' -- {0}'.format(count)
+            msg = msg + ' --- {0}'.format(count)
             total_wc += count
         click.echo(msg)
     if word_count:
