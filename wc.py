@@ -34,6 +34,15 @@ def word_counts():
     return counts
 
 
+def find_tex_files():
+    tex_files = []
+    for root, dirs, files in os.walk('.'):
+        for file in files:
+            if file.endswith('.tex'):
+                tex_files.append(os.path.join(root, file))
+    return tex_files
+
+
 @click.group()
 def cli():
     pass
@@ -42,11 +51,7 @@ def cli():
 @cli.command()
 @click.option('--word-count/--no-word-count', default=True)
 def ls(word_count):
-    tex_files = []
-    for root, dirs, files in os.walk('.'):
-        for file in files:
-            if file.endswith('.tex'):
-                tex_files.append(os.path.join(root, file))
+    tex_files = find_tex_files()
     longest = len(max(tex_files, key=lambda x: len(x)))
     tex_files.sort(key=lambda p: os.path.getmtime(p), reverse=True)
     total_wc = 0
@@ -70,6 +75,12 @@ def ls(word_count):
         click.echo(msg)
     if word_count:
         click.secho('\nTotal Word Count: {0}'.format(total_wc), fg='blue')
+
+
+@cli.command()
+def log():
+    """Save all the word counts to a log"""
+    pass
 
 
 if __name__ == '__main__':
