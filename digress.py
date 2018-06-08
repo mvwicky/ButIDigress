@@ -7,7 +7,11 @@ TODO: save each word count to a JSON file
 from datetime import datetime
 import os
 import re
+import shutil
 import subprocess
+
+# TODO: add type signatures
+import typing
 
 import click
 
@@ -16,29 +20,34 @@ try:
 except ImportError:
     import json
 
+# Typing Stuff
+Path = typing.Text
+EntriesDict = typing.Dict[str, typing.Dict[Path, int]]
+WordCountsTup = typing.List[typing.Tuple[Path, int]]
 
-WORDS_RE = re.compile(r'Words in text: (\d+)')
+# regex used to find word count in texcount output
+WORDS_RE: typing.re = re.compile(r'Words in text: (\d+)')
 
-HERE = os.path.split(os.path.abspath(__file__))[0]
-log_file = os.path.join(HERE, 'counts.json')
+HERE: Path = os.path.split(os.path.abspath(__file__))[0]
+log_file: Path = os.path.join(HERE, 'counts.json')
 
-DT_FMT = '{0:%Y-%m-%d %H:%M:%S}'
-STRP_FMT = DT_FMT[3:-1]
-DT_LEN = len('YYYY-MM-DD HH:MM:SS')
+DT_FMT: typing.Text = '{0:%Y-%m-%d %H:%M:%S}'
+STRP_FMT: typing.Text = DT_FMT[3:-1]
+DT_LEN: int = len('YYYY-MM-DD HH:MM:SS')
 
 
-def save_log(entries):
+def save_log(entries: EntriesDict) -> typing.Union[bool, int]:
     with open(log_file, 'wt') as f:
         json.dump(entries, f, indent=4)
     return os.path.isfile(log_file) and os.path.getsize(log_file)
 
 
-def get_log():
+def get_log() -> EntriesDict:
     with open(log_file, 'rt') as f:
         return json.load(f)
 
 
-def wc(file: str) -> int:
+def wc(file: Path) -> int:
     s = subprocess.run(['texcount', file], stdout=subprocess.PIPE)
     res = WORDS_RE.search(s.stdout.decode())
     if res:
@@ -47,7 +56,7 @@ def wc(file: str) -> int:
     return 0
 
 
-def find_tex_files(path):
+def find_tex_files(path: Path) -> typing.List[Path]:
     tex_files = []
     for root, dirs, files in os.walk(path):
         for file in files:
@@ -56,7 +65,7 @@ def find_tex_files(path):
     return tex_files
 
 
-def word_counts(path):
+def word_counts(path: Path) -> WordCountsTup:
     counts = []
     for file in find_tex_files(path):
         counts.append((file, wc(file)))
@@ -148,7 +157,48 @@ def log(file):
 @cli.command()
 def check():
     """Run lacheck on all files"""
-    pass
+
+
+@cli.command()
+@click.option('--view/--no-view', default=True, help='')
+@click.option('--pdf-viewer', type=click.Path(dir_okay=False))
+def build(view, pdf_viewer):
+    """Build butidigress.pdf (assumes a lot)"""
+
+
+_sort_opts = ['files', 'lines', 'blanks', 'code', 'comments']
+
+
+@cli.command()
+@click.option(
+    '--files',
+    '-f',
+    is_flag=True,
+    help='print out statistics on individual files',
+)
+@click.option(
+    '--sort',
+    '-s',
+    type=click.Choice(_sort_opts),
+    help='sort languages based on a column',
+)
+def tokei(files, sort):
+    """Run tokei"""
+    exe = shutil.which('tokei')
+    if exe is None:
+        click.secho(
+            'tokei not found on PATH, install with `cargo install tokei`',
+            err=True,
+            fg='red',
+        )
+        return 2
+    args = [exe]
+    if files:
+        args.append('--files')
+    if sort:
+        print(sort)
+        args.extend(['--sort', sort])
+    return subprocess.run(args).returncode
 
 
 if __name__ == '__main__':
