@@ -145,5 +145,11 @@ def log(file):
     save_log(log_cts)
 
 
+@cli.command()
+def check():
+    """Run lacheck on all files"""
+    pass
+
+
 if __name__ == '__main__':
     cli()
