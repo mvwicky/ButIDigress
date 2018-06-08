@@ -25,3 +25,4 @@ I compiled the book successfully using LuaLatex with a full installation of TexL
 - [x] Use the `\movie` and `\tvshow` and `\book` commands (and make more as appropriate)
 - [ ] Maybe add a sections breakdown to the beginning of each chapter
 - [x] Copy over existing release notes to CHANGELOG.md
+- [x] Change `wc.py` to `digress.py` or something like that, scope has expanded beyond word counts 
