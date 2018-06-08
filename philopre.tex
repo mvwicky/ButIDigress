@@ -67,7 +67,7 @@
 
 \usepackage[unicode]{hyperref}
 \usepackage{bookmark}
-\hypersetup{
+\hypersetup{%
 colorlinks=false,
 linkbordercolor=white,
 pdfborder=0 0 0,
@@ -76,7 +76,7 @@ pdfsubject={philosophy},
 pdfauthor={Michael Van Wickle},
 pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
-\graphicspath{ {images/} }
+\graphicspath{{images/}}
 
 \everymath{\displaystyle}
 
@@ -207,7 +207,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
 
-\newcommand{\cref}[1]{chapter \ref{#1} starting on page~\pageref{#1}}
+\newcommand{\cref}[1]{chapter~\ref{#1} starting on page~\pageref{#1}}
 
 \newcommand{\notescolor}{teal}
 \newenvironment{somenotes}[1]{\subsection*{\scshape Some Notes On: #1}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
