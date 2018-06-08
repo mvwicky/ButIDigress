@@ -155,8 +155,27 @@ def log(file):
 
 
 @cli.command()
-def check():
+@click.option(
+    '--path',
+    '-f',
+    default='.',
+    type=click.Path(),
+    help='the path to search for LaTeX files',
+)
+def check(path):
     """Run lacheck on all files"""
+    exe = shutil.which('lacheck')
+    if exe is None:
+        click.secho('lacheck not found on PATH', err=True, fg='red')
+        return -1
+    ret = 0
+    for file in find_tex_files(path):
+        s = subprocess.run([exe, file], stdout=subprocess.PIPE)
+        if s.stdout:
+            click.secho(os.path.relpath(file), fg='blue')
+            click.echo(s.stdout.decode())
+        ret &= s.returncode
+    return ret
 
 
 @cli.command()
@@ -167,6 +186,7 @@ def build(view, pdf_viewer):
 
 
 _sort_opts = ['files', 'lines', 'blanks', 'code', 'comments']
+_sort_help = 'sort languages based on a column'
 
 
 @cli.command()
@@ -176,12 +196,7 @@ _sort_opts = ['files', 'lines', 'blanks', 'code', 'comments']
     is_flag=True,
     help='print out statistics on individual files',
 )
-@click.option(
-    '--sort',
-    '-s',
-    type=click.Choice(_sort_opts),
-    help='sort languages based on a column',
-)
+@click.option('--sort', '-s', type=click.Choice(_sort_opts), help=_sort_help)
 def tokei(files, sort):
     """Run tokei"""
     exe = shutil.which('tokei')
@@ -191,7 +206,8 @@ def tokei(files, sort):
             err=True,
             fg='red',
         )
-        return 2
+        return -1
+
     args = [exe]
     if files:
         args.append('--files')
