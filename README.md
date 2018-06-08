@@ -24,4 +24,4 @@ I compiled the book successfully using LuaLatex with a full installation of TexL
 - [ ] Make or find a hat that says "pedant" or "pedantic" across the front
 - [x] Use the `\movie` and `\tvshow` and `\book` commands (and make more as appropriate)
 - [ ] Maybe add a sections breakdown to the beginning of each chapter
-- [ ] Copy over existing release notes to CHANGELOG.md
+- [x] Copy over existing release notes to CHANGELOG.md
