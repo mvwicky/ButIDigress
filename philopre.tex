@@ -81,7 +81,6 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \everymath{\displaystyle}
 
 \DeclareMathOperator{\sinc}{sinc}
-\newcommand{\boph}[1]{\emph{\textbf{#1}}} % bold and emph
 \newcommand{\defItem}{\itemsep1pt \parsep0pt \parskip0pt}
 \newcommand{\tbul}{\textbullet}
 
@@ -90,6 +89,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\oneover}[1]{\frac{1}{#1}}
 
+% Float Setup
 \newcommand{\br}[1]{\ensuremath{\left\{ #1 \right\}}}
 \newcommand{\adpar}[1]{\ensuremath{\left( #1 \right)}}
 
@@ -107,15 +107,18 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \renewcommand{\floatpagefraction}{0.7}
 \renewcommand{\dblfloatpagefraction}{0.7}
 
+% Subsection and Subsubsection notation setup
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\thesection.\thesubsection.\roman{subsubsection}}
 
+% Semantic commands for different media
 \newcommand{\impword}[1]{\textcolor{red}{\textbf{#1}}}
 \newcommand{\movie}[1]{{\itshape #1}}
 \newcommand{\tvshow}[1]{{\itshape #1}}
 \newcommand{\book}[1]{{\itshape #1}}
 \newcommand{\podcast}[1]{{\itshape #1}}
 
+% Convenience commands for unnumbered divisions
 \newcommand{\unnumchapter}[1]{\chapter*{#1}\markright{#1}\addcontentsline{toc}{chapter}{#1}}
 \newcommand{\unnumsection}[1]{\section*{#1}\markright{#1}\addcontentsline{toc}{section}{#1}}
 \newcommand{\unnumsubsection}[1]{\subsection*{#1}\markright{#1}\addcontentsline{toc}{subsection}{#1}}
@@ -137,9 +140,10 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \renewcommand{\epigraphflush}{center}
 \renewcommand{\epigraphsize}{\small}
 \setlength{\epigraphwidth}{0.8\textwidth}
-\newcommand{\attrib}[3]{\textsc{#1}, \textit{#2} (#3)}
+\NewDocumentCommand\attrib{mmm}{\textsc{#1}, \textit{#2} (#3)}
+
 \newcounter{epicounter}
-\newcommand{\epi}[2]{\epigraph{#1}{#2}\stepcounter{epicounter}}
+\NewDocumentCommand\epi{mm}{\epigraph{#1}{#2}\stepcounter{epicounter}}
 
 % Space between title elements
 \newlength{\titlevspace}
@@ -193,7 +197,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 % A random thought
 \newcounter{thoughtcounter}
 \setcounter{thoughtcounter}{0}
-\newcommand{\thoughtcolor}{Goldenrod}
+\newcommand{\thoughtcolor}{Sepia}
 \newcommand{\thoughtstyle}{\itshape}
 \newcommand{\marginthought}[1]{\marginnote{\thoughtstyle\textcolor{\thoughtcolor}{#1}}\stepcounter{thoughtcounter}}
 
