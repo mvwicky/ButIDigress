@@ -137,6 +137,8 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \renewcommand{\epigraphsize}{\small}
 \setlength{\epigraphwidth}{0.8\textwidth}
 \newcommand{\attrib}[3]{\textsc{#1}, \textit{#2} (#3)}
+\newcounter{epicounter}
+\newcommand{\epi}[2]{\epigraph{#1}{#2}\stepcounter{epicounter}}
 
 % Space between title elements
 \newlength{\titlevspace}
