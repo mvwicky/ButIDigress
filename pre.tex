@@ -17,7 +17,9 @@
     UprightFont=*-Regular,
     BoldFont=*-Bold,
     ItalicFont=*-Italic,
-    BoldItalicFont=*-BoldItalic
+    BoldItalicFont=*-BoldItalic,
+    Ligatures=TeX,
+    Numbers={OldStyle, Proportional}
 ]
 \setmonofont{Hack}[
     Extension=.ttf,
@@ -26,7 +28,8 @@
     BoldFont=*-Bold,
     ItalicFont=*-Italic,
     BoldItalicFont=*-BoldItalic,
-    Scale=MatchLowercase
+    Scale=MatchLowercase,
+    Ligatures=TeX
 ]
 \else
 \usepackage[utf8]{inputenc}
@@ -113,11 +116,11 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 % Semantic commands for different media
 \newcommand{\impword}[1]{\textcolor{red}{\textbf{#1}}}
-\newcommand{\movie}[1]{{\itshape #1}}
-\newcommand{\tvshow}[1]{{\itshape #1}}
+\newcommand{\movie}[1]{\textit{#1}}
+\newcommand{\tvshow}[1]{\textit{#1}}
 \newcommand{\tv}[1]{\tvshow{#1}}
-\newcommand{\book}[1]{{\itshape #1}}
-\newcommand{\podcast}[1]{{\itshape #1}}
+\newcommand{\book}[1]{\textit{#1}}
+\newcommand{\podcast}[1]{\textit{#1}}
 
 % Convenience commands for unnumbered divisions
 \newcommand{\unnumchapter}[1]{\chapter*{#1}\markright{#1}\addcontentsline{toc}{chapter}{#1}}
