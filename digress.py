@@ -35,6 +35,11 @@ DT_FMT: typing.Text = '{0:%Y-%m-%d %H:%M:%S}'
 STRP_FMT: typing.Text = DT_FMT[3:-1]
 DT_LEN: int = len('YYYY-MM-DD HH:MM:SS')
 
+tex_dir: Path = os.path.join('C:\\', 'texlive', '2017', 'bin', 'win32')
+lualatex_exe: Path = shutil.which(os.path.join(tex_dir, 'lualatex.exe'))
+biber_exe: Path = shutil.which(os.path.join(tex_dir, 'biber.exe'))
+latexopts = ['-interaction=nonstopmode', '-synctex=1', '--shell-escape']
+
 
 def save_log(entries: EntriesDict) -> typing.Union[bool, int]:
     with open(log_file, 'wt') as f:
@@ -168,6 +173,7 @@ def check(path):
     if exe is None:
         click.secho('lacheck not found on PATH', err=True, fg='red')
         return -1
+
     ret = 0
     for file in find_tex_files(path):
         s = subprocess.run([exe, file], stdout=subprocess.PIPE)
@@ -179,23 +185,39 @@ def check(path):
 
 
 @cli.command()
-@click.option('--view/--no-view', default=True, help='')
+@click.options('--base-name', type=str, default='butidigress')
+@click.option('--view/--no-view', default=True)
 @click.option('--pdf-viewer', type=click.Path(dir_okay=False))
-def build(view, pdf_viewer):
+def build(base_name, view, pdf_viewer):
     """Build butidigress.pdf (assumes a lot)"""
+    # TODO: Convert all these asserts to more normal CLI stuff
+    assert lualatex_exe is not None
+    assert biber_exe is not None
+    tex_file = os.path.abspath(base_name + '.tex')
+    assert os.path.isfile(tex_file)
+
+    tex_args = [lualatex_exe] + latexopts + [tex_file]
+
+    # First Latex Compile
+    c = subprocess.run(tex_args, shell=True)
+
+    # Run Biber
+    c = subprocess.run([biber_exe, base_name], shell=True)
+
+    # Second Latex Compile
+    c = subprocess.run(tex_args, shell=True)
+
+    # Third Latex Compile
+    c = subprocess.run(tex_args, shell=True)
 
 
 _sort_opts = ['files', 'lines', 'blanks', 'code', 'comments']
 _sort_help = 'sort languages based on a column'
+_tokei_files_help = 'print out statistics on individual files'
 
 
 @cli.command()
-@click.option(
-    '--files',
-    '-f',
-    is_flag=True,
-    help='print out statistics on individual files',
-)
+@click.option('--files', '-f', is_flag=True, help=_tokei_files_help)
 @click.option('--sort', '-s', type=click.Choice(_sort_opts), help=_sort_help)
 def tokei(files, sort):
     """Run tokei"""
