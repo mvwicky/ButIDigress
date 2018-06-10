@@ -185,7 +185,7 @@ def check(path):
 
 
 @cli.command()
-@click.options('--base-name', type=str, default='butidigress')
+@click.option('--base-name', type=str, default='butidigress')
 @click.option('--view/--no-view', default=True)
 @click.option('--pdf-viewer', type=click.Path(dir_okay=False))
 def build(base_name, view, pdf_viewer):
