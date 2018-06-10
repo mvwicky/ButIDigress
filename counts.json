@@ -1,17 +1,37 @@
 [
     {
-        "datetime":"2018-06-08 17:22:07",
+        "datetime":"2018-06-08 22:35:17",
         "files":{
             ".\\butidigress.tex":872,
-            ".\\introduction.tex":3214,
+            ".\\introduction.tex":3394,
             ".\\philopre.tex":0,
-            ".\\sections\\appendix.tex":5377,
+            ".\\sections\\appendix.tex":5348,
             ".\\sections\\empathy.tex":1442,
             ".\\sections\\immutable.tex":530,
             ".\\sections\\knowledge.tex":1846,
             ".\\sections\\sincerity.tex":2167,
-            ".\\sections\\thevoid.tex":1411
+            ".\\sections\\thevoid.tex":1944
         },
-        "total":16859
+        "total":17543
+    },
+    {
+        "datetime":"2018-06-09 21:54:28",
+        "files":{
+            ".\\butidigress.tex":872,
+            ".\\introduction.tex":3394,
+            ".\\pre.tex":0,
+            ".\\appendices\\appendix.tex":10,
+            ".\\appendices\\justrandom.tex":217,
+            ".\\appendices\\poemsandstuff.tex":1460,
+            ".\\appendices\\quotations.tex":697,
+            ".\\appendices\\roadtrip.tex":2912,
+            ".\\appendices\\topten.tex":337,
+            ".\\sections\\empathy.tex":1442,
+            ".\\sections\\immutable.tex":530,
+            ".\\sections\\knowledge.tex":1846,
+            ".\\sections\\sincerity.tex":2204,
+            ".\\sections\\thevoid.tex":1944
+        },
+        "total":17865
     }
 ]
