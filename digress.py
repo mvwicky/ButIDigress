@@ -248,28 +248,5 @@ _sort_help = 'sort languages based on a column'
 _tokei_files_help = 'print out statistics on individual files'
 
 
-@cli.command()
-@click.option('--files', '-f', is_flag=True, help=_tokei_files_help)
-@click.option('--sort', '-s', type=click.Choice(_sort_opts), help=_sort_help)
-def tokei(files, sort):
-    """Run tokei"""
-    exe = shutil.which('tokei')
-    if exe is None:
-        click.secho(
-            'tokei not found on PATH, install with `cargo install tokei`',
-            err=True,
-            fg='red',
-        )
-        return -1
-
-    args = [exe]
-    if files:
-        args.append('--files')
-    if sort:
-        print(sort)
-        args.extend(['--sort', sort])
-    return subprocess.run(args).returncode
-
-
 if __name__ == '__main__':
     cli()
