@@ -52,7 +52,9 @@ def get_log() -> EntriesDict:
         return json.load(f)
 
 
-def wc(file: Path) -> int:
+def wc(file: Path, echo=False) -> int:
+    if echo:
+        click.secho('running texcount on: {0}'.format(file), fg='green')
     s = subprocess.run(['texcount', file], stdout=subprocess.PIPE)
     res = WORDS_RE.search(s.stdout.decode())
     if res:
@@ -91,41 +93,71 @@ def cli():
     help='the path to search for LaTeX files',
 )
 @click.option(
-    '--word-count/--no-word-count', default=True, help='toggle word counting'
+    '--sort',
+    '-s',
+    type=click.Choice(['name', 'mdate', 'wc']),
+    default='mdate',
+    help='sort rows by column',
 )
-def ls(path, word_count):
+def ls(path, sort):
     """Print out TeX files"""
-    tex_files = sorted(
-        find_tex_files(path), key=lambda p: os.path.getmtime(p), reverse=True
-    )
+    click.clear()
+    tex_files = find_tex_files(path)
     longest = len(max(tex_files, key=lambda x: len(x)))
     total_wc = 0
-    msg_1, msg_2 = 'File Name', 'Last Mod. Date'
-    msg = '{0}{1} --- {2}{3}'.format(
-        msg_1,
-        ' ' * (longest - len(msg_1) - 2),
-        msg_2,
-        ' ' * (DT_LEN - len(msg_2))
+    col_1, col_2, col_3 = 'File Name', 'Last Mod. Date', 'Word Count'
+    hdr = '\n{0}{1} --- {2}{3} --- {4}'.format(
+        col_1,
+        ' ' * (longest - len(col_1) - 2),
+        col_2,
+        ' ' * (DT_LEN - len(col_2)),
+        col_3
     )
-    if word_count:
-        msg_3 = ' --- Word Count'
-        msg = msg + msg_3
-    click.secho(msg, fg='red')
-    click.echo('-' * len(msg))
-    for elem in tex_files:
-        pad = ' ' * (longest - len(elem))
-        msg = '{0}{2} --- {1:%Y-%m-%d %H:%M:%S}'.format(
-            os.path.relpath(elem),
-            datetime.fromtimestamp(os.path.getmtime(elem)),
-            pad,
+
+    if sort == 'name':
+
+        def _sort_fn(e):
+            return e[0]
+
+        reverse = False
+    elif sort == 'mdate':
+
+        def _sort_fn(e):
+            return os.path.getmtime(e[0])
+
+        reverse = True
+    else:
+
+        def _sort_fn(e):
+            return e[2]
+
+        reverse = True
+
+    rows = sorted(
+        (
+            [
+                os.path.relpath(p),
+                datetime.fromtimestamp(os.path.getmtime(p)),
+                wc(p, True),
+            ]
+            for p in tex_files
+        ),
+        key=_sort_fn,
+        reverse=reverse,
+    )
+    p_rows = []
+    for elem in rows:
+        pad = ' ' * (longest - len(elem[0]))
+        msg = '{0}{2} --- {1:%Y-%m-%d %H:%M:%S} --- {3}'.format(
+            elem[0], elem[1], pad, elem[2]
         )
-        if word_count:
-            count = wc(elem)
-            msg = msg + ' --- {0}'.format(count)
-            total_wc += count
-        click.echo(msg)
-    if word_count:
-        click.secho('\nTotal Word Count: {0}'.format(total_wc), fg='blue')
+        total_wc += elem[2]
+        p_rows.append(msg)
+    click.secho(hdr, fg='red')
+    click.echo('-' * len(hdr))
+    for row in p_rows:
+        click.echo(row)
+    click.secho('\nTotal Word Count: {0}'.format(total_wc), fg='blue')
 
 
 @cli.command()
