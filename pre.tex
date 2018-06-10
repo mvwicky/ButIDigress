@@ -1,6 +1,7 @@
 %!TEX program = lualatex
 %!TEX root = ./butidigress.tex
 \documentclass[10pt,fleqn,titlepage]{book}
+\usepackage[protrusion=true,expansion]{microtype}
 \setlength{\paperheight}{9in}
 \setlength{\paperwidth}{6in}
 \usepackage{marginnote}
@@ -9,7 +10,7 @@
 \usepackage[T1]{fontenc}
 
 \usepackage{iftex}
-\ifLuaTeX
+\ifLuaTeX%
 \usepackage{fontspec}
 \setmainfont{Spectral}[
     Extension=.ttf,
@@ -191,7 +192,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \setcounter{todocounter}{0}
 \newcommand{\todocolor}{red}
 \newcommand{\todostyle}{\bfseries}
-\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{TODO: #1}}\stepcounter{todocounter}}
+\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{TODO:\@#1}}\stepcounter{todocounter}}
 % A last modifed date
 \newcounter{datecounter}
 \setcounter{datecounter}{0}
@@ -211,7 +212,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
 
-\newcommand{\cref}[1]{chapter~\ref{#1} starting on page~\pageref{#1}}
+\newcommand{\cref}[1]{Chapter~\ref{#1} starting on page~\pageref{#1}}
 
 \newcommand{\notescolor}{teal}
 \newenvironment{somenotes}[1]{\subsection*{\scshape Some Notes On: #1}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
