@@ -14,6 +14,7 @@ import subprocess
 import typing
 
 import click
+import profilehooks
 
 try:
     import ujson as json
@@ -55,7 +56,8 @@ def get_log() -> EntriesDict:
 def wc(file: Path, echo=False) -> int:
     if echo:
         click.secho('running texcount on: {0}'.format(file), fg='green')
-    s = subprocess.run(['texcount', file], stdout=subprocess.PIPE)
+    args = ['texcount', file]
+    s = subprocess.run(args, shell=True, stdout=subprocess.PIPE)
     res = WORDS_RE.search(s.stdout.decode())
     if res:
         return int(res.group(1))
