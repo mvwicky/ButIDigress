@@ -49,9 +49,24 @@ latexopts: List[str] = [
 ]
 
 
-def save_log(entries: EntriesDict) -> Union[bool, int]:
+def save_log(entry: EntriesDict) -> Union[bool, int]:
+    now: datetime = datetime.utcnow()
+    entry['datetime'] = DT_FMT.format(now)
+    if not os.path.isfile(log_file):
+        log_cts: List[EntriesDict] = []
+    else:
+        log_cts: List[EntriesDict] = get_log()
+
+    if log_cts:
+        last_ent: datetime = datetime.strptime(
+            log_cts[-1]['datetime'], STRP_FMT
+        )
+        if last_ent.day == now.day:
+            log_cts.pop()
+    log_cts.append(entry)
+
     with open(log_file, 'wt') as f:
-        json.dump(entries, f, indent=4)
+        json.dump(log_cts, f, indent=4)
     return os.path.isfile(log_file) and os.path.getsize(log_file)
 
 
@@ -62,14 +77,17 @@ def get_log() -> List[EntriesDict]:
 
 def wc(file: PathType, echo: bool = False) -> int:
     if echo:
-        click.secho('running texcount on: {0}'.format(file), fg='green')
+        click.secho(
+            'running texcount on: {0} --- '.format(file), fg='green', nl=False
+        )
     args: ArgsType = ['texcount', file]
     s: CompletedProcess = run(args, shell=True, stdout=PIPE)
     res: Match[str] = WORDS_RE.search(s.stdout.decode())
-    if res:
-        return int(res.group(1))
+    ret: int = 0 if not res else int(res.group(1))
+    if echo:
+        click.secho(str(ret), fg='green')
 
-    return 0
+    return ret
 
 
 def find_tex_files(path: PathType) -> List[PathType]:
@@ -86,6 +104,16 @@ def word_counts(path: PathType) -> WordCountsTup:
     for file in find_tex_files(path):
         counts.append((file, wc(file)))
     return counts
+
+
+def ls_log(rows: List[RowsTup]):
+    entry: EntriesDict = {'files': {}}
+    total: int = 0
+    for name, _, count in rows:
+        entry['files'][name] = count
+        total += count
+    entry['total'] = total
+    save_log(entry)
 
 
 _sort_opts: List[str] = ['name', 'mdate', 'wc']
@@ -177,6 +205,7 @@ def ls(path: PathType, sort: str):
     for row in p_rows:
         click.echo(row)
     click.secho('\nTotal Word Count: {0}'.format(total_wc), fg='blue')
+    ls_log(rows)
 
 
 @cli.command()
@@ -189,27 +218,13 @@ def ls(path: PathType, sort: str):
 )
 def log(file: PathType):
     """Save all word counts to a log"""
-    now: datetime = datetime.utcnow()
-    entry: EntriesDict = {}
-    entry['datetime'] = DT_FMT.format(now)
-    entry['files'] = {}
+    entry: EntriesDict = {'files': {}}
     total: int = 0
     for file, count in word_counts('.'):
         entry['files'][file] = count
         total += count
     entry['total'] = total
-    if not os.path.isfile(log_file):
-        log_cts: List[EntriesDict] = []
-    else:
-        log_cts: List[EntriesDict] = get_log()
-    if log_cts:
-        last_ent: datetime = datetime.strptime(
-            log_cts[-1]['datetime'], STRP_FMT
-        )
-        if last_ent.day == now.day:
-            log_cts.pop()
-    log_cts.append(entry)
-    save_log(log_cts)
+    save_log(entry)
 
 
 @cli.command()
