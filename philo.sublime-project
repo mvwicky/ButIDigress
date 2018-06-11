@@ -13,5 +13,15 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings":
+	{
+		"TEXroot": "./butidigress.tex",
+		"output_directory": "./build",
+		"builder_settings":
+		{
+			"program": "lualatex",
+			"options": "--shell_escape"
+		}
+	}
 }
