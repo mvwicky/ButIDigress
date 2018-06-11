@@ -26,34 +26,68 @@ RowsTup = Tuple[PathType, int, int]
 ArgsType = List[Union[PathType, str]]
 SortFnType = Callable[[RowsTup], Union[str, int]]
 SortFnRet = Tuple[SortFnType, bool]
+WhichType = Optional[PathType]
 
 # regex used to find word count in texcount output
 WORDS_RE: Pattern[str] = re.compile(r'Words in text: (\d+)')
 
 HERE: PathType = os.path.split(os.path.abspath(__file__))[0]
-log_file: PathType = os.path.join(HERE, 'counts.json')
+LOG_FILE: PathType = os.path.join(HERE, 'counts.json')
 
 DT_FMT: Text = '{0:%Y-%m-%d %H:%M:%S}'
 STRP_FMT: Text = DT_FMT[3:-1]
 DT_LEN: int = len('YYYY-MM-DD HH:MM:SS')
 
 tex_dir: PathType = os.path.join('C:\\', 'texlive', '2017', 'bin', 'win32')
-lualatex_exe: Optional[PathType] = shutil.which(
-    os.path.join(tex_dir, 'lualatex.exe')
-)
-biber_exe: Optional[PathType] = shutil.which(
-    os.path.join(tex_dir, 'biber.exe')
-)
+lualatex_exe: WhichType = shutil.which(os.path.join(tex_dir, 'lualatex.exe'))
+biber_exe: WhichType = shutil.which(os.path.join(tex_dir, 'biber.exe'))
+
+sumatra_exe: WhichType = shutil.which(os.path.join(
+    os.environ['PROGRAMFILES'], 'SumatraPDF', 'SumatraPDF.exe'))
+if sumatra_exe is None:
+    sumatra_exe: WhichType = shutil.which(os.path.join(
+        os.environ['PROGRAMFILES(X86)'], 'SumatraPDF', 'SumatraPDF.exe'))
+
+output_dir = 'build'
+
 latexopts: List[str] = [
-    '-interaction=nonstopmode', '-synctex=1', '--shell-escape'
+    '-interaction=nonstopmode',
+    '-synctex=1',
+    '--output-directory={0}'.format(output_dir),
+    '--shell-escape',
 ]
+biber_opts: List[str] = ['--output-directory={0}'.format(output_dir)]
+
+
+def latex_build(base_name: str) -> Optional[PathType]:
+    tex_file: PathType = os.path.abspath(base_name + '.tex')
+    if not os.path.isfile(tex_file):
+        raise click.Abort('{0} not found'.format(tex_file))
+
+    tex_args: ArgsType = [lualatex_exe] + latexopts + [tex_file]
+    biber_args: ArgsType = [biber_exe] + biber_opts + [base_name]
+
+    # First Latex Compile
+    c: CompletedProcess = run(tex_args, shell=True)
+
+    # Run Biber
+    c: CompletedProcess = run(biber_args, shell=True)
+
+    # Second Latex Compile
+    c: CompletedProcess = run(tex_args, shell=True)
+
+    # Third Latex Compile
+    c: CompletedProcess = run(tex_args, shell=True)
+
+    out_file = os.path.join(os.path.abspath(output_dir), base_name + '.pdf')
+    return out_file if os.path.exists(out_file) else None
 
 
 def save_log(entry: EntriesDict) -> Union[bool, int]:
     """Saves the log file, overwrites existing entry from today with input"""
     now: datetime = datetime.utcnow()
     entry['datetime'] = DT_FMT.format(now)
-    if not os.path.isfile(log_file):
+    if not os.path.isfile(LOG_FILE):
         log_cts: List[EntriesDict] = []
     else:
         log_cts: List[EntriesDict] = get_log()
@@ -66,14 +100,14 @@ def save_log(entry: EntriesDict) -> Union[bool, int]:
             log_cts.pop()
     log_cts.append(entry)
 
-    with open(log_file, 'wt') as f:
+    with open(LOG_FILE, 'wt') as f:
         json.dump(log_cts, f, indent=4)
-    return os.path.isfile(log_file) and os.path.getsize(log_file)
+    return os.path.isfile(LOG_FILE) and os.path.getsize(LOG_FILE)
 
 
 def get_log() -> List[EntriesDict]:
     """Fetch log file contents"""
-    with open(log_file, 'rt') as f:
+    with open(LOG_FILE, 'rt') as f:
         return json.load(f)
 
 
@@ -228,7 +262,7 @@ def ls(path: PathType, sort: str):
     '--file',
     '-f',
     type=click.Path(),
-    default=log_file,
+    default=LOG_FILE,
     help='path to the output file',
 )
 def log(file: PathType):
@@ -273,8 +307,7 @@ def check(path: PathType, linter: str):
 @cli.command()
 @click.option('--base-name', type=str, default='butidigress')
 @click.option('--view/--no-view', default=True)
-@click.option('--pdf-viewer', type=click.Path(dir_okay=False))
-def build(base_name: str, view: bool, pdf_viewer: Optional[PathType]):
+def build(base_name: str, view: bool):
     """Build butidigress.pdf (assumes a lot)"""
     if lualatex_exe is None:
         click.secho(
@@ -287,27 +320,13 @@ def build(base_name: str, view: bool, pdf_viewer: Optional[PathType]):
             '{0} not found, aborting'.format(biber_exe), fg='red', err=True
         )
         return -1
-
-    tex_file: PathType = os.path.abspath(base_name + '.tex')
-    if not os.path.isfile(tex_file):
-        click.secho(
-            '{0} not found, aborting'.format(tex_file), fg='red', err=True
-        )
-        return -1
-
-    tex_args: ArgsType = [lualatex_exe] + latexopts + [tex_file]
-
-    # First Latex Compile
-    c: CompletedProcess = run(tex_args, shell=True)
-
-    # Run Biber
-    c: CompletedProcess = run([biber_exe, base_name], shell=True)
-
-    # Second Latex Compile
-    c: CompletedProcess = run(tex_args, shell=True)
-
-    # Third Latex Compile
-    c: CompletedProcess = run(tex_args, shell=True)
+    out_file: Optional[PathType] = latex_build(base_name)
+    if out_file is not None and view:
+        if sumatra_exe is not None:
+            from subprocess import Popen
+            Popen([sumatra_exe, '-reuse-instance', out_file], shell=True)
+    else:
+        click.secho('Failed to create output file', fg='red', err=True)
 
 
 if __name__ == '__main__':
