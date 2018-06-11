@@ -1,17 +1,15 @@
 """wc.py: a CLI tool with functionality about/around word counts in TeX files
 
-TODO: save each word count to a JSON file
-    - each entry would have a datetime and the word counts of each file
-    - then we could, in some way, compare across runs
+TODO: log results after ls
 """
 from datetime import datetime
 import os
 import re
 import shutil
-import subprocess
-
-# TODO: add type signatures
-import typing
+from subprocess import run, CompletedProcess, PIPE
+from typing import (
+    Text, Dict, Union, List, Tuple, Match, Pattern, Callable, Optional
+)
 
 import click
 import profilehooks
@@ -22,51 +20,60 @@ except ImportError:
     import json
 
 # Typing Stuff
-Path = typing.Text
-EntriesDict = typing.Dict[str, typing.Dict[Path, int]]
-WordCountsTup = typing.List[typing.Tuple[Path, int]]
+PathType = Text
+EntriesDict = Dict[str, Union[str, Dict[str, int], int]]
+WordCountsTup = List[Tuple[PathType, int]]
+RowsTup = Tuple[PathType, int, int]
+ArgsType = List[Union[PathType, str]]
+SortFnRet = Tuple[Callable[[RowsTup], Union[str, int]], bool]
 
 # regex used to find word count in texcount output
-WORDS_RE: typing.re = re.compile(r'Words in text: (\d+)')
+WORDS_RE: Pattern = re.compile(r'Words in text: (\d+)')
 
-HERE: Path = os.path.split(os.path.abspath(__file__))[0]
-log_file: Path = os.path.join(HERE, 'counts.json')
+HERE: PathType = os.path.split(os.path.abspath(__file__))[0]
+log_file: PathType = os.path.join(HERE, 'counts.json')
 
-DT_FMT: typing.Text = '{0:%Y-%m-%d %H:%M:%S}'
-STRP_FMT: typing.Text = DT_FMT[3:-1]
+DT_FMT: Text = '{0:%Y-%m-%d %H:%M:%S}'
+STRP_FMT: Text = DT_FMT[3:-1]
 DT_LEN: int = len('YYYY-MM-DD HH:MM:SS')
 
-tex_dir: Path = os.path.join('C:\\', 'texlive', '2017', 'bin', 'win32')
-lualatex_exe: Path = shutil.which(os.path.join(tex_dir, 'lualatex.exe'))
-biber_exe: Path = shutil.which(os.path.join(tex_dir, 'biber.exe'))
-latexopts = ['-interaction=nonstopmode', '-synctex=1', '--shell-escape']
+tex_dir: PathType = os.path.join('C:\\', 'texlive', '2017', 'bin', 'win32')
+lualatex_exe: Optional[PathType] = shutil.which(
+    os.path.join(tex_dir, 'lualatex.exe')
+)
+biber_exe: Optional[PathType] = shutil.which(
+    os.path.join(tex_dir, 'biber.exe')
+)
+latexopts: List[str] = [
+    '-interaction=nonstopmode', '-synctex=1', '--shell-escape'
+]
 
 
-def save_log(entries: EntriesDict) -> typing.Union[bool, int]:
+def save_log(entries: EntriesDict) -> Union[bool, int]:
     with open(log_file, 'wt') as f:
         json.dump(entries, f, indent=4)
     return os.path.isfile(log_file) and os.path.getsize(log_file)
 
 
-def get_log() -> EntriesDict:
+def get_log() -> List[EntriesDict]:
     with open(log_file, 'rt') as f:
         return json.load(f)
 
 
-def wc(file: Path, echo=False) -> int:
+def wc(file: PathType, echo: bool = False) -> int:
     if echo:
         click.secho('running texcount on: {0}'.format(file), fg='green')
-    args = ['texcount', file]
-    s = subprocess.run(args, shell=True, stdout=subprocess.PIPE)
-    res = WORDS_RE.search(s.stdout.decode())
+    args: ArgsType = ['texcount', file]
+    s: CompletedProcess = run(args, shell=True, stdout=PIPE)
+    res: Match[str] = WORDS_RE.search(s.stdout.decode())
     if res:
         return int(res.group(1))
 
     return 0
 
 
-def find_tex_files(path: Path) -> typing.List[Path]:
-    tex_files = []
+def find_tex_files(path: PathType) -> List[PathType]:
+    tex_files: List[PathType] = []
     for root, dirs, files in os.walk(path):
         for file in files:
             if file.endswith('.tex'):
@@ -74,11 +81,38 @@ def find_tex_files(path: Path) -> typing.List[Path]:
     return tex_files
 
 
-def word_counts(path: Path) -> WordCountsTup:
-    counts = []
+def word_counts(path: PathType) -> WordCountsTup:
+    counts: WordCountsTup = []
     for file in find_tex_files(path):
         counts.append((file, wc(file)))
     return counts
+
+
+_sort_opts: List[str] = ['name', 'mdate', 'wc']
+
+
+def _choose_sort_fn(sort: str) -> SortFnRet:
+    sort = sort.lower()
+    assert sort in _sort_opts
+    if sort == 'name':
+
+        def _sort_fn(e: RowsTup) -> str:
+            return e[0]
+
+        reverse = False
+    elif sort == 'mdate':
+
+        def _sort_fn(e: RowsTup) -> int:
+            return os.path.getmtime(e[0])
+
+        reverse = True
+    else:
+
+        def _sort_fn(e: RowsTup) -> int:
+            return e[2]
+
+        reverse = True
+    return _sort_fn, reverse
 
 
 @click.group()
@@ -97,18 +131,18 @@ def cli():
 @click.option(
     '--sort',
     '-s',
-    type=click.Choice(['name', 'mdate', 'wc']),
+    type=click.Choice(_sort_opts),
     default='mdate',
     help='sort rows by column',
 )
-def ls(path, sort):
+def ls(path: PathType, sort: str):
     """Print out TeX files"""
     click.clear()
-    tex_files = find_tex_files(path)
-    longest = len(max(tex_files, key=lambda x: len(x)))
-    total_wc = 0
+    tex_files: List[PathType] = find_tex_files(path)
+    longest: int = len(max(tex_files, key=lambda x: len(x)))
+    total_wc: int = 0
     col_1, col_2, col_3 = 'File Name', 'Last Mod. Date', 'Word Count'
-    hdr = '\n{0}{1} --- {2}{3} --- {4}'.format(
+    hdr: str = '\n{0}{1} --- {2}{3} --- {4}'.format(
         col_1,
         ' ' * (longest - len(col_1) - 2),
         col_2,
@@ -116,26 +150,9 @@ def ls(path, sort):
         col_3
     )
 
-    if sort == 'name':
+    _sort_fn, reverse = _choose_sort_fn(sort)
 
-        def _sort_fn(e):
-            return e[0]
-
-        reverse = False
-    elif sort == 'mdate':
-
-        def _sort_fn(e):
-            return os.path.getmtime(e[0])
-
-        reverse = True
-    else:
-
-        def _sort_fn(e):
-            return e[2]
-
-        reverse = True
-
-    rows = sorted(
+    rows: List[RowsTup] = sorted(
         (
             [
                 os.path.relpath(p),
@@ -147,10 +164,10 @@ def ls(path, sort):
         key=_sort_fn,
         reverse=reverse,
     )
-    p_rows = []
+    p_rows: List[str] = []
     for elem in rows:
-        pad = ' ' * (longest - len(elem[0]))
-        msg = '{0}{2} --- {1:%Y-%m-%d %H:%M:%S} --- {3}'.format(
+        pad: str = ' ' * (longest - len(elem[0]))
+        msg: str = '{0}{2} --- {1:%Y-%m-%d %H:%M:%S} --- {3}'.format(
             elem[0], elem[1], pad, elem[2]
         )
         total_wc += elem[2]
@@ -170,23 +187,25 @@ def ls(path, sort):
     default=log_file,
     help='path to the output file',
 )
-def log(file):
+def log(file: PathType):
     """Save all word counts to a log"""
-    now = datetime.utcnow()
-    entry = {}
+    now: datetime = datetime.utcnow()
+    entry: EntriesDict = {}
     entry['datetime'] = DT_FMT.format(now)
     entry['files'] = {}
-    total = 0
+    total: int = 0
     for file, count in word_counts('.'):
         entry['files'][file] = count
         total += count
     entry['total'] = total
     if not os.path.isfile(log_file):
-        log_cts = []
+        log_cts: List[EntriesDict] = []
     else:
-        log_cts = get_log()
+        log_cts: List[EntriesDict] = get_log()
     if log_cts:
-        last_ent = datetime.strptime(log_cts[-1]['datetime'], STRP_FMT)
+        last_ent: datetime = datetime.strptime(
+            log_cts[-1]['datetime'], STRP_FMT
+        )
         if last_ent.day == now.day:
             log_cts.pop()
     log_cts.append(entry)
@@ -201,16 +220,16 @@ def log(file):
     type=click.Path(),
     help='the path to search for LaTeX files',
 )
-def check(path):
+def check(path: PathType):
     """Run lacheck on all files"""
-    exe = shutil.which('lacheck')
+    exe: Optional[PathType] = shutil.which('lacheck')
     if exe is None:
         click.secho('lacheck not found on PATH', err=True, fg='red')
         return -1
 
-    ret = 0
+    ret: int = 0
     for file in find_tex_files(path):
-        s = subprocess.run([exe, file], stdout=subprocess.PIPE)
+        s: CompletedProcess = run([exe, file], stdout=PIPE)
         if s.stdout:
             click.secho(os.path.relpath(file), fg='blue')
             click.echo(s.stdout.decode())
@@ -222,32 +241,41 @@ def check(path):
 @click.option('--base-name', type=str, default='butidigress')
 @click.option('--view/--no-view', default=True)
 @click.option('--pdf-viewer', type=click.Path(dir_okay=False))
-def build(base_name, view, pdf_viewer):
+def build(base_name: str, view: bool, pdf_viewer: Optional[PathType]):
     """Build butidigress.pdf (assumes a lot)"""
     # TODO: Convert all these asserts to more normal CLI stuff
-    assert lualatex_exe is not None
-    assert biber_exe is not None
-    tex_file = os.path.abspath(base_name + '.tex')
-    assert os.path.isfile(tex_file)
+    if lualatex_exe is None:
+        click.secho(
+            '{0} not found, aborting'.format(lualatex_exe), fg='red', err=True
+        )
+        return -1
 
-    tex_args = [lualatex_exe] + latexopts + [tex_file]
+    if biber_exe is None:
+        click.secho(
+            '{0} not found, aborting'.format(biber_exe), fg='red', err=True
+        )
+        return -1
+
+    tex_file: PathType = os.path.abspath(base_name + '.tex')
+    if not os.path.isfile(tex_file):
+        click.secho(
+            '{0} not found, aborting'.format(tex_file), fg='red', err=True
+        )
+        return -1
+
+    tex_args: ArgsType = [lualatex_exe] + latexopts + [tex_file]
 
     # First Latex Compile
-    c = subprocess.run(tex_args, shell=True)
+    c: CompletedProcess = run(tex_args, shell=True)
 
     # Run Biber
-    c = subprocess.run([biber_exe, base_name], shell=True)
+    c: CompletedProcess = run([biber_exe, base_name], shell=True)
 
     # Second Latex Compile
-    c = subprocess.run(tex_args, shell=True)
+    c: CompletedProcess = run(tex_args, shell=True)
 
     # Third Latex Compile
-    c = subprocess.run(tex_args, shell=True)
-
-
-_sort_opts = ['files', 'lines', 'blanks', 'code', 'comments']
-_sort_help = 'sort languages based on a column'
-_tokei_files_help = 'print out statistics on individual files'
+    c: CompletedProcess = run(tex_args, shell=True)
 
 
 if __name__ == '__main__':
