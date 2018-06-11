@@ -33,5 +33,45 @@
             ".\\sections\\thevoid.tex":1944
         },
         "total":17865
+    },
+    {
+        "datetime":"2018-06-10 17:43:01",
+        "files":{
+            ".\\butidigress.tex":872,
+            ".\\introduction.tex":3394,
+            ".\\pre.tex":0,
+            ".\\appendices\\appendix.tex":10,
+            ".\\appendices\\justrandom.tex":217,
+            ".\\appendices\\poemsandstuff.tex":1460,
+            ".\\appendices\\quotations.tex":697,
+            ".\\appendices\\roadtrip.tex":2912,
+            ".\\appendices\\topten.tex":337,
+            ".\\sections\\empathy.tex":1442,
+            ".\\sections\\immutable.tex":583,
+            ".\\sections\\knowledge.tex":1846,
+            ".\\sections\\sincerity.tex":2226,
+            ".\\sections\\thevoid.tex":1944
+        },
+        "total":17940
+    },
+    {
+        "datetime":"2018-06-11 18:41:24",
+        "files":{
+            ".\\butidigress.tex":872,
+            ".\\introduction.tex":3457,
+            ".\\pre.tex":0,
+            ".\\appendices\\appendix.tex":10,
+            ".\\appendices\\justrandom.tex":217,
+            ".\\appendices\\poemsandstuff.tex":1460,
+            ".\\appendices\\quotations.tex":697,
+            ".\\appendices\\roadtrip.tex":2933,
+            ".\\appendices\\topten.tex":337,
+            ".\\sections\\empathy.tex":1446,
+            ".\\sections\\immutable.tex":604,
+            ".\\sections\\knowledge.tex":1858,
+            ".\\sections\\sincerity.tex":2226,
+            ".\\sections\\thevoid.tex":1944
+        },
+        "total":18061
     }
 ]

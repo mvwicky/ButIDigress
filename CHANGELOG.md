@@ -1,16 +1,40 @@
 # Release History
 
-## NOTE: Until v1.0.0 (probably never), just increment the patch version 
+## v0.7.0 --- Pre-release 10
 
-## UNRELEASED --- v0.7.0 --- Pre-release 10
+This release contains a great deal of folder level restructuring, renaming, and settings.
+Additionally, I transcribed my notes on __The 100__ and started adapting them; I also made changes based on suggestions from TeX linters.
 
-### wc.py
-- check command
-- path argument
+### Appendices
+- Moved all the appendices to their own folder.
+- some explanations re: the list of quotations
+
+### philopre.tex -> pre.tex
+Changed the name because I'm lazy and it's less to type.
+
+### wc.py -> digress.py
+- changed name to better reflect scope
+- `build` command
+- `tokei` command: counts code using `tokei` (removed)
+- `check` command: runs `lacheck` on all files
+- `ls` + `log` commands: path argument
     + allows one to check specific folders for TeX files
+- sort command to `ls`
+
+### 'The Void'
+- transcribed notes on __The 100__
+- started adapting __The 100__ notes to essay form
 
 ### Misc
+- added to sublime-project file the settings previously set by TEX directives
+    + makes those settings more centralized and less susceptible human (me) error
+- fixed random typos
 - CHANGELOG.md contains all previous release notes
+- various little changes based on `lacheck` and `chktex` suggestions
+- line spacing is now 1.5 (better readability)
+- new semantic command: `\tv` (just an alias for `\tvshow`)
+- margin notes are single spaced now
+- sentence cased the footnotes
 
 ## v0.6.1 --- Pre-Release 9
 
