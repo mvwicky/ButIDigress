@@ -1,6 +1,4 @@
-"""wc.py: a CLI tool with functionality about/around word counts in TeX files
-
-TODO: log results after ls
+"""digress.py: a CLI tool with functionality related to the ButIDigress project
 """
 from datetime import datetime
 import os
@@ -22,13 +20,15 @@ except ImportError:
 # Typing Stuff
 PathType = Text
 EntriesDict = Dict[str, Union[str, Dict[str, int], int]]
+WordCountsDict = Dict[PathType, int]
 WordCountsTup = List[Tuple[PathType, int]]
 RowsTup = Tuple[PathType, int, int]
 ArgsType = List[Union[PathType, str]]
-SortFnRet = Tuple[Callable[[RowsTup], Union[str, int]], bool]
+SortFnType = Callable[[RowsTup], Union[str, int]]
+SortFnRet = Tuple[SortFnType, bool]
 
 # regex used to find word count in texcount output
-WORDS_RE: Pattern = re.compile(r'Words in text: (\d+)')
+WORDS_RE: Pattern[str] = re.compile(r'Words in text: (\d+)')
 
 HERE: PathType = os.path.split(os.path.abspath(__file__))[0]
 log_file: PathType = os.path.join(HERE, 'counts.json')
@@ -50,6 +50,7 @@ latexopts: List[str] = [
 
 
 def save_log(entry: EntriesDict) -> Union[bool, int]:
+    """Saves the log file, overwrites existing entry from today with input"""
     now: datetime = datetime.utcnow()
     entry['datetime'] = DT_FMT.format(now)
     if not os.path.isfile(log_file):
@@ -71,12 +72,18 @@ def save_log(entry: EntriesDict) -> Union[bool, int]:
 
 
 def get_log() -> List[EntriesDict]:
+    """Fetch log file contents"""
     with open(log_file, 'rt') as f:
         return json.load(f)
 
 
-def wc(file: PathType, echo: bool = False) -> int:
-    if echo:
+def wc(file: PathType, verbose: bool = False) -> int:
+    """Run texcount on the input file
+
+    file: path to a latex file (hopefully)
+    verbose: print status commands
+    """
+    if verbose:
         click.secho(
             'running texcount on: {0} --- '.format(file), fg='green', nl=False
         )
@@ -84,13 +91,14 @@ def wc(file: PathType, echo: bool = False) -> int:
     s: CompletedProcess = run(args, shell=True, stdout=PIPE)
     res: Match[str] = WORDS_RE.search(s.stdout.decode())
     ret: int = 0 if not res else int(res.group(1))
-    if echo:
+    if verbose:
         click.secho(str(ret), fg='green')
 
     return ret
 
 
 def find_tex_files(path: PathType) -> List[PathType]:
+    """Walks the given path and returns files with the extension .tex"""
     tex_files: List[PathType] = []
     for root, dirs, files in os.walk(path):
         for file in files:
@@ -99,14 +107,16 @@ def find_tex_files(path: PathType) -> List[PathType]:
     return tex_files
 
 
-def word_counts(path: PathType) -> WordCountsTup:
-    counts: WordCountsTup = []
+def word_counts(path: PathType) -> WordCountsDict:
+    """Runs texcount on all LaTex files in the given path"""
+    counts: WordCountsDict = {}
     for file in find_tex_files(path):
-        counts.append((file, wc(file)))
+        counts[file] = wc(file)
     return counts
 
 
 def ls_log(rows: List[RowsTup]):
+    """The logging function run by the ls command"""
     entry: EntriesDict = {'files': {}}
     total: int = 0
     for name, _, count in rows:
@@ -120,6 +130,7 @@ _sort_opts: List[str] = ['name', 'mdate', 'wc']
 
 
 def _choose_sort_fn(sort: str) -> SortFnRet:
+    """Generates a sort function from a given option"""
     sort = sort.lower()
     assert sort in _sort_opts
     if sort == 'name':
@@ -145,6 +156,7 @@ def _choose_sort_fn(sort: str) -> SortFnRet:
 
 @click.group()
 def cli():
+    """digress.py"""
     pass
 
 
@@ -168,8 +180,10 @@ def ls(path: PathType, sort: str):
     click.clear()
     tex_files: List[PathType] = find_tex_files(path)
     longest: int = len(max(tex_files, key=lambda x: len(x)))
-    total_wc: int = 0
-    col_1, col_2, col_3 = 'File Name', 'Last Mod. Date', 'Word Count'
+
+    col_1: str = 'File Name'
+    col_2: str = 'Last Mod. Date'
+    col_3: str = 'Word Count'
     hdr: str = '\n{0}{1} --- {2}{3} --- {4}'.format(
         col_1,
         ' ' * (longest - len(col_1) - 2),
@@ -192,6 +206,7 @@ def ls(path: PathType, sort: str):
         key=_sort_fn,
         reverse=reverse,
     )
+    total_wc: int = 0
     p_rows: List[str] = []
     for elem in rows:
         pad: str = ' ' * (longest - len(elem[0]))
@@ -218,12 +233,9 @@ def ls(path: PathType, sort: str):
 )
 def log(file: PathType):
     """Save all word counts to a log"""
-    entry: EntriesDict = {'files': {}}
-    total: int = 0
-    for file, count in word_counts('.'):
-        entry['files'][file] = count
-        total += count
-    entry['total'] = total
+    counts: WordCountsDict = word_counts('.')
+    entry: EntriesDict = {'files': counts}
+    entry['total'] = sum(counts.values())
     save_log(entry)
 
 
@@ -235,11 +247,17 @@ def log(file: PathType):
     type=click.Path(),
     help='the path to search for LaTeX files',
 )
-def check(path: PathType):
+@click.option(
+    '--linter',
+    '-l',
+    type=click.Choice(['lacheck', 'chktex']),
+    default='lacheck',
+)
+def check(path: PathType, linter: str):
     """Run lacheck on all files"""
-    exe: Optional[PathType] = shutil.which('lacheck')
+    exe: Optional[PathType] = shutil.which(linter)
     if exe is None:
-        click.secho('lacheck not found on PATH', err=True, fg='red')
+        click.secho('{0} not found on PATH'.format(linter), err=True, fg='red')
         return -1
 
     ret: int = 0
@@ -258,7 +276,6 @@ def check(path: PathType):
 @click.option('--pdf-viewer', type=click.Path(dir_okay=False))
 def build(base_name: str, view: bool, pdf_viewer: Optional[PathType]):
     """Build butidigress.pdf (assumes a lot)"""
-    # TODO: Convert all these asserts to more normal CLI stuff
     if lualatex_exe is None:
         click.secho(
             '{0} not found, aborting'.format(lualatex_exe), fg='red', err=True
