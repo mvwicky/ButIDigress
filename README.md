@@ -27,3 +27,7 @@ I compiled the book successfully using LuaLatex with a full installation of TexL
 - [x] Copy over existing release notes to CHANGELOG.md
 - [x] Change `wc.py` to `digress.py` or something like that, scope has expanded beyond word counts 
 - [ ] Generally increase footnote length
+- [ ] research
+    + Jürgen Habermas [SEP](https://plato.stanford.edu/entries/habermas/)
+    + postmodernism [SEP](https://plato.stanford.edu/entries/postmodernism/)
+    + Albert Camus [SEP](https://plato.stanford.edu/entries/camus/)
