@@ -18,7 +18,7 @@
     ItalicFont=*-Italic,
     BoldItalicFont=*-BoldItalic,
     Ligatures=TeX,
-    Numbers={OldStyle, Proportional}
+    Numbers={Proportional}
 ]
 \setmonofont{Hack}[
     Extension=.ttf,
@@ -40,6 +40,8 @@
 \usepackage[english]{babel}
 \usepackage{csquotes}
 \usepackage{dirtytalk}
+
+\usepackage{tocbibind}
 
 \usepackage[backend=biber,citestyle=verbose-ibid,bibstyle=numeric]{biblatex}
 \addbibresource{butidigress.bib}
@@ -169,10 +171,6 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 {\hfil\footnotesize\ttfamily \underline{Last Compiled: \today}\hfil}
 \vspace*{\fill}}
 
-\NewDocumentCommand\digsec{mmm}{\section{#1}\margindate{#2}\label{sec:#3}}
-\NewDocumentCommand\digsubsec{mmm}{\subsection{#1}\margindate{#2}\label{subsec:#3}}
-\NewDocumentCommand\digsubsubsec{mmm}{\subsubsection{#1}\margindate{#2}\label{subsubsec:#3}}
-
 \newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
 
 \newcounter{footcounter}
@@ -196,7 +194,10 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \setcounter{datecounter}{0}
 \newcommand{\datecolor}{Olive}
 \newcommand{\datestyle}{\ttfamily}
-\newcommand{\margindate}[1]{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{#1}}\normalmarginpar\stepcounter{datecounter}}
+\NewDocumentCommand\fmtdate{mmm}{#1/#2/#3}
+\NewDocumentCommand\fmttime{mmm}{#1:#2 #3}
+\NewDocumentCommand\margindate{mmm}{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{\fmtdate{#1}{#2}{#3}}}\normalmarginpar\stepcounter{datecounter}}
+\NewDocumentCommand\margintime{mmm}{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{\fmttime{#1}{#2}{#3}}}\normalmarginpar\stepcounter{datecounter}}
 % A random thought
 \newcounter{thoughtcounter}
 \setcounter{thoughtcounter}{0}
@@ -214,3 +215,10 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\notescolor}{teal}
 \newenvironment{somenotes}[1]{\subsection*{\scshape Some Notes On: #1}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
+
+% \def\curday{\day}
+\NewDocumentCommand\ddate{O{\the\day}O{\the\month}O{\the\year}}{#1/#2/#3}
+
+\NewDocumentCommand\digsec{mmmmm}{\section{#1}\margindate{#2}{#3}{#4}\label{sec:#5}}
+\NewDocumentCommand\digsubsec{mmmmm}{\subsection{#1}\margindate{#2}{#3}{#4}\label{subsec:#5}}
+\NewDocumentCommand\digsubsubsec{mmmmm}{\subsubsection{#1}\margindate{#2}{#3}{#4}\label{subsubsec:#5}}
