@@ -1,5 +1,27 @@
 # Release History
 
+## v0.7.1 --- Pre-release 11
+
+### digress.py
+- `build` command now implemented to a bare-bones degree
+    + removed build.py
+    + assumes one's build environment is the same as mine
+- `ls` command 
+    + writes to the log file
+    + sort function choice logic is now its own function
+- added type hints to pretty much every function/variable
+- every function (I think) has a docstring
+
+### Appendices
+- wrote some thoughts on the Google memo
+- uncommented the formal theorem statements back 
+- used the `textsc` command instead of the flag for some quotations
+
+### Misc
+- fixed an issue where a tilde was appearing over the next character
+- new `margintimes` command specifically for time
+- changed up the `dig*` commands 
+
 ## v0.7.0 --- Pre-release 10
 
 This release contains a great deal of folder level restructuring, renaming, and settings.

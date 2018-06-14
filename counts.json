@@ -55,23 +55,63 @@
         "total":17940
     },
     {
-        "datetime":"2018-06-11 18:41:24",
         "files":{
-            ".\\butidigress.tex":872,
-            ".\\introduction.tex":3457,
-            ".\\pre.tex":0,
-            ".\\appendices\\appendix.tex":10,
-            ".\\appendices\\justrandom.tex":217,
-            ".\\appendices\\poemsandstuff.tex":1460,
-            ".\\appendices\\quotations.tex":697,
-            ".\\appendices\\roadtrip.tex":2933,
-            ".\\appendices\\topten.tex":337,
-            ".\\sections\\empathy.tex":1446,
-            ".\\sections\\immutable.tex":604,
-            ".\\sections\\knowledge.tex":1858,
-            ".\\sections\\sincerity.tex":2226,
-            ".\\sections\\thevoid.tex":1944
+            "introduction.tex":3457,
+            "appendices\\topten.tex":337,
+            "appendices\\roadtrip.tex":2933,
+            "appendices\\poemsandstuff.tex":1460,
+            "appendices\\justrandom.tex":217,
+            "appendices\\appendix.tex":10,
+            "sections\\thevoid.tex":1944,
+            "sections\\sincerity.tex":2226,
+            "sections\\knowledge.tex":1858,
+            "sections\\immutable.tex":604,
+            "sections\\empathy.tex":1446,
+            "pre.tex":0,
+            "appendices\\quotations.tex":697,
+            "butidigress.tex":872
         },
-        "total":18061
+        "total":18061,
+        "datetime":"2018-06-11 22:44:26"
+    },
+    {
+        "files":{
+            "sections\\immutable.tex":605,
+            "sections\\empathy.tex":1480,
+            "pre.tex":0,
+            "sections\\sincerity.tex":2226,
+            "butidigress.tex":880,
+            "appendices\\roadtrip.tex":2906,
+            "sections\\thevoid.tex":1944,
+            "sections\\knowledge.tex":1858,
+            "introduction.tex":3457,
+            "appendices\\topten.tex":337,
+            "appendices\\poemsandstuff.tex":1460,
+            "appendices\\justrandom.tex":217,
+            "appendices\\appendix.tex":10,
+            "appendices\\quotations.tex":697
+        },
+        "total":18077,
+        "datetime":"2018-06-12 23:10:10"
+    },
+    {
+        "files":{
+            "pre.tex":0,
+            "appendices\\justrandom.tex":709,
+            "appendices\\quotations.tex":763,
+            "sections\\immutable.tex":605,
+            "sections\\empathy.tex":1480,
+            "sections\\sincerity.tex":2226,
+            "butidigress.tex":880,
+            "appendices\\roadtrip.tex":2906,
+            "sections\\thevoid.tex":1944,
+            "sections\\knowledge.tex":1858,
+            "introduction.tex":3457,
+            "appendices\\topten.tex":337,
+            "appendices\\poemsandstuff.tex":1460,
+            "appendices\\appendix.tex":10
+        },
+        "total":18635,
+        "datetime":"2018-06-14 18:04:09"
     }
 ]
