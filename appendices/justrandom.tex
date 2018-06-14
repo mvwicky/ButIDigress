@@ -44,24 +44,27 @@ Like, there's a bunch of stuff like that, where he points out the fact that \say
 Okay, to be fair\ftnote{Not that this dude deserves fairness.}, the schoolyard justification isn't stated explicitly.
 It's introduced as evidence for the \say{biological} difference between men and women, but that doesn't make the point any less fallacious\ftnote{Side note, horrible word, just sounds way too close to another, way worse to say around mixed company word.}.
 There are, many, practices spanning across cultures that are not because of \say{genetics.}
-All my reading on semiotics has taught me the power and pervasiveness of ingrained, social behavior.
+If I've gotten anything out of all my reading on semiotics has taught me the power and pervasiveness of ingrained, social behavior.
 
 \section{Formal Statements}
 \subsection*{The Pumping Lemma for Regular Languages}
-% \newcommand{\tab}{\hspace*{2em}}
-% \begin{align*}
-% &(\forall L\subseteq \Sigma^{\ast}) \\
-% &\tab (regular(L) \Rightarrow \\
-% &\tab ((\exists p\geq 1)((\forall w\in L)((|w| \geq p) \Rightarrow \\
-% &\tab ((\exists x,y,z \in \Sigma^{\ast})(w=xyz \wedge (|y| > 0 \wedge |xy|\leq p \wedge (\forall i \geq 0)(xy^{i}z\in L))))))))
-% \end{align*}
+\newcommand{\tab}{\hspace*{2em}}
+\begin{align*}
+&(\forall L\subseteq \Sigma^{\ast}) \\
+&\tab (regular(L) \Rightarrow \\
+&\tab ((\exists p\geq 1)((\forall w\in L)((|w| \geq p) \Rightarrow \\
+&\tab ((\exists x,y,z \in \Sigma^{\ast}) \\
+&\tab (w=xyz \wedge (|y| > 0 \wedge |xy|\leq p \wedge (\forall i \geq 0)(xy^{i}z\in L))))))))
+\end{align*}
 
 \subsection*{The Pumping Lemma for Context Free Languages}
-% \begin{align*}
-% &(\forall L\subseteq \Sigma^{\ast}) \\
-% &\tab (context\ free(L) \Rightarrow \\
-% &\tab ((\exists p\geq 1)((\forall w\in L)((|w| \geq p) \Rightarrow \\
-% &\tab ((\exists u,v,x,y,z \in \Sigma^{\ast})(w=uvxyz \wedge (|vy| > 0 \wedge |vxy|\leq p \wedge (\forall i \geq 0)(uv^{1}xy^{i}z\in L))))))))
-% \end{align*}
+\begin{align*}
+&(\forall L\subseteq \Sigma^{\ast}) \\
+&\tab (context\ free(L) \Rightarrow \\
+&\tab ((\exists p\geq 1)((\forall w\in L)((|w| \geq p) \Rightarrow \\
+&\tab ((\exists u,v,x,y,z \in \Sigma^{\ast}) \\
+&\tab (w=uvxyz \wedge (|vy| > 0 \wedge |vxy|\leq p\ \wedge \\
+&\tab\tab (\forall i \geq 0)(uv^{i}xy^{i}z\in L))))))))
+\end{align*}
 
 \end{document}
