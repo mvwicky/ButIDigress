@@ -1,9 +1,9 @@
 \documentclass[10pt,fleqn,titlepage]{book}
 \usepackage[protrusion=true,expansion]{microtype}
-\setlength{\paperheight}{9in}
-\setlength{\paperwidth}{6in}
+\setlength{\paperheight}{9.2in}
+\setlength{\paperwidth}{6.8in}
 \usepackage{marginnote}
-\usepackage[top=0.75in,bottom=1.3in,outer=1.1in,inner=0.7in,marginparwidth=2cm,marginparsep=3mm]{geometry}
+\usepackage[top=0.75in,bottom=1.3in,outer=1.2in,inner=0.7in,marginparwidth=25mm,marginparsep=2mm]{geometry}
 
 \usepackage[T1]{fontenc}
 
@@ -27,7 +27,7 @@
     BoldFont=*-Bold,
     ItalicFont=*-Italic,
     BoldItalicFont=*-BoldItalic,
-    Scale=MatchUppercase,
+    Scale=MatchLowercase,
     Ligatures=TeX
 ]
 \else
@@ -48,7 +48,7 @@
 
 \usepackage{indentfirst}
 \usepackage{float}
-\usepackage[symbol*]{footmisc}
+\usepackage[symbol*,multiple]{footmisc}
 \usepackage{amsmath,amsfonts,amssymb}
 \usepackage{bm}
 \usepackage[dvipsnames,svgnames]{xcolor}
@@ -188,7 +188,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \setcounter{todocounter}{0}
 \newcommand{\todocolor}{red}
 \newcommand{\todostyle}{\bfseries}
-\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{TODO:\@#1}}\stepcounter{todocounter}}
+\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{TODO:~#1}}\stepcounter{todocounter}}
 % A last modifed date
 \newcounter{datecounter}
 \setcounter{datecounter}{0}
