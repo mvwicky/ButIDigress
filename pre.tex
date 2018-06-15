@@ -214,7 +214,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\cref}[1]{Chapter~\ref{#1} starting on page~\pageref{#1}}
 
 \newcommand{\notescolor}{teal}
-\newenvironment{somenotes}[1]{\subsection*{\scshape Some Notes On: #1}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
+\newenvironment{somenotes}[1]{\subsection*{\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
 
 % \def\curday{\day}
 \NewDocumentCommand\ddate{O{\the\day}O{\the\month}O{\the\year}}{#1/#2/#3}
@@ -222,3 +222,12 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \NewDocumentCommand\digsec{mmmmm}{\section{#1}\margindate{#2}{#3}{#4}\label{sec:#5}}
 \NewDocumentCommand\digsubsec{mmmmm}{\subsection{#1}\margindate{#2}{#3}{#4}\label{subsec:#5}}
 \NewDocumentCommand\digsubsubsec{mmmmm}{\subsubsection{#1}\margindate{#2}{#3}{#4}\label{subsubsec:#5}}
+
+% Make empty pages blank
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+    \hbox{}
+    \thispagestyle{empty}
+    \newpage
+    \if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
