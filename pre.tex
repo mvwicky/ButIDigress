@@ -37,19 +37,25 @@
 
 \usepackage{titling}
 
+% Language customization
 \usepackage[english]{babel}
+% Provides the displayquote environment
 \usepackage{csquotes}
+% Provides the \say command
 \usepackage{dirtytalk}
 
+% Puts the Table of Contents in the ToC
 \usepackage{tocbibind}
 
 \usepackage[backend=biber,citestyle=verbose-ibid,bibstyle=numeric]{biblatex}
 \addbibresource{butidigress.bib}
 
+% Makes the first paragraph indented
 \usepackage{indentfirst}
 \usepackage{float}
-\usepackage[symbol*,multiple]{footmisc}
+\usepackage[stable,multiple,bottom]{footmisc}
 \usepackage{amsmath,amsfonts,amssymb}
+% Bold in math
 \usepackage{bm}
 \usepackage[dvipsnames,svgnames]{xcolor}
 \usepackage{mathrsfs,mathtools}
@@ -60,14 +66,30 @@
 \usepackage{graphicx}
 \usepackage{fancyvrb,fancyhdr}
 \usepackage[plain]{fancyref}
-\usepackage[clearempty]{titlesec}
+% clearempty makes automatic even pages empty
+% nobottomtitles* moves sections close to the bottom of the page to the next page
+% calcwidth adds the \textwidth length
+\usepackage[clearempty,nobottomtitles*,calcwidth]{titlesec}
+\usepackage[dotinlabels]{titletoc}
+% Package for formatting epigraphs
 \usepackage{epigraph}
+% Package for splitting doc into files
 \usepackage{subfiles}
+\usepackage{tikz}
+\usetikzlibrary{
+    arrows,
+    automata,
+    graphdrawing,
+    graphs,
+    quotes}
+\usegdlibrary{phylogenetics,layered,trees}
 
-\usepackage{verse}
-\usepackage{dramatist}
+% Packages for typesetting poems and excerpts from screenplays
+\usepackage{verse,dramatist}
 
+% Package for customizing lists
 \usepackage{enumitem}
+\usepackage[normalem]{ulem}
 
 \usepackage[unicode]{hyperref}
 \usepackage{bookmark}
@@ -75,6 +97,7 @@
 colorlinks=false,
 linkbordercolor=white,
 pdfborder=0 0 0,
+bookmarksnumbered=true,
 pdftitle={But I Digress\ldots},
 pdfsubject={philosophy},
 pdfauthor={Michael Van Wickle},
@@ -93,10 +116,10 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\oneover}[1]{\frac{1}{#1}}
 
-% Float Setup
 \newcommand{\br}[1]{\ensuremath{\left\{ #1 \right\}}}
 \newcommand{\adpar}[1]{\ensuremath{\left( #1 \right)}}
 
+% Float Setup
 \renewcommand{\topfraction}{0.9}
 \renewcommand{\bottomfraction}{0.9}
 
@@ -124,17 +147,18 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\podcast}[1]{\textit{#1}}
 
 % Convenience commands for unnumbered divisions
-\newcommand{\unnumchapter}[1]{\chapter*{#1}\markright{#1}\addcontentsline{toc}{chapter}{#1}}
-\newcommand{\unnumsection}[1]{\section*{#1}\markright{#1}\addcontentsline{toc}{section}{#1}}
-\newcommand{\unnumsubsection}[1]{\subsection*{#1}\markright{#1}\addcontentsline{toc}{subsection}{#1}}
-
+\newcommand{\unnumchapter}[1]{\cleardoublepage\phantomsection\chapter*{#1}\markright{#1}\addcontentsline{toc}{chapter}{#1}}
+\newcommand{\unnumsection}[1]{\section*{#1}\phantomsection\addcontentsline{toc}{section}{#1}\markright{#1}}
+\newcommand{\unnumsubsection}[1]{\subsection*{#1}\phantomsection\addcontentsline{toc}{subsection}{#1}\markright{#1}}
 
 \setlength{\fboxsep}{5pt}
-\newcommand{\textbox}[1]{\vspace{0em}\noindent\hfil\fbox{\parbox[c][1.1\height][c]{0.9\textwidth}{\small\scshape {#1}}}\vspace{1em}}
+% Provides a block of text with a box around it
+\newcommand{\textbox}[1]{\vspace{0em}\noindent\hfil\fbox{\parbox[c][1.1\height][c]{0.9\textwidth}{\small\textsc{#1}}}\vspace{1em}}
 
 % Division Formatting/Styling
 \addtolength{\headheight}{\baselineskip}
 
+% Set margin note size
 \renewcommand*{\marginfont}{\scriptsize}
 
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
@@ -142,11 +166,15 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \renewcommand{\subsectionmark}[1]{\markright{#1}}
 
 % Some Epigraph Stuff
+% Center epigraphs (default is flushright)
 \renewcommand{\epigraphflush}{center}
+% Make epigraphs smal
 \renewcommand{\epigraphsize}{\small}
 \setlength{\epigraphwidth}{0.8\textwidth}
+% Convenience command for attribution of quotes
 \NewDocumentCommand\attrib{mmm}{\textsc{#1}, \textit{#2} (#3)}
 
+% Count all the epigraphs (for the Random Stats page)
 \newcounter{epicounter}
 \NewDocumentCommand\epi{mm}{\epigraph{#1}{#2}\stepcounter{epicounter}}
 
@@ -173,25 +201,23 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
 
+% Counter for footnotes
 \newcounter{footcounter}
-\setcounter{footcounter}{0}
+% Footnote command
 \newcommand{\ftnote}[1]{\footnote{#1}\stepcounter{footcounter}}
 
 % Commentary on this particular section
 \newcounter{commcounter}
-\setcounter{commcounter}{0}
 \newcommand{\commcolor}{MidnightBlue}
 \newcommand{\commstyle}{\scshape}
 \newcommand{\margincomm}[1]{\marginnote{\singlespace\commstyle\textcolor{\commcolor}{#1}}\stepcounter{commcounter}}
 % TODO note
 \newcounter{todocounter}
-\setcounter{todocounter}{0}
 \newcommand{\todocolor}{red}
 \newcommand{\todostyle}{\bfseries}
 \newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{TODO:~#1}}\stepcounter{todocounter}}
 % A last modifed date
 \newcounter{datecounter}
-\setcounter{datecounter}{0}
 \newcommand{\datecolor}{Olive}
 \newcommand{\datestyle}{\ttfamily}
 \NewDocumentCommand\fmtdate{mmm}{#1/#2/#3}
@@ -200,18 +226,23 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \NewDocumentCommand\margintime{mmm}{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{\fmttime{#1}{#2}{#3}}}\normalmarginpar\stepcounter{datecounter}}
 % A random thought
 \newcounter{thoughtcounter}
-\setcounter{thoughtcounter}{0}
 \newcommand{\thoughtcolor}{Sepia}
 \newcommand{\thoughtstyle}{\itshape}
 \newcommand{\marginthought}[1]{\marginnote{\singlespace\thoughtstyle\textcolor{\thoughtcolor}{#1}}\stepcounter{thoughtcounter}}
 
+% Inserts monospaced text inside <>
 \newcommand{\todobrak}[1]{\texttt{\textcolor{\todocolor}{<{#1}>}}}
 
 \newcommand{\wrt}{w.r.t.}
 
+% Skip between two paragraphs that are relevant enough to be in the same section, but a thematic break is still needed
+% TODO: See if this looks okay with a light, small width hrule
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
+% \def\entryskiplen{0.5\baselineskip}
+% \newcommand{\entryskip}{\vspace{\entryskiplen}\noindent\hfill\rule{0.25\textwidth}{0.5pt}\hfill\vspace{\entryskiplen}}
 
-\newcommand{\cref}[1]{Chapter~\ref{#1} starting on page~\pageref{#1}}
+% \newcommand{\cref}[1]{Chapter~\ref{#1} starting on page~\pageref{#1}}
+% \newcommand{\cref}[1]{\fref[vario]{#1}}
 
 \newcommand{\notescolor}{teal}
 \newenvironment{somenotes}[1]{\subsection*{\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
