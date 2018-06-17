@@ -100,4 +100,56 @@ Here's a graph that I made that tracks the construction of Toxic Nerd Culture, w
 &\tab\tab (\forall i \geq 0)(uv^{i}xy^{i}z\in L))))))))
 \end{align*}
 
+
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem*{corollary}{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[subsection]
+
+
+\digsec{Abstract Algebra Notes}{6}{16}{18}{abstractalgebra}
+This section is basically just me copying \book{Contemporary Abstract Algebra}.
+
+\begin{definition}{Well Ordering Principle}
+The well ordering principle states that every nonempty set of positive integers contains a smallest number.
+\end{definition}
+
+A nonzero integer $t$ is a \emph{divisor} of an integer $s$ if there is an integer $u$ such that $s=tu$.
+Write $t\mid s$, \say{$t$ divides $s$.}
+
+When $t$ is not a divisor of $s$, write $t\nmid s$.
+
+A \emph{prime} is a positive integer greater than $1$ whose only positive divisors are $1$ and itself.
+
+An integer $s$ is a \emph{multiple} of an integer $t$ if there is an integer $u$ such that $s=tu$ or, equivalently, if $t\mid s$.
+
+\begin{theorem}[Division Algorithm]
+Let $a$ and $b$ be integers with $b>0$.
+Then there exist unique integers $q$ and $r$ with the property that $a=bq+r$, where $0\leq r<b$.
+\end{theorem}
+
+\begin{definition}{Greatest Common Divisor}
+The greatest common divisor of two nonzero integers $a$ and $b$ is the largest of all common divisors of $a$ and $b$.
+Denote this integer by $\gcd(a, b)$
+\end{definition}
+
+\begin{definition}{Relatively Prime}
+When two nonzero integers $a$ and $b$ have $\gcd(a,b)=1$ they are relatively prime.
+\end{definition}
+
+\begin{theorem}[GCD is a Linear Combination]
+For any nonzero integers $a$ and $b$, there exist integers $s$ and $t$ such that $\gcd(a,b) = as+bt$.
+Moreover, $\gcd(a, b)$ is the smallest positive integer of the form $as + bt$.
+\end{theorem}
+
+\begin{corollary}
+If $a$ and $b$ are relatively prime, then there exist integers $s$ and $t$ such that $as+bt=1$.
+\end{corollary}
+
+\begin{lemma}[Euclid's Lemma]
+If $p$ is a prime that divides $ab$ then $p\mid a$ or $p\mid b$.
+\end{lemma}
+
 \end{document}
