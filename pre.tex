@@ -54,7 +54,7 @@
 \usepackage{indentfirst}
 \usepackage{float}
 \usepackage[stable,multiple,bottom]{footmisc}
-\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
 % Bold in math
 \usepackage{bm}
 \usepackage[dvipsnames,svgnames]{xcolor}
@@ -89,6 +89,7 @@
 
 % Package for customizing lists
 \usepackage{enumitem}
+% Package allowing for underlining
 \usepackage[normalem]{ulem}
 
 \usepackage[unicode]{hyperref}
@@ -236,20 +237,14 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\wrt}{w.r.t.}
 
 % Skip between two paragraphs that are relevant enough to be in the same section, but a thematic break is still needed
-% TODO: See if this looks okay with a light, small width hrule
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
-% \def\entryskiplen{0.5\baselineskip}
-% \newcommand{\entryskip}{\vspace{\entryskiplen}\noindent\hfill\rule{0.25\textwidth}{0.5pt}\hfill\vspace{\entryskiplen}}
-
-% \newcommand{\cref}[1]{Chapter~\ref{#1} starting on page~\pageref{#1}}
-% \newcommand{\cref}[1]{\fref[vario]{#1}}
 
 \newcommand{\notescolor}{teal}
 \newenvironment{somenotes}[1]{\subsection*{\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
 
-% \def\curday{\day}
 \NewDocumentCommand\ddate{O{\the\day}O{\the\month}O{\the\year}}{#1/#2/#3}
 
+% Custom sectioning commands which take a date as an input
 \NewDocumentCommand\digsec{mmmmm}{\section{#1}\margindate{#2}{#3}{#4}\label{sec:#5}}
 \NewDocumentCommand\digsubsec{mmmmm}{\subsection{#1}\margindate{#2}{#3}{#4}\label{subsec:#5}}
 \NewDocumentCommand\digsubsubsec{mmmmm}{\subsubsection{#1}\margindate{#2}{#3}{#4}\label{subsubsec:#5}}
