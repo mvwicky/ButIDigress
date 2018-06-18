@@ -33,7 +33,7 @@ The major change in this release is the page size change.
 - we now use `titletoc` with the `dotinlabels` option
 - removed lines that initialized counters (don't need them)
 
-## Misc
+### Misc
 - intro footnotes are now letters
 - changed up chapter page formatting
 - fixed some problems with PDF bookmarks
