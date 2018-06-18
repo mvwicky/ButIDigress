@@ -206,6 +206,8 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcounter{footcounter}
 % Footnote command
 \newcommand{\ftnote}[1]{\footnote{#1}\stepcounter{footcounter}}
+% Step footcounter on citations
+\AtEveryCite{\stepcounter{footcounter}}
 
 % Commentary on this particular section
 \newcounter{commcounter}
