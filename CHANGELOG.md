@@ -1,5 +1,44 @@
 # Release History
 
+## v0.8.0 --- Pre-release 12
+The major change in this release is the page size change.
+
+### Sincerity
+- redid the intro/explanation for __Speed Racer__
+
+### Knowledge
+- 'Inform Oneself' -> 'Stay Current'
+- started actually talking about staying up on current events
+- 'Toxic Nerd Culture' section 
+
+### Sincerity
+- added a __The Good Place__ subsection
+
+### Appendices
+- new appendix: 'Old Notes' for old notes
+- some commentary on the TV show top ten
+- introduction to 'Just Random BS...'
+- 'Random Thoughts on Speech'
+    + language clean up 
+    + notes re: SPP
+- new page after chapter in 'Old Notes'
+- paragraph breaks in Dr. Wong's monologue
+- noted an assumption in the Sam Miller attribution
+- TV show top ten honorable mentions
+- added 'Toxic Nerd Culture' flow chart
+
+### `pre.tex`
+- comments on lots of `\usepackage` commands
+- added options to `titlesec`
+- we now use `titletoc` with the `dotinlabels` option
+- removed lines that initialized counters (don't need them)
+
+## Misc
+- intro footnotes are now letters
+- changed up chapter page formatting
+- fixed some problems with PDF bookmarks
+- random introduction fixes/tweaks
+
 ## v0.7.1 --- Pre-release 11
 
 ### digress.py

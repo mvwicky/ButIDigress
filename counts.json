@@ -96,22 +96,107 @@
     },
     {
         "files":{
+            "sections\\sincerity.tex":2490,
+            "appendices\\oldnotes.tex":814,
+            "sections\\thevoid.tex":1506,
+            "appendices\\appendix.tex":12,
             "pre.tex":0,
+            "introduction.tex":3536,
+            "butidigress.tex":880,
+            "appendices\\topten.tex":442,
             "appendices\\justrandom.tex":709,
             "appendices\\quotations.tex":763,
             "sections\\immutable.tex":605,
             "sections\\empathy.tex":1480,
-            "sections\\sincerity.tex":2226,
-            "butidigress.tex":880,
             "appendices\\roadtrip.tex":2906,
-            "sections\\thevoid.tex":1944,
             "sections\\knowledge.tex":1858,
-            "introduction.tex":3457,
-            "appendices\\topten.tex":337,
-            "appendices\\poemsandstuff.tex":1460,
-            "appendices\\appendix.tex":10
+            "appendices\\poemsandstuff.tex":1460
         },
-        "total":18635,
-        "datetime":"2018-06-14 18:04:09"
+        "total":19461,
+        "datetime":"2018-06-14 22:34:42"
+    },
+    {
+        "files":{
+            "pre.tex":0,
+            "introduction.tex":3617,
+            "appendices\\justrandom.tex":846,
+            "appendices\\poemsandstuff.tex":1460,
+            "sections\\thevoid.tex":1506,
+            "appendices\\topten.tex":536,
+            "appendices\\quotations.tex":765,
+            "appendices\\oldnotes.tex":814,
+            "appendices\\appendix.tex":15,
+            "sections\\knowledge.tex":1911,
+            "sections\\sincerity.tex":2490,
+            "sections\\immutable.tex":605,
+            "butidigress.tex":880,
+            "sections\\empathy.tex":1480,
+            "appendices\\roadtrip.tex":2906
+        },
+        "total":19831,
+        "datetime":"2018-06-15 20:21:22"
+    },
+    {
+        "files":{
+            "introduction.tex":3739,
+            "appendices\\roadtrip.tex":2906,
+            "sections\\knowledge.tex":2603,
+            "sections\\sincerity.tex":2490,
+            "sections\\thevoid.tex":1506,
+            "sections\\empathy.tex":1480,
+            "appendices\\poemsandstuff.tex":1460,
+            "appendices\\justrandom.tex":942,
+            "butidigress.tex":878,
+            "appendices\\oldnotes.tex":814,
+            "appendices\\quotations.tex":765,
+            "sections\\immutable.tex":605,
+            "appendices\\topten.tex":566,
+            "appendices\\appendix.tex":12,
+            "pre.tex":0
+        },
+        "total":20766,
+        "datetime":"2018-06-16 21:48:57"
+    },
+    {
+        "files":{
+            "introduction.tex":3739,
+            "appendices\\roadtrip.tex":2906,
+            "sections\\knowledge.tex":2603,
+            "sections\\sincerity.tex":2490,
+            "sections\\thevoid.tex":1506,
+            "sections\\empathy.tex":1480,
+            "appendices\\poemsandstuff.tex":1460,
+            "appendices\\justrandom.tex":1139,
+            "butidigress.tex":878,
+            "appendices\\oldnotes.tex":814,
+            "appendices\\quotations.tex":765,
+            "sections\\immutable.tex":605,
+            "appendices\\topten.tex":566,
+            "appendices\\appendix.tex":12,
+            "pre.tex":0
+        },
+        "total":20963,
+        "datetime":"2018-06-17 04:06:43"
+    },
+    {
+        "files":{
+            "introduction.tex":3739,
+            "appendices\\roadtrip.tex":2906,
+            "sections\\knowledge.tex":2707,
+            "sections\\sincerity.tex":2490,
+            "sections\\thevoid.tex":1506,
+            "sections\\empathy.tex":1480,
+            "appendices\\poemsandstuff.tex":1460,
+            "appendices\\justrandom.tex":1139,
+            "butidigress.tex":878,
+            "appendices\\oldnotes.tex":814,
+            "appendices\\quotations.tex":765,
+            "sections\\immutable.tex":605,
+            "appendices\\topten.tex":566,
+            "appendices\\appendix.tex":12,
+            "pre.tex":0
+        },
+        "total":21067,
+        "datetime":"2018-06-18 03:58:35"
     }
 ]
