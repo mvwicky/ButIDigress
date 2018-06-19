@@ -100,17 +100,31 @@ Here's a graph that I made that tracks the construction of Toxic Nerd Culture, w
 &\tab\tab (\forall i \geq 0)(uv^{i}xy^{i}z\in L))))))))
 \end{align*}
 
+\def\thmskiplen{1em}
+% \newtheoremstyle{<name>}{<space above>}{<space below>}{<body font>}{<indent amount>}{<head font>}{<punctiation after thm. head>}{<space after thm head>}{<thm. head spec.>}
+\newtheoremstyle{defn}{\thmskiplen}{\thmskiplen}{}{}{\bfseries}{:}{0.5em}{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+\newtheoremstyle{thmskip}{\thmskiplen}{\thmskiplen}{}{}{\bfseries}{:}{0.25em}{\thmname{#1}\thmnumber{ #2}\thmnote{ [#3]}}
 
-\newtheorem{theorem}{Theorem}[subsection]
+\theoremstyle{thmskip}
+\newtheorem{theorem}{Theorem}[section]
 \newtheorem*{corollary}{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
 
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[subsection]
+\theoremstyle{defn}
+\newtheorem{definition}{Definition}[section]
 
+\newcommand{\vprime}[1]{{#1}^{\prime}}
+\def\vp{\vprime}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\mathlist}{\itemsep2pt \parsep0pt \parskip0pt}
 
+% \setlength{\parskip}{1.2em}
 \digsec{Abstract Algebra Notes}{6}{16}{18}{abstractalgebra}
 This section is basically just me copying \book{Contemporary Abstract Algebra}.
+
+\digsubsec{Integers and Equivalence Relations}{6}{19}{18}{integersequivalence}
+
+\digsubsubsec{Properties of Integers}{6}{18}{18}{propofintegers}
 
 \begin{definition}{Well Ordering Principle}
 The well ordering principle states that every nonempty set of positive integers contains a smallest number.
@@ -130,6 +144,30 @@ Let $a$ and $b$ be integers with $b>0$.
 Then there exist unique integers $q$ and $r$ with the property that $a=bq+r$, where $0\leq r<b$.
 \end{theorem}
 
+\begin{proof}
+We begin with the existence portion of the theorem.
+Consider the set $S = \left\{a - bk\mid k\ \text{is an integer and}\ a - bk \geq 0 \right\}$.
+If $0 \in S$, then $b$ divides $a$ and we may obtain the desired result with $q = a/b$ and $r = 0$.
+Now assume $0 \notin S$.
+Since $S$ is nonempty [if $a>0$, $a-b\cdot 0 \in S$; if $a < 0$, $a - b(2a) = a(1 - 2b) \in S$; $a \neq 0$ since $0 \notin S$], we may apply the Well Ordering Principle to conclude that $S$ has a smallest member, say $r - a - bq$.
+Then $a = bq + r$ and $r \geq 0$, so all that remains to be proved is $r < b$.
+
+If $r \geq b$, then $a - b(q + 1) = a - bq - b = r - b \geq 0$, so that $a - b(q + 1) \in S$.
+But $a - b(q + 1) < a - bq$, and $a - bq$ is the \emph{smallest} member of $S$.
+So $r < b$.
+
+To establish the uniqueness of $q$ and $r$, let us suppose that there are integers, $q$, $\vprime{q}$, $r$, and $\vprime{r}$ such that
+\begin{align*}
+a = bq + r,\ 0\leq r < b\ \text{and}\ a = b\vprime{q} + \vprime{r},\ 0 \leq \vprime{r} < b
+\end{align*}
+For convenience, we may also suppose that $\vprime{r} \geq r$.
+Then $bq + r = b\vprime{q} + \vprime{r}$ and $b(q - \vprime{q}) = \vprime{r} - r$.
+So, $b$ divides $\vprime{r} - r$ and $0 \leq \vprime{r} - r \leq \vprime{r} < b$.
+It follows that $\vprime{r} - r = 0$, and therefore $\vprime{r} = r$ and $\vprime{q} = q$.
+\end{proof}
+
+The integer $q$ in the division algorithm is called the \emph{quotient} upon dividing $a$ by $b$; the integer $r$ is called the \emph{remainder} upon dividing $a$ by $b$.
+
 \begin{definition}{Greatest Common Divisor}
 The greatest common divisor of two nonzero integers $a$ and $b$ is the largest of all common divisors of $a$ and $b$.
 Denote this integer by $\gcd(a, b)$
@@ -144,6 +182,11 @@ For any nonzero integers $a$ and $b$, there exist integers $s$ and $t$ such that
 Moreover, $\gcd(a, b)$ is the smallest positive integer of the form $as + bt$.
 \end{theorem}
 
+\begin{proof}
+Consider the set $S = \left\{am + bn\mid m,n\ \text{are integers and}\ am + bn > 0 \right\}$.
+Since $S$ is obviously nonempty (if some choice of $m$ and $n$ makes $am + bn < 0$, then replace $m$ and $n$ by $-m$ and $-n$), the Well Ordering Principle asserts that $S$ has a smallest member, say, $d = as + bt$.
+\end{proof}
+
 \begin{corollary}
 If $a$ and $b$ are relatively prime, then there exist integers $s$ and $t$ such that $as+bt=1$.
 \end{corollary}
@@ -151,5 +194,302 @@ If $a$ and $b$ are relatively prime, then there exist integers $s$ and $t$ such 
 \begin{lemma}[Euclid's Lemma]
 If $p$ is a prime that divides $ab$ then $p\mid a$ or $p\mid b$.
 \end{lemma}
+
+\begin{proof}
+Suppose $p$ is a prime that divides $ab$ but does not divide $a$.
+We must show that $p$ divides $b$.
+Since $p$ does not divide $a$, there are integers $s$ and $t$ such that $1 = as + pt$.
+Then $b = abs + ptb$, and since $p$ divides the right-hand side of this equation, $p$ also divides $b$.
+\end{proof}
+
+\digsubsubsec{Mathematical Induction}{6}{18}{18}{mathematicalinduction}
+
+\begin{theorem}[First Principle of Mathematical Induction]
+Let $S$ be a set of integers containing $a$.
+Suppose $S$ has the property that whenever some integer $n\geq a$ belongs to $S$, then the integer $n+1$ also belongs to $S$.
+Then, $S$ contains every integer greater than or equal to $a$.
+\end{theorem}
+
+To use induction to prove a statement involving positive integers is true for every positive integer, we must first verify that the statement is true for the integer 1.
+We then \emph{assume} the statement is true for the integer $n$ and use this assumption to prove that the statement is true for the integer $n+1$.
+
+\begin{theorem}[Second Principle of Mathematical Induction]
+Let $S$ be a set of integers containing $a$.
+Suppose $S$ has the property that $n$ belongs to $S$ whenever every integer less than $n$ or greater than or equal to $a$ belongs to $S$.
+Then, $S$ contains every integer greater than or equal to $a$.
+\end{theorem}
+
+In this form of induction, we first show that the statement is true for the integer $a$.
+We then \emph{assume} that the statement is true for \emph{all} integers that are greater than or equal to $a$ and less than $n$, and use this assumption to prove that the statement is true for $n$.
+
+\digsubsubsec{Equivalence Relations}{6}{18}{18}{equivrelations}
+
+\begin{definition}{Equivalence Relation}
+An \emph{equivalence relation} on a set $S$ is a set $R$ of ordered pairs of elements in $S$ such that
+\begin{enumerate}\mathlist
+    \item $(\forall a\in S)((a,a) \in R)$ (reflexive property)
+    \item $(a,b) \in R \rightarrow (b,a) \in R$ (symmetric property)
+    \item $(a,b) \in R \wedge (b,c) \in R \rightarrow (a,c) \in R$ (transitive property)
+\end{enumerate}
+\end{definition}
+
+When $R$ is an equivalence relation on a set $S$, it is customary to write $aRb$ instead of $(a,b) \in R$.
+Also, since an equivalence relation is just a generalization of equality, a suggestive symbol such as $=$, $\sim$, or $\approx$ is usually used to denote the relation.
+Using $\sim$ as a notation, the three conditions for an equivalence relation become $a\sim a$; $a\sim b$ implies $b\sim a$; and $a\sim b$ and $b\sim c$ imply $a\sim c$.
+If $\sim$ is an equivalence relation on a set $S$ and $a \in S$, then the set $[a] = \{ x \in S \mid x\sim a\}$ is called the \emph{equivalence class of $S$ containing $a$}.
+
+\begin{definition}{Partition}
+A \emph{partition} of a set $S$ is a collection of nonempty disjoint subsets of $S$ whose union is $S$.
+\end{definition}
+
+\begin{theorem}[Equivalence Classes Partition]
+The equivalence classes of an equivalence relation on a set $S$ constitute a partition of $S$.
+Conversely, for any partition $P$ of $S$, there is an equivalence relation on $S$ whose equivalence classes are the elements of $P$.
+\end{theorem}
+
+\begin{proof}
+Let $\sim$ be an equivalence relation on a set $S$.
+For any $a \in S$, the reflexive property shows that $a \in [a]$.
+So, $[a]$ is nonempty and the union of all equivalence classes.
+We must show that $[a] \cap [b] = \varnothing$.
+On the contrary, assume $c \in [a] \cap [b]$.
+We will show that $[a] \subseteq [b]$.
+To this end, let $a \in [a]$.
+We then have $c \sim a$, $c \sim b$, and $x \sim a$.
+By the symmetric property, we also have $a \sim c$.
+Thus, by transitivity, $x \sim c$, and by transitivity again, $x \sim b$.
+This proves $[a] \subseteq [b]$.
+Analogously, $[b] \subseteq [a]$.
+This $[a] = [b]$, in contradiction to our assumption that $[a]$ and $[b]$ are distinct equivalence classes.
+
+To prove the converse, let $P$ be a collection of nonempty disjoint subsets of $S$ whose union is $S$.
+Define $a \sim b$ if $a$ and $b$ belong to the same subset in the collection.
+\end{proof}
+
+\digsubsubsec{Functions (Mapping)}{6}{18}{18}{functionsmapping}
+
+\begin{definition}{Function (Mapping)}
+A \emph{function} (or \emph{mapping}) $\phi$ from a set $A$ to a set $B$ is a rule that assigns to each element $a \in A$ exactly one element $b \in B$.
+The set $A$ is called the \emph{domain of $\phi$} , and $B$ is called the \emph{range of $\phi$}.
+If $\phi$ assigned $b$ to $a$, then $b$ is called the \emph{image of a under $\phi$}.
+The subset of $B$ comprising all the images of $A$ is called the \emph{image of $A$ under $\phi$}.
+\end{definition}
+
+Use the shorthand $\phi: A\rightarrow B$ to mean that $\phi$ is a mapping from $A$ to $B$.
+We will write $\phi(a) = b$ or $\phi : a \rightarrow b$ to indicate that $\phi$ carries $a$ to $b$.
+
+\begin{definition}{Composition of Functions}
+Let $\phi : A\rightarrow B$ and $\psi : B\rightarrow C$.
+The composition $\psi\phi$ is the mapping from $A$ to $C$ defined by $(\psi\phi)(a) = \psi(\phi(a))$ for all $a \in A$.
+\end{definition}
+
+\begin{definition}{One-to-One Function}
+A function $\phi$ from a set $A$ is called \emph{one-to-one} if for every $a_{1},a_{2} \in A$, $\phi(a_{1}) = \phi(a_{2})$ implies $a_{1} = a_{2}$.
+\end{definition}
+
+\begin{definition}{Function from $A$ onto $B$}
+A function $\phi$ from a set $A$ to a set $B$ is said to be \emph{onto} $B$ is each element of $B$ is the image of at least one element of $A$.
+In symbols, $\phi : A\rightarrow B$ is onto if for each $b$ in $B$ there is at least one $a$ in $A$ such that $\phi(a) = b$.
+\end{definition}
+
+\begin{theorem}[Properties of Functions]
+Given function $\alpha:A\rightarrow B$, $\beta:B\rightarrow C$, and $\gamma:C\rightarrow D$, then
+\begin{enumerate}\mathlist
+    \item $\gamma(\beta\alpha) = (\gamma\beta)\alpha$ (associativity).
+    \item If $\alpha$ and $\beta$ are one-to-one, then $\beta\alpha$ is one-to-one.
+    \item If $\alpha$ and $\beta$ are onto, then $\beta\alpha$ is onto.
+    \item If $\alpha$ is one-to-one and onto, then there is a function $\alpha^{-1}$ from $B$ onto $A$ such that $(\alpha^{-1}\alpha)(a) = a$ for all $a$ in $A$ and $(\alpha\alpha^{-1})(b) = b$ for all $b$ in $B$.
+\end{enumerate}
+\end{theorem}
+
+\digsubsec{Introduction to Groups}{6}{19}{18}{groups}
+The term \emph{group} was used by Galois in \~{}1830 to describe sets of one-to-one functions on finite sets that could be grouped together to form a set closed under composition.
+
+\digsubsubsec{Definition and Examples of Groups}{6}{19}{18}{defngroups}
+
+\begin{definition}{Binary Operation}
+Let $G$ be a set.
+A \emph{binary operation} on $G$ is a function that assigns each ordered pair of element of $G$ and element of $G$.
+\end{definition}
+
+A binary operation on a set $G$ is simply a method (or formula) by which the members of an ordered pair from $G$ combine to yield a new member of $G$.
+This condition is called \emph{closure}.
+
+\begin{definition}{Group}
+Let $G$ be a set together with a binary operation (usually called multiplication) that assigns to each ordered pair $(a,b)$ of elements of $G$ an element in $G$ denoted by $ab$.
+We say $G$ is a \emph{group} under this operation if the following three properties are satisfied.
+\begin{enumerate}\mathlist
+    \item \emph{Associativity}. The operation is associative; that is, $(ab)c = a(bc)$ for all $a,b,c \in G$.
+    \item \emph{Identity}. There is an element $e$ (called the \emph{identity}) in $G$ such that $ae=ea=a$ for all $a \in G$.
+    \item \emph{Inverses}. For each element $a \in G$, there is an element $b \in G$ (called an \emph{inverse} of $a$) such that $ab=ba=e$.
+\end{enumerate}
+\end{definition}
+
+If a group has the property that $ab = ba$ for every pair of elements $a$ and $b$, we say the group is \emph{Abelian}.
+A group is \emph{non-Abelian} is there is some pair of elements $a$ and $b$ for which $ab\neq ba$.
+
+\digsubsubsec{Elementary Properties of Groups}{6}{19}{18}{propgroups}
+
+\begin{theorem}[Uniqueness of the Identity]
+In a group $G$, there is only one identity element.
+\end{theorem}
+
+\begin{proof}
+Suppose both $e$ and $\vprime{e}$ are identities of $G$.
+Then,
+\begin{enumerate}\mathlist
+    \item $ae = a$ for all $a \in G$, and
+    \item $\vprime{e}a = a$ for all $a \in G$
+\end{enumerate}
+The choices of $a = \vprime{e}$ and $a = e$ yield $\vprime{e}e = \vprime{e}$ and $\vprime{e}e = e$.
+Thus, $e$ and $\vprime{e}$ are both equal to $\vprime{e}e$ and so are equal to each other.
+\end{proof}
+
+\begin{theorem}[Cancellation]
+In a group $G$, the right and left cancellation laws hold; that is, $ba = ca$ implies $b = c$, and $ab = ac$ implies $b = c$.
+\end{theorem}
+
+\begin{proof}
+Suppose $ba = ca$.
+Let $\vprime{a}$ be an inverse of $a$.
+Then multiplying on the right by $\vprime{a}$ yields $(ba)\vprime{a} = (ca)\vprime{a}$.
+Associativity yields $b(a\vp{a}) = c(a\vp{a})$.
+Then $be = ce$ and, therefore, $b = c$ as desired.
+Similarly, one can prove that $ab = ac$ implies $b = c$ by multiplying by $\vp{a}$ on the left.
+\end{proof}
+
+\begin{theorem}[Uniqueness of Inverses]
+For each element $a$ in a group $G$, there is a unique element $b$ in $G$ such that $ab=ba=e$.
+\end{theorem}
+
+\begin{proof}
+Suppose that $b$ and $c$ are both inverses of $a$.
+Then $ab = c$ and $ac = e$, so that $ab = ac$.
+Canceling the $a$ on both sides gives $b = c$, as desired.
+\end{proof}
+
+\begin{theorem}[Socks-Shoes Property]
+For group elements $a$ and $b$, $(ab)^{-1} = b^{-1}a^{-1}$.
+\end{theorem}
+
+\begin{proof}
+Since $(ab)(ab)^{-1} = e$ and $(ab)(b^{-1}a^{-1}) = a(bb^{-1})a^{-1} = aea^{-1} = aa^{-1} = e$, we have $(ab)^{-1} = b^{-1}a^{-1}$.
+\end{proof}
+
+\digsubsec{Finite Groups; Subgroups}{6}{19}{18}{finitegroups}
+
+\begin{definition}{Order of a Group}
+The number of elements of a group (finite or infinite) is called its \emph{order}.
+We will use $|G|$ to denote the order of $G$.
+\end{definition}
+
+\begin{definition}{Order of an Element}
+The \emph{order} of an element $g$ in a group $G$ is the smallest positive integer $n$ such that $g^{n} = e$.
+(In additive notation, this would be $ng = 0$.)
+If no such integer exists, we say that $g$ has \emph{infinite order}.
+The order of an element $g$ is denoted $|g|$.
+\end{definition}
+
+To find the order of a group element $g$, compute the sequence of products $g, g^{2}, g^{3},\ldots,$ until you reach the identity for the first time.
+The exponent of this product (or coefficient if the operation is addition) is the order of $g$.
+If the identity never appears in the sequence, then $g$ has infinite order.
+
+\begin{definition}{Subgroup}
+If a subset $H$ of a group $G$ is itself a group under the operation of $G$, we say that $H$ is a \emph{subgroup} of $G$.
+\end{definition}
+
+We use the notation $H \leq G$ to mean that $H$ is a subgroup of $G$.
+If we want to indicate that $H$ is a subgroup of $G$ but is not equal to $G$ itself, we write $H < G$.
+Such a subgroup is called a \emph{proper subgroup}.
+The subgroup $\{e\}$ is called the \emph{trivial subgroup} of $G$; a subgroup that is not $\{e\}$ is called a \emph{nontrivial subgroup} of $G$.
+
+\digsubsubsec{Subgroup Tests}{6}{19}{18}{subgrouptests}
+When determining whether or not a subset $H$ of a group $G$ is a subgroup of $G$, one need not directly verify the group axioms.
+The next three results provide simple tests that suffice to shaw that a subset of a group is a subgroup.
+
+\begin{theorem}{One-Step Subgroup Test}
+Let $G$ be a group and $H$ a nonempty subset of $G$.
+If $ab^{-1}$ is in $H$ whenever $a$ and $b$ are in $H$, then $H$ is a subgroup of $G$.
+(In additive notation, if $a - b$ is in $H$ whenever $a$ and $b$ are in $H$, then $H$ is a subgroup of $G$.)
+\end{theorem}
+
+\begin{proof}
+Since the operation of $H$ is the same as that of $G$, it is clear that this operation is associative.
+Next we show that $e$ is in $H$.
+Since $H$ is nonempty, we may pick some $x \in H$.
+Then, letting $a = x$ and $b = x$ in the hypothesis, we have $e = xx^{-1} = ab^{-1}$ is in $H$.
+To verify that $x^{-1}$ is in $H$ whenever $x$ is in $H$, all we need to do is choose $a = e$ and $b = x$ in the statement of the theorem.
+Finally, the proof will be complete when we show that $H$ is closed; that is, if $x$, $y$ belong to $H$, we must show that $xy \in H$.
+We have already shown that $y^{-1}$ is in $H$ whenever $y$ is; so, letting $a = x$ and $b = y^{-1}$, we have $xy = x(y^{-1})^{-1} = ab^{-1}$ is in $H$.
+\end{proof}
+
+There are actually four steps in applying the previous theorem, although the first three will become routine.
+Note the similarity between the last three steps and the three steps involved in the Second Principle of Mathematical Induction.
+\begin{enumerate}\mathlist
+    \item Identify the property $P$ that distinguishes the elements of $H$; that is, identify a defining condition.
+    \item Prove that the identity has property $P$. (This verifies that $H$ is nonempty)
+    \item \emph{Assume} that two elements $a$ and $b$ have property $P$.
+    \item Use the assumption that $a$ and $b$ have property $P$ to show that $ab^{-1}$ has property $P$.
+\end{enumerate}
+
+\begin{theorem}[Two-Step Subgroup Test]
+Let $G$ be a group and let $H$ be a nonempty subset of $G$.
+If $ab$ is in $H$ whenever $a$ and $b$ are in $H$ ($H$ is closed under the operation), and $a^{-1}$ is in $H$ whenever $a$ is in $H$ ($H$ is closed under taking inverses), then $H$ is a subgroup of $G$.
+\end{theorem}
+
+\begin{proof}
+By the One-Step Subgroup Test, it suffices to show that $a,b \in H$ implies $ab^{-1} \in H$.
+So, we suppose that $a,b \in H$.
+Since $H$ is closed under taking inverses, we also have $b^{-1} \in H$.
+Thus, $ab^{-1} \in H$ by closure under multiplication.
+\end{proof}
+
+How do you prove that a subset of a group is \emph{not} a subgroup?
+Here are three possible ways, any one of which guarantees that the subset is not a subgroup.
+\begin{enumerate}\mathlist
+    \item Show that the identity is not in the set.
+    \item Exhibit an element of the set whose inverse is not in the set.
+    \item Exhibit two elements of the set whose product is not in the set.
+\end{enumerate}
+
+When dealing with finite groups, it is easier to use the following subgroup test.
+
+\begin{theorem}[Finite Subgroup Test]
+Let $H$ be a nonempty finite subset of a group $G$.
+If $H$ is closed under the operation of $G$, then $H$ is a subgroup of $G$.
+\end{theorem}
+
+\begin{proof}
+In view of the Two-Step Subgroup Test, we need only prove that $a^{-1} \in H$ whenever $a \in H$.
+If $a = e$, then $a^{-1} = a$ and we're done.
+If $a \neq e$, consider the sequence $a,a^{2},\ldots$.
+By closure, all of these elements belong to $H$.
+Since $H$ is finite, not all of these elements are distinct.
+Say $a^{i} = a^{j}$ and $i > j$.
+Then $a^{i-j} = e$; and since $a \neq e$, $i -j > 1$.
+Thus, $aa^{i-j-1} = a^{i-j} = e$ and therefore, $a^{i-j-1} = a^{-1}$.
+But $i - j - 1 \geq 1$ implies $a^{i-j-1} \in H$ and we are done.
+\end{proof}
+
+\digsubsubsec{Examples of Subgroups}{6}{19}{18}{examplesofsubgroups}
+For any element $a$ from a group, let $\langle a \rangle$ denote the set $\{a^{n} \mid n \in \Z \}$.
+Note that the exponents of $a$ include all negative integers as well as $0$ and the positive integers ($a^{0}$ is defined to be the identity).
+
+\begin{theorem}[$\bm{\langle a \rangle}$ is a Subgroup]
+Let $G$ be a group, and let $a$ be any element of $G$.
+Then $\langle a \rangle$ is a subgroup of $G$.
+\end{theorem}
+
+\begin{proof}
+Since $a \in \langle a \rangle$, $\langle a \rangle$ is not empty.
+Let $a^{n}, a^{m} \in \langle a \rangle$.
+Then, $a^{n}(a^{m})^{-1} = a^{n - m} \in \langle a \rangle$; so by the One-Step Subgroup Test, $\langle a \rangle$ is a subgroup of $G$.
+\end{proof}
+
+The subgroup $\langle a \rangle$ is called the \emph{cyclic subgroup of $G$ generated by $a$}.
+In the case that $G = \langle a \rangle$, we say that $G$ is \emph{cyclic} and $a$ is a \emph{generator of $G$}.
+(A cyclic group may have many generators.)
+Note that although the list $\ldots,a^{-2},a^{-1},a^{0},a^{1},a^{1},\ldots$ has infinitely many entries, the set $\{ a^{n} \mid n\in\Z\}$ might have only finitely many elements.
+Also note that, since $a^{i}a^{j} = a^{i+j} = a^{j}a^{i}$, every cyclic group is Abelian.
 
 \end{document}
