@@ -1,5 +1,21 @@
 \include{pre}
 
+% Page Header/Footer Formatting/Styling
+\addtolength{\headheight}{\baselineskip}
+\setlength{\footskip}{26pt}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\fancyhf{}
+\renewcommand{\headrule}{}
+\fancyhead{}
+\fancyhead[C]{\nouppercase{\footnotesize\itshape\rightmark}}
+\fancyfoot{}
+\fancyfoot[ER,OL]{\nouppercase{\itshape\leftmark}}
+\fancyfoot[EL,OR]{\thepage}
+\fancyfootoffset{8pt}
+
+\assignpagestyle{\chapter}{fancy}
+
 \pagecolor{WhiteSmoke}
 
 \title{But I Digress\ldots}
@@ -21,14 +37,10 @@
 
 \onehalfspace
 
+% Make footnotes bolded lowercase
 \renewcommand{\thefootnote}{\textbf{\alph{footnote}}}
 
 \pagestyle{fancy}
-\fancyhf{}
-\renewcommand{\headrule}{}
-\fancyhead[C]{\nouppercase{\footnotesize\itshape\rightmark}}
-\fancyfoot[ER,OL]{\nouppercase{\itshape\leftmark}}
-\fancyfoot[EL,OR]{\thepage}
 
 \titleformat{\chapter}[display]{\LARGE}{}{0cm}{\scshape\uline}
 
@@ -95,7 +107,7 @@ I would like, however, to have at least an idea of the general tone\ldots}
 \tableofcontents
 \newpage
 
-\setlength{\parskip}{0.4em}
+\setlength{\parskip}{\defparskip}
 
 \setcounter{footnote}{0}
 \setcounter{section}{1}

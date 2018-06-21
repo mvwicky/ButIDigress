@@ -1,4 +1,4 @@
-\documentclass[10pt,fleqn,titlepage]{book}
+\documentclass[10pt,titlepage]{book}
 \usepackage[protrusion=true,expansion]{microtype}
 \setlength{\paperheight}{9.2in}
 \setlength{\paperwidth}{6.8in}
@@ -108,6 +108,9 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \everymath{\displaystyle}
 
+\newlength{\defparskip}
+\setlength{\defparskip}{0.4em}
+
 \DeclareMathOperator{\sinc}{sinc}
 \def\defItem{\itemsep1pt \parsep0pt \parskip0pt}
 \newcommand{\tbul}{\textbullet}
@@ -155,9 +158,6 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \setlength{\fboxsep}{5pt}
 % Provides a block of text with a box around it
 \newcommand{\textbox}[1]{\vspace{0em}\noindent\hfil\fbox{\parbox[c][1.1\height][c]{0.9\textwidth}{\small\textsc{#1}}}\vspace{1em}}
-
-% Division Formatting/Styling
-\addtolength{\headheight}{\baselineskip}
 
 % Set margin note size
 \renewcommand*{\marginfont}{\scriptsize}
