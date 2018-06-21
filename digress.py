@@ -42,11 +42,15 @@ tex_dir: PathType = os.path.join('C:\\', 'texlive', '2017', 'bin', 'win32')
 lualatex_exe: WhichType = shutil.which(os.path.join(tex_dir, 'lualatex.exe'))
 biber_exe: WhichType = shutil.which(os.path.join(tex_dir, 'biber.exe'))
 
-sumatra_exe: WhichType = shutil.which(os.path.join(
-    os.environ['PROGRAMFILES'], 'SumatraPDF', 'SumatraPDF.exe'))
+sumatra_exe: WhichType = shutil.which(
+    os.path.join(os.environ['PROGRAMFILES'], 'SumatraPDF', 'SumatraPDF.exe')
+)
 if sumatra_exe is None:
-    sumatra_exe: WhichType = shutil.which(os.path.join(
-        os.environ['PROGRAMFILES(X86)'], 'SumatraPDF', 'SumatraPDF.exe'))
+    sumatra_exe: WhichType = shutil.which(
+        os.path.join(
+            os.environ['PROGRAMFILES(X86)'], 'SumatraPDF', 'SumatraPDF.exe'
+        )
+    )
 
 output_dir = 'build'
 
@@ -59,10 +63,16 @@ latexopts: List[str] = [
 biber_opts: List[str] = ['--output-directory={0}'.format(output_dir)]
 
 
+def error(msg, return_code=-1):
+    click.secho(msg, fg='red', err=True)
+    return return_code
+
+
 def latex_build(base_name: str) -> Optional[PathType]:
     tex_file: PathType = os.path.abspath(base_name + '.tex')
+
     if not os.path.isfile(tex_file):
-        raise click.Abort('{0} not found'.format(tex_file))
+        return error('{0} not found'.format(tex_file), 66)
 
     tex_args: ArgsType = [lualatex_exe] + latexopts + [tex_file]
     biber_args: ArgsType = [biber_exe] + biber_opts + [base_name]
@@ -291,8 +301,7 @@ def check(path: PathType, linter: str):
     """Run lacheck on all files"""
     exe: Optional[PathType] = shutil.which(linter)
     if exe is None:
-        click.secho('{0} not found on PATH'.format(linter), err=True, fg='red')
-        return -1
+        return error('{0} not found on PATH'.format(linter), 69)
 
     ret: int = 0
     for file in find_tex_files(path):
@@ -310,23 +319,26 @@ def check(path: PathType, linter: str):
 def build(base_name: str, view: bool):
     """Build butidigress.pdf (assumes a lot)"""
     if lualatex_exe is None:
-        click.secho(
-            '{0} not found, aborting'.format(lualatex_exe), fg='red', err=True
-        )
-        return -1
+        return error('{0} not found, aborting'.format(lualatex_exe), 69)
 
     if biber_exe is None:
-        click.secho(
-            '{0} not found, aborting'.format(biber_exe), fg='red', err=True
-        )
-        return -1
+        return error('{0} not found, aborting'.format(biber_exe), 69)
+
     out_file: Optional[PathType] = latex_build(base_name)
     if out_file is not None and view:
         if sumatra_exe is not None:
             from subprocess import Popen
+
             Popen([sumatra_exe, '-reuse-instance', out_file], shell=True)
     else:
-        click.secho('Failed to create output file', fg='red', err=True)
+        return error('Failed to create output file', 73)
+
+
+@cli.command()
+def pandoc():
+    pd: Optional[PathType] = shutil.which('pandoc')
+    if pd is None:
+        return error('pandoc not found', 70)
 
 
 if __name__ == '__main__':
