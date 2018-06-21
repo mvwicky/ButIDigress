@@ -22,6 +22,10 @@
 		{
 			"program": "lualatex",
 			"options": "--shell_escape"
+		},
+		"preview_math_latex_compile_program": "lualatex",
+		"windows": {
+			"keep_focus_delay": 0.25
 		}
 	}
 }
