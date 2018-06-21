@@ -1,5 +1,23 @@
 # Release History
 
+## v0.9.0 --- Pre-release 13
+A relatively minor release; includes a section on abstract algebra (in the appendix) and a section on learning independently.
+
+### Knowledge
+- new section on independent learning
+- intro changes
+
+### Appendix
+- 'Just Random BS'
+    + abstract algebra notes (from Contemporary Abstract Algebra)
+
+### Misc
+- added footer rule
+- added a sublime project setting (math preview program)
+- created the skeleton for a `pandoc` command in `digress.py`
+- used a BibLaTeX hook to count citations as footnotes
+
+
 ## v0.8.0 --- Pre-release 12
 The major change in this release is the page size change.
 

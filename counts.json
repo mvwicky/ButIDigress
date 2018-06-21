@@ -182,7 +182,7 @@
         "files":{
             "introduction.tex":3739,
             "appendices\\roadtrip.tex":2906,
-            "sections\\knowledge.tex":2707,
+            "sections\\knowledge.tex":2782,
             "sections\\sincerity.tex":2490,
             "sections\\thevoid.tex":1506,
             "sections\\empathy.tex":1480,
@@ -196,7 +196,49 @@
             "appendices\\appendix.tex":12,
             "pre.tex":0
         },
-        "total":21067,
-        "datetime":"2018-06-18 03:58:35"
+        "total":21142,
+        "datetime":"2018-06-18 17:46:45"
+    },
+    {
+        "files":{
+            "butidigress.tex":878,
+            "pre.tex":0,
+            "appendices\\justrandom.tex":2372,
+            "sections\\knowledge.tex":3064,
+            "introduction.tex":3739,
+            "appendices\\roadtrip.tex":2906,
+            "sections\\sincerity.tex":2490,
+            "appendices\\topten.tex":566,
+            "appendices\\appendix.tex":12,
+            "appendices\\poemsandstuff.tex":1460,
+            "sections\\thevoid.tex":1506,
+            "appendices\\quotations.tex":765,
+            "appendices\\oldnotes.tex":814,
+            "sections\\immutable.tex":605,
+            "sections\\empathy.tex":1480
+        },
+        "total":22657,
+        "datetime":"2018-06-19 18:05:05"
+    },
+    {
+        "files":{
+            "introduction.tex":3739,
+            "appendices\\justrandom.tex":3196,
+            "sections\\knowledge.tex":3099,
+            "appendices\\roadtrip.tex":2906,
+            "sections\\sincerity.tex":2490,
+            "sections\\thevoid.tex":1506,
+            "sections\\empathy.tex":1480,
+            "appendices\\poemsandstuff.tex":1460,
+            "butidigress.tex":880,
+            "appendices\\oldnotes.tex":814,
+            "appendices\\quotations.tex":765,
+            "sections\\immutable.tex":605,
+            "appendices\\topten.tex":566,
+            "appendices\\appendix.tex":12,
+            "pre.tex":0
+        },
+        "total":23518,
+        "datetime":"2018-06-21 21:29:59"
     }
 ]
