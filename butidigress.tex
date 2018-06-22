@@ -98,10 +98,13 @@ I would like, however, to have at least an idea of the general tone\ldots}
 
 \newpage
 
+\newlength{\headerskip}
+\setlength{\headerskip}{0em}
+\newcommand{\headerdelim}{}
 \titleformat{\chapter}[frame]{\Large}{\filright\enspace{\Large \chaptertitlename~\thechapter}\enspace}{2cm}{\LARGE\bfseries\filcenter}
-\titleformat{\section}[display]{\Large}{\thesection\filright}{0cm}{\bfseries\filcenter}[\rule{0.5\textwidth}{0.8pt}]
-\titleformat{\subsection}[display]{\large}{\thesubsection}{0cm}{\bfseries\filcenter}[\rule{\titlewidth}{0.5pt}]
-\titleformat{\subsubsection}[display]{\small}{\thesubsubsection}{0cm}{\bfseries\filcenter}[\rule{\titlewidth}{0.3pt}]
+\titleformat{\section}[block]{\filcenter\Large}{\thesection\headerdelim}{1cm}{\bfseries\hspace{\headerskip}}[\rule{\titlewidth}{0.8pt}]
+\titleformat{\subsection}[block]{\filcenter\large}{\thesubsection}{1cm}{\bfseries\hspace{\headerskip}}[\rule{\titlewidth}{0.5pt}]
+\titleformat{\subsubsection}[block]{\filcenter\small}{\thesubsubsection}{1cm}{\bfseries\hspace{\headerskip}}[\rule{\titlewidth}{0.3pt}]
 
 
 \tableofcontents
@@ -112,9 +115,19 @@ I would like, however, to have at least an idea of the general tone\ldots}
 \setcounter{footnote}{0}
 \setcounter{section}{1}
 
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{}
+\renewcommand{\thesubsubsection}{}
+
 \subfile{introduction}
 
 \mainmatter
+% \setlength{\headerskip}{2em}
+\renewcommand{\headerdelim}{.}
+% Subsection and Subsubsection notation setup
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesection.\thesubsection.\roman{subsubsection}}
 \renewcommand{\chaptermark}[1]{\markboth{\chaptertitlename~\thechapter.\ #1}{}}
 \renewcommand{\thefootnote}{\arabic{footnote}}
 
@@ -137,38 +150,54 @@ I would like, however, to have at least an idea of the general tone\ldots}
 \backmatter
 
 \titleformat{\chapter}[hang]{\Large}{\filright\enspace\thechapter\enspace}{2.5cm}{\Large\bfseries\filcenter}
+\phantomsection
 \markright{Bibliography}
 \addcontentsline{toc}{chapter}{Bibliography}
 \printbibliography
 
-\newpage
-\markright{Typeface}
-\vspace*{0.075\paperheight}
-\begin{center}\bfseries
-About the Typeface\ftnote{Description from \url{https://fonts.google.com/specimen/Spectral}}\ftnote{Description from \url{https://github.com/source-foundry/Hack}}
-\end{center}
-\noindent\hfil\parbox[c][1.1\height][c]{0.6\textwidth}{\small\textsc{%
-Spectral is a new and versatile serif face available in seven weights of roman and italic, with small caps.
+\clearpage
+\markboth{Typeface}{Typeface}
+
+\vspace*{\stretch{2}}
+\begin{center}
+{\noindent\Large\textbf{About the Typeface}}\ftnote{Description from \url{https://fonts.google.com/specimen/Spectral}}\ftnote{Description from \url{https://github.com/source-foundry/Hack}}
+
+\entryskip
+
+\begin{minipage}{0.5\textwidth}\small
+\noindent\textsc{Spectral is a new and versatile serif face available in seven weights of roman and italic, with small caps.
 Spectral offers an efficient, beautiful design that’s intended primarily for text-rich, screen-first environments and long-form reading.}
 
-\vspace*{1.5\baselineskip}
+\entryskip
 
-\texttt{Hack is designed to be a workhorse typeface for source code.
+\noindent\texttt{Hack is designed to be a workhorse typeface for source code.
 It has deep roots in the free, open source typeface community and expands upon the contributions of the Bitstream Vera \& DejaVu projects.
-The large x-height + wide aperture + low contrast design make it legible at commonly used source code text sizes with a sweet spot that runs in the 8--14 range}}
+The large x-height + wide aperture + low contrast design make it legible at commonly used source code text sizes with a sweet spot that runs in the 8--14 range}
+\end{minipage}
+\end{center}
+\vspace{\stretch{3}}
 
-\newpage
-\titleformat{\chapter}[frame]{\Large}{\filright\enspace\thechapter\enspace}{1.5cm}{\Large\bfseries\filcenter}
-\chapter{Random Stats}
-Some totals of the various notes we've seen throughout this book.
+\clearpage
+\markboth{Random Stats}{Random Stats}
+\vspace*{\stretch{1}}
+\begin{center}
+{\Large\textbf{Random Stats}}
+
+\entryskip
+
+\begin{minipage}{0.6\textwidth}
+Totals of the various notes we've seen throughout this book.
 Really just added them for fun.
-\begin{itemize}\scshape\large
-    \item Commentary Notes: \thecommcounter
-    \item Todo Notes: \thetodocounter
-    \item Thought Notes: \thethoughtcounter
-    \item Date Notes: \thedatecounter
-    \item Footnotes: \thefootcounter
-    \item Quotes (main text): \theepicounter
-\end{itemize}
+\begin{description}\scshape\large
+    \item [Commentary Notes] \thecommcounter
+    \item [Todo Notes] \thetodocounter
+    \item [Thought Notes] \thethoughtcounter
+    \item [Date Notes] \thedatecounter
+    \item [Footnotes] \thefootcounter
+    \item [Quotes] \theepicounter
+\end{description}
+\end{minipage}
+\end{center}
+\vspace{\stretch{3}}
 
 \end{document}
