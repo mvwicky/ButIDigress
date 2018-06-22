@@ -1,9 +1,16 @@
 \documentclass[10pt,titlepage]{book}
 \usepackage[protrusion=true,expansion]{microtype}
-\setlength{\paperheight}{9.2in}
-\setlength{\paperwidth}{6.8in}
+\usepackage{calc}
+\setlength{\paperheight}{9.8in}
+\setlength{\paperwidth}{6.9in}
 \usepackage{marginnote}
-\usepackage[top=0.75in,bottom=1.3in,outer=1.2in,inner=0.7in,marginparwidth=25mm,marginparsep=2mm]{geometry}
+\usepackage[
+top=0.75in,
+bottom=1.0in,
+outer=1.2in,
+inner=0.7in,
+marginparwidth=1in,
+marginparsep=4mm]{geometry}
 
 \usepackage[T1]{fontenc}
 
@@ -76,12 +83,7 @@
 % Package for splitting doc into files
 \usepackage{subfiles}
 \usepackage{tikz}
-\usetikzlibrary{
-    arrows,
-    automata,
-    graphdrawing,
-    graphs,
-    quotes}
+\usetikzlibrary{arrows,automata,graphdrawing,graphs,quotes}
 \usegdlibrary{phylogenetics,layered,trees}
 
 % Packages for typesetting poems and excerpts from screenplays
@@ -99,6 +101,8 @@ colorlinks=false,
 linkbordercolor=white,
 pdfborder=0 0 0,
 bookmarksnumbered=true,
+bookmarksopen=true,
+bookmarksopenlevel=2,
 pdftitle={But I Digress\ldots},
 pdfsubject={philosophy},
 pdfauthor={Michael Van Wickle},
@@ -138,9 +142,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \renewcommand{\floatpagefraction}{0.7}
 \renewcommand{\dblfloatpagefraction}{0.7}
 
-% Subsection and Subsubsection notation setup
-\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
-\renewcommand{\thesubsubsection}{\thesection.\thesubsection.\roman{subsubsection}}
+
 
 % Semantic commands for different media
 \newcommand{\impword}[1]{\textcolor{red}{\textbf{#1}}}
@@ -196,9 +198,9 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \end{center}}
 
 \newcommand*{\posttitlepage}{%
-\vspace*{0.15\paperheight}
+\vspace*{\stretch{1}}
 {\hfil\footnotesize\ttfamily \underline{Last Compiled: \today}\hfil}
-\vspace*{\fill}}
+\vspace{\stretch{3}}}
 
 \newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
 
@@ -242,7 +244,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
 
 \newcommand{\notescolor}{teal}
-\newenvironment{somenotes}[1]{\subsection*{\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
+\newenvironment{somenotes}[1]{\par\entryskip\noindent{\Large\centering\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
 
 \NewDocumentCommand\ddate{O{\the\day}O{\the\month}O{\the\year}}{#1/#2/#3}
 
