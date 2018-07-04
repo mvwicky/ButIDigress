@@ -12,24 +12,21 @@ from typing import (
 import click
 import profilehooks
 
-try:
-    import ujson as json
-except ImportError:
-    import json
+import json
 
 # Typing Stuff
 PathType = Text
-EntriesDict = Dict[str, Union[str, Dict[str, int], int]]
+EntriesDict = Dict[Text, Union[Text, Dict[Text, int], int]]
 WordCountsDict = Dict[PathType, int]
 WordCountsTup = List[Tuple[PathType, int]]
 RowsTup = Tuple[PathType, int, int]
-ArgsType = List[Union[PathType, str]]
-SortFnType = Callable[[RowsTup], Union[str, int]]
+ArgsType = List[Text]
+SortFnType = Callable[[RowsTup], Union[Text, int]]
 SortFnRet = Tuple[SortFnType, bool]
 WhichType = Optional[PathType]
 
 # regex used to find word count in texcount output
-WORDS_RE: Pattern[str] = re.compile(r'Words in text: (\d+)')
+WORDS_RE: Pattern[Text] = re.compile(r'Words in text: (\d+)')
 
 HERE: PathType = os.path.split(os.path.abspath(__file__))[0]
 LOG_FILE: PathType = os.path.join(HERE, 'counts.json')
@@ -46,7 +43,7 @@ sumatra_exe: WhichType = shutil.which(
     os.path.join(os.environ['PROGRAMFILES'], 'SumatraPDF', 'SumatraPDF.exe')
 )
 if sumatra_exe is None:
-    sumatra_exe: WhichType = shutil.which(
+    sumatra_exe = shutil.which(
         os.path.join(
             os.environ['PROGRAMFILES(X86)'], 'SumatraPDF', 'SumatraPDF.exe'
         )
@@ -54,13 +51,13 @@ if sumatra_exe is None:
 
 output_dir = 'build'
 
-latexopts: List[str] = [
+latexopts: ArgsType = [
     '-interaction=nonstopmode',
     '-synctex=1',
     '--output-directory={0}'.format(output_dir),
     '--shell-escape',
 ]
-biber_opts: List[str] = ['--output-directory={0}'.format(output_dir)]
+biber_opts: List[Text] = ['--output-directory={0}'.format(output_dir)]
 
 
 def error(msg, return_code=-1):
@@ -68,26 +65,35 @@ def error(msg, return_code=-1):
     return return_code
 
 
-def latex_build(base_name: str) -> Optional[PathType]:
+def latex_build(base_name: Text) -> Optional[PathType]:
     tex_file: PathType = os.path.abspath(base_name + '.tex')
 
+    assert lualatex_exe is not None
+    assert biber_exe is not None
     if not os.path.isfile(tex_file):
         return error('{0} not found'.format(tex_file), 66)
 
-    tex_args: ArgsType = [lualatex_exe] + latexopts + [tex_file]
-    biber_args: ArgsType = [biber_exe] + biber_opts + [base_name]
+    tex_args = list()
+    tex_args.append(lualatex_exe)
+    tex_args.extend(latexopts)
+    tex_args.append(tex_file)
+
+    biber_args: ArgsType = list()
+    biber_args.append(biber_exe)
+    biber_args.extend(biber_opts)
+    biber_args.append(base_name)
 
     # First Latex Compile
     c: CompletedProcess = run(tex_args, shell=True)
 
     # Run Biber
-    c: CompletedProcess = run(biber_args, shell=True)
+    c = run(biber_args, shell=True)
 
     # Second Latex Compile
-    c: CompletedProcess = run(tex_args, shell=True)
+    c = run(tex_args, shell=True)
 
     # Third Latex Compile
-    c: CompletedProcess = run(tex_args, shell=True)
+    c = run(tex_args, shell=True)
 
     out_file = os.path.join(os.path.abspath(output_dir), base_name + '.pdf')
     return out_file if os.path.exists(out_file) else None
@@ -97,10 +103,9 @@ def save_log(entry: EntriesDict) -> Union[bool, int]:
     """Saves the log file, overwrites existing entry from today with input"""
     now: datetime = datetime.utcnow()
     entry['datetime'] = DT_FMT.format(now)
-    if not os.path.isfile(LOG_FILE):
-        log_cts: List[EntriesDict] = []
-    else:
-        log_cts: List[EntriesDict] = get_log()
+    log_cts: List[EntriesDict] = list()
+    if os.path.isfile(LOG_FILE):
+        log_cts = get_log()
 
     if log_cts:
         last_ent: datetime = datetime.strptime(
@@ -118,7 +123,7 @@ def save_log(entry: EntriesDict) -> Union[bool, int]:
 def get_log() -> List[EntriesDict]:
     """Fetch log file contents"""
     with open(LOG_FILE, 'rt') as f:
-        return json.load(f)
+        return json.load(f, parse_int=int)
 
 
 def wc(file: PathType, verbose: bool = False) -> int:
@@ -133,8 +138,11 @@ def wc(file: PathType, verbose: bool = False) -> int:
         )
     args: ArgsType = ['texcount', file]
     s: CompletedProcess = run(args, shell=True, stdout=PIPE)
-    res: Match[str] = WORDS_RE.search(s.stdout.decode())
-    ret: int = 0 if not res else int(res.group(1))
+    res = WORDS_RE.search(s.stdout.decode())
+    if not res:
+        ret = 0
+    else:
+        ret = int(res.group(1))
     if verbose:
         click.secho(str(ret), fg='green')
 
@@ -339,6 +347,21 @@ def pandoc():
     pd: Optional[PathType] = shutil.which('pandoc')
     if pd is None:
         return error('pandoc not found', 70)
+
+
+@cli.command()
+@click.option('--detail/--no-detail', default=False)
+def delta(detail: bool = False):
+    log_cts = get_log()
+    click.clear()
+    for i, elem in enumerate(log_cts):
+        dt = elem['datetime'][:10]
+        tot = int(elem['total'])
+        nl = not bool(i)
+        click.echo('{0} - {1}'.format(dt, elem['total']), nl=nl)
+        if i:
+            dw = tot - int(log_cts[i - 1]['total'])
+            click.echo(' (delta: {0})'.format(dw))
 
 
 if __name__ == '__main__':
