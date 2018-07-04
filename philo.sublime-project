@@ -19,6 +19,8 @@
 		"TEXroot": "./butidigress.tex",
 		"output_directory": "./build",
 		"copy_output_on_build": false,
+		"display_bad_boxes": false,
+		"show_error_phantoms": "badboxes",
 		"builder_settings":
 		{
 			"program": "lualatex",
