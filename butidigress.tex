@@ -2,7 +2,7 @@
 
 % Page Header/Footer Formatting/Styling
 \addtolength{\headheight}{\baselineskip}
-\setlength{\footskip}{26pt}
+\setlength{\footskip}{30pt}
 \renewcommand{\footrulewidth}{0.25pt}
 
 \fancyhf{}
@@ -38,7 +38,7 @@
 \onehalfspace
 
 % Make footnotes bolded lowercase
-\renewcommand{\thefootnote}{\textbf{\alph{footnote}}}
+\renewcommand{\thefootnote}{\textbf{\Alph{footnote}}}
 
 \pagestyle{fancy}
 
@@ -98,13 +98,13 @@ I would like, however, to have at least an idea of the general tone\ldots}
 
 \newpage
 
-\newlength{\headerskip}
-\setlength{\headerskip}{0em}
+\newlength{\headersep}
+\setlength{\headersep}{2em}
 \newcommand{\headerdelim}{}
 \titleformat{\chapter}[frame]{\Large}{\filright\enspace{\Large \chaptertitlename~\thechapter}\enspace}{2cm}{\LARGE\bfseries\filcenter}
-\titleformat{\section}[block]{\filcenter\Large}{\thesection\headerdelim}{1cm}{\bfseries\hspace{\headerskip}}[\rule{\titlewidth}{0.8pt}]
-\titleformat{\subsection}[block]{\filcenter\large}{\thesubsection}{1cm}{\bfseries\hspace{\headerskip}}[\rule{\titlewidth}{0.5pt}]
-\titleformat{\subsubsection}[block]{\filcenter\small}{\thesubsubsection}{1cm}{\bfseries\hspace{\headerskip}}[\rule{\titlewidth}{0.3pt}]
+\titleformat{\section}[block]{\filcenter\Large}{\thesection\headerdelim}{\headersep}{\bfseries}[\rule{\titlewidth}{0.8pt}]
+\titleformat{\subsection}[block]{\filcenter\large}{\thesubsection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.5pt}]
+\titleformat{\subsubsection}[block]{\filcenter\small}{\thesubsubsection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.3pt}]
 
 
 \tableofcontents
@@ -122,7 +122,6 @@ I would like, however, to have at least an idea of the general tone\ldots}
 \subfile{introduction}
 
 \mainmatter
-% \setlength{\headerskip}{2em}
 \renewcommand{\headerdelim}{.}
 % Subsection and Subsubsection notation setup
 \renewcommand{\thesection}{\arabic{section}}
