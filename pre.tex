@@ -7,15 +7,17 @@
 \usepackage[
 top=0.75in,
 bottom=1.0in,
-outer=1.2in,
+outer=1.0in,
 inner=0.7in,
-marginparwidth=1in,
-marginparsep=4mm]{geometry}
+marginparwidth=0.9in,
+marginparsep=0.1in]{geometry}
 
 \usepackage[T1]{fontenc}
 
 \usepackage{iftex}
 \ifLuaTeX%
+\usepackage{polyglossia}
+\setmainlanguage[variant=american]{english}
 \usepackage{fontspec}
 \setmainfont{Spectral}[
     Extension=.ttf,
@@ -37,19 +39,22 @@ marginparsep=4mm]{geometry}
     Scale=MatchLowercase,
     Ligatures=TeX
 ]
+
+
 \else
+\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \fi
 
 \usepackage{titling}
 
-% Language customization
-\usepackage[english]{babel}
+\usepackage{metalogo}
+
 % Provides the displayquote environment
 \usepackage{csquotes}
 % Provides the \say command
-\usepackage{dirtytalk}
+% \usepackage{dirtytalk}
 
 % Puts the Table of Contents in the ToC
 \usepackage{tocbibind}
@@ -82,6 +87,14 @@ marginparsep=4mm]{geometry}
 \usepackage{epigraph}
 % Package for splitting doc into files
 \usepackage{subfiles}
+\usepackage{ellipsis}
+
+\newcommand{\say}[1]{\enquote{#1}}
+
+\renewcommand{\ellipsisgap}{0.2em}
+
+\newcommand{\lips}{\kern\ellipsisgap .\kern\ellipsisgap .\kern\ellipsisgap .\kern\ellipsisgap}
+
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata,graphdrawing,graphs,quotes}
 \usegdlibrary{phylogenetics,layered,trees}
@@ -142,8 +155,6 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \renewcommand{\floatpagefraction}{0.7}
 \renewcommand{\dblfloatpagefraction}{0.7}
 
-
-
 % Semantic commands for different media
 \newcommand{\impword}[1]{\textcolor{red}{\textbf{#1}}}
 \newcommand{\movie}[1]{\textit{#1}}
@@ -198,9 +209,14 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \end{center}}
 
 \newcommand*{\posttitlepage}{%
+\begin{center}\small
+\begin{spacing}{2.0}
 \vspace*{\stretch{1}}
-{\hfil\footnotesize\ttfamily \underline{Last Compiled: \today}\hfil}
-\vspace{\stretch{3}}}
+\underline{\texttt{Last Compiled: \today}} \\
+\underline{\texttt{Compiled With} \LuaLaTeX}
+\vspace{\stretch{3}}\end{spacing}
+\end{center}}
+
 
 \newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
 

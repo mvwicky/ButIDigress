@@ -87,7 +87,7 @@ There are moments, a great deal of moments\ftnote{For instance, right now.}, whe
 Such irreverence has its place, but within a deeply personal document outlining some serious life events, it may be inappropriate.\marginthought{something that occurred to me is  having the body text be relatively serious, but let the footnotes have some flippancy}
 
 As this is meant to be some manner of living document, it's in constant revision so the tone (and content and stuff) will generally be in flux.\ftnote{I'm just kinda using this secondary disclaimer as a place to record my thoughts.}
-I would like, however, to have at least an idea of the general tone\ldots}
+I would like, however, to have at least an idea of the general tone\lips}
 
 \noindent\hspace*{2em} ---Once again,
 
@@ -128,6 +128,7 @@ I would like, however, to have at least an idea of the general tone\ldots}
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\thesection.\thesubsection.\roman{subsubsection}}
 \renewcommand{\chaptermark}[1]{\markboth{\chaptertitlename~\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
 \renewcommand{\thefootnote}{\arabic{footnote}}
 
 \subfile{sections/empathy}
