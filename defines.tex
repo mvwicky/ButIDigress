@@ -1,0 +1,176 @@
+\hypersetup{%
+colorlinks=false,
+linkbordercolor=white,
+pdfborder=0 0 0,
+bookmarksnumbered=true,
+bookmarksopen=true,
+bookmarksopenlevel=2,
+pdftitle={But I Digress\ldots},
+pdfsubject={philosophy},
+pdfauthor={Michael Van Wickle},
+pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
+
+\graphicspath{{images/}}
+
+\everymath{\displaystyle}
+
+% B/c I used `\say` a bunch before I started actually using csquotes
+\newcommand{\say}[1]{\enquote{#1}}
+
+\newcommand{\ellipsisgap}{0.2em}
+
+\newcommand{\lips}{\kern\ellipsisgap.\kern\ellipsisgap.\kern\ellipsisgap.\kern\ellipsisgap}
+
+\newlength{\defparskip}
+\setlength{\defparskip}{0.4em}
+
+\DeclareMathOperator{\sinc}{sinc}
+\def\defItem{\itemsep1pt \parsep0pt \parskip0pt}
+\newcommand{\tbul}{\textbullet}
+
+\newcommand{\minus}{\scalebox{0.8}{$-$}}
+\newcommand{\plus}{\scalebox{0.6}{$+$}}
+
+\newcommand{\oneover}[1]{\frac{1}{#1}}
+
+\newcommand{\br}[1]{\ensuremath{\left\{ #1 \right\}}}
+\newcommand{\adpar}[1]{\ensuremath{\left( #1 \right)}}
+
+% Float Setup
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
+
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\setcounter{dbltopnumber}{2}
+
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+
+\renewcommand{\floatpagefraction}{0.7}
+\renewcommand{\dblfloatpagefraction}{0.7}
+
+% Semantic commands for different media
+\newcommand{\impword}[1]{\textcolor{red}{\textbf{#1}}}
+\newcommand{\movie}[1]{\textit{#1}}
+\newcommand{\tvshow}[1]{\textit{#1}}
+\newcommand{\tv}[1]{\tvshow{#1}}
+\newcommand{\book}[1]{\textit{#1}}
+\newcommand{\podcast}[1]{\textit{#1}}
+
+% Convenience commands for unnumbered divisions
+\newcommand{\unnumchapter}[1]{\cleardoublepage\phantomsection\chapter*{#1}\markright{#1}\addcontentsline{toc}{chapter}{#1}}
+\newcommand{\unnumsection}[1]{\section*{#1}\phantomsection\addcontentsline{toc}{section}{#1}\markright{#1}}
+\newcommand{\unnumsubsection}[1]{\subsection*{#1}\phantomsection\addcontentsline{toc}{subsection}{#1}\markright{#1}}
+
+\setlength{\fboxsep}{5pt}
+% Provides a block of text with a box around it
+\newcommand{\textbox}[1]{\vspace{0em}\noindent\hfil\fbox{\parbox[c][1.1\height][c]{0.9\textwidth}{\small\textsc{#1}}}\vspace{1em}}
+\NewDocumentCommand{\textboxsty}{O{0em}O{\textwidth}mO{1em}}{\vspace{#1}\noindent\hfil\fbox{\parbox[c][1.1\height][c]{#2}{\small\textsc{#3}}}\vspace{#4}}
+
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
+
+% Some Epigraph Stuff
+% Center epigraphs (default is flushright)
+\renewcommand{\epigraphflush}{center}
+% Make epigraphs smal
+\renewcommand{\epigraphsize}{\small}
+\setlength{\epigraphwidth}{0.8\textwidth}
+% Convenience command for attribution of quotes
+\NewDocumentCommand\attrib{mmm}{\textsc{#1}, \textit{#2} (#3)}
+
+% Count all the epigraphs (for the Random Stats page)
+\newcounter{epicounter}
+\NewDocumentCommand\epi{mm}{\epigraph{#1}{#2}\stepcounter{epicounter}}
+
+% Space between title elements
+\newlength{\titlevspace}
+\setlength{\titlevspace}{1cm}
+
+\newcommand*{\customtitlepage}{%
+\begin{center}\scshape
+\begin{spacing}{2.0}
+    \vspace{3cm}
+    {\huge But I Digress\ldots} \\
+    \vspace*{\titlevspace}
+    {\large An Ethical Codification for Exactly One Person (Me)} \\
+\end{spacing}
+{\vspace*{\fill}}
+{\large\bfseries Michael Van Wickle} \\
+\end{center}}
+
+\newcommand*{\posttitlepage}{%
+\begin{center}\small
+\begin{spacing}{2.0}
+\vspace*{\stretch{1}}
+\underline{\texttt{Last Compiled: \today}} \\
+\underline{\texttt{Compiled With} \LuaLaTeX}
+\vspace{\stretch{3}}\end{spacing}
+\end{center}}
+
+\newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
+
+% Margin Stuff
+
+% Set margin note size
+\renewcommand*{\marginfont}{\scriptsize}
+
+% Counter for footnotes
+\newcounter{footcounter}
+% Footnote command
+\newcommand{\ftnote}[1]{\footnote{#1}\stepcounter{footcounter}}
+% Step footcounter on citations
+\AtEveryCite{\stepcounter{footcounter}}
+
+% Commentary on this particular section
+\newcounter{commcounter}
+\newcommand{\commcolor}{MidnightBlue}
+\newcommand{\commstyle}{\scshape}
+\newcommand{\margincomm}[1]{\marginnote{\singlespace\commstyle\textcolor{\commcolor}{#1}}\stepcounter{commcounter}}
+
+% TODO note
+\newcounter{todocounter}
+\newcommand{\todocolor}{red}
+\newcommand{\todostyle}{\mdseries}
+\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{\textbf{TODO:}~#1}}\stepcounter{todocounter}}
+
+% A last modifed date
+% TODO: Make this a lot nicer
+\newcounter{datecounter}
+\newcommand{\datecolor}{Olive}
+\newcommand{\datestyle}{\ttfamily}
+\NewDocumentCommand\fmtdate{mmm}{#1/#2/#3}
+\NewDocumentCommand\fmttime{mmm}{#1:#2 #3}
+\NewDocumentCommand\margindate{mmm}{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{\fmtdate{#1}{#2}{#3}}}\normalmarginpar\stepcounter{datecounter}}
+\NewDocumentCommand\margintime{mmm}{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{\fmttime{#1}{#2}{#3}}}\normalmarginpar\stepcounter{datecounter}}
+
+% A random thought
+\newcounter{thoughtcounter}
+\newcommand{\thoughtcolor}{Sepia}
+\newcommand{\thoughtstyle}{\itshape}
+\newcommand{\marginthought}[1]{\marginnote{\singlespace\thoughtstyle\textcolor{\thoughtcolor}{#1}}\stepcounter{thoughtcounter}}
+
+% Inserts monospaced text inside <>
+\newcommand{\todobrak}[1]{\texttt{\textcolor{\todocolor}{<{#1}>}}}
+
+\newcommand{\wrt}{w.r.t.}
+
+% Skip between two paragraphs that are relevant enough to be in the same section, but a thematic break is still needed
+\newcommand{\entryskip}{\vspace*{\baselineskip}}
+
+\newcommand{\notescolor}{teal}
+\newenvironment{somenotes}[1]{\par\entryskip\noindent{\Large\centering\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
+
+\NewDocumentCommand\ddate{O{\the\day}O{\the\month}O{\the\year}}{#1/#2/#3}
+
+% Custom sectioning commands which take a date as an input
+\NewDocumentCommand\digsec{mmmmm}{\section{#1}\margindate{#2}{#3}{#4}\label{sec:#5}}
+\NewDocumentCommand\digsubsec{mmmmm}{\subsection{#1}\margindate{#2}{#3}{#4}\label{subsec:#5}}
+\NewDocumentCommand\digsubsubsec{mmmmm}{\subsubsection{#1}\margindate{#2}{#3}{#4}\label{subsubsec:#5}}
+
+\newcommand{\lengthtoinches}[2]{\setlength{#1}{#2 / \real{72.27}}}
+

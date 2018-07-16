@@ -1,15 +1,16 @@
 \documentclass[10pt,titlepage]{book}
 \usepackage[protrusion=true,expansion]{microtype}
 \usepackage{calc}
-\setlength{\paperheight}{9.8in}
-\setlength{\paperwidth}{6.9in}
+% The dimensions of `Brandeis' by Melvin I. Urofsky (2012)
+\setlength{\paperheight}{9.2in}
+\setlength{\paperwidth}{6.3in}
 \usepackage{marginnote}
 \usepackage[
-top=0.75in,
+top=0.7in,
 bottom=1.0in,
 outer=1.0in,
 inner=0.7in,
-marginparwidth=0.9in,
+marginparwidth=0.8in,
 marginparsep=0.1in]{geometry}
 
 \usepackage[T1]{fontenc}
@@ -39,8 +40,6 @@ marginparsep=0.1in]{geometry}
     Scale=MatchLowercase,
     Ligatures=TeX
 ]
-
-
 \else
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
@@ -49,6 +48,7 @@ marginparsep=0.1in]{geometry}
 
 \usepackage{titling}
 
+% Provides, inter alia, `\LuaLaTeX` command
 \usepackage{metalogo}
 
 % Provides the displayquote environment
@@ -59,18 +59,27 @@ marginparsep=0.1in]{geometry}
 % Puts the Table of Contents in the ToC
 \usepackage{tocbibind}
 
-\usepackage[backend=biber,citestyle=verbose-ibid,bibstyle=numeric]{biblatex}
+% Bibiliography Support
+\usepackage[
+backend=biber,
+block=nbpar,
+sorting=ynt,
+citestyle=verbose-ibid,
+loccittracker=true,
+bibstyle=numeric]{biblatex}
 \addbibresource{butidigress.bib}
 
 % Makes the first paragraph indented
 \usepackage{indentfirst}
 \usepackage{float}
+% TODO: Figure out why `multiple' doesn't work
 \usepackage[stable,multiple,bottom]{footmisc}
-\usepackage{amsmath,amsfonts,amssymb,amsthm}
-% Bold in math
-\usepackage{bm}
+
+% Math Packages
+\usepackage{amsmath,amsfonts,amssymb,amsthm,bm,mathrsfs,mathtools}
+\usepackage{lengthconvert}
+
 \usepackage[dvipsnames,svgnames]{xcolor}
-\usepackage{mathrsfs,mathtools}
 \usepackage{multicol}
 \usepackage[super,negative]{nth}
 \usepackage{setspace}
@@ -87,13 +96,6 @@ marginparsep=0.1in]{geometry}
 \usepackage{epigraph}
 % Package for splitting doc into files
 \usepackage{subfiles}
-\usepackage{ellipsis}
-
-\newcommand{\say}[1]{\enquote{#1}}
-
-\renewcommand{\ellipsisgap}{0.2em}
-
-\newcommand{\lips}{\kern\ellipsisgap .\kern\ellipsisgap .\kern\ellipsisgap .\kern\ellipsisgap}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows,automata,graphdrawing,graphs,quotes}
@@ -109,162 +111,3 @@ marginparsep=0.1in]{geometry}
 
 \usepackage[unicode]{hyperref}
 \usepackage{bookmark}
-\hypersetup{%
-colorlinks=false,
-linkbordercolor=white,
-pdfborder=0 0 0,
-bookmarksnumbered=true,
-bookmarksopen=true,
-bookmarksopenlevel=2,
-pdftitle={But I Digress\ldots},
-pdfsubject={philosophy},
-pdfauthor={Michael Van Wickle},
-pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
-
-\graphicspath{{images/}}
-
-\everymath{\displaystyle}
-
-\newlength{\defparskip}
-\setlength{\defparskip}{0.4em}
-
-\DeclareMathOperator{\sinc}{sinc}
-\def\defItem{\itemsep1pt \parsep0pt \parskip0pt}
-\newcommand{\tbul}{\textbullet}
-
-\newcommand{\minus}{\scalebox{0.8}{$-$}}
-\newcommand{\plus}{\scalebox{0.6}{$+$}}
-
-\newcommand{\oneover}[1]{\frac{1}{#1}}
-
-\newcommand{\br}[1]{\ensuremath{\left\{ #1 \right\}}}
-\newcommand{\adpar}[1]{\ensuremath{\left( #1 \right)}}
-
-% Float Setup
-\renewcommand{\topfraction}{0.9}
-\renewcommand{\bottomfraction}{0.9}
-
-\setcounter{topnumber}{2}
-\setcounter{bottomnumber}{2}
-\setcounter{totalnumber}{4}
-\setcounter{dbltopnumber}{2}
-
-\renewcommand{\dbltopfraction}{0.9}
-\renewcommand{\textfraction}{0.07}
-
-\renewcommand{\floatpagefraction}{0.7}
-\renewcommand{\dblfloatpagefraction}{0.7}
-
-% Semantic commands for different media
-\newcommand{\impword}[1]{\textcolor{red}{\textbf{#1}}}
-\newcommand{\movie}[1]{\textit{#1}}
-\newcommand{\tvshow}[1]{\textit{#1}}
-\newcommand{\tv}[1]{\tvshow{#1}}
-\newcommand{\book}[1]{\textit{#1}}
-\newcommand{\podcast}[1]{\textit{#1}}
-
-% Convenience commands for unnumbered divisions
-\newcommand{\unnumchapter}[1]{\cleardoublepage\phantomsection\chapter*{#1}\markright{#1}\addcontentsline{toc}{chapter}{#1}}
-\newcommand{\unnumsection}[1]{\section*{#1}\phantomsection\addcontentsline{toc}{section}{#1}\markright{#1}}
-\newcommand{\unnumsubsection}[1]{\subsection*{#1}\phantomsection\addcontentsline{toc}{subsection}{#1}\markright{#1}}
-
-\setlength{\fboxsep}{5pt}
-% Provides a block of text with a box around it
-\newcommand{\textbox}[1]{\vspace{0em}\noindent\hfil\fbox{\parbox[c][1.1\height][c]{0.9\textwidth}{\small\textsc{#1}}}\vspace{1em}}
-
-% Set margin note size
-\renewcommand*{\marginfont}{\scriptsize}
-
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-\renewcommand{\sectionmark}[1]{\markright{#1}}
-\renewcommand{\subsectionmark}[1]{\markright{#1}}
-
-% Some Epigraph Stuff
-% Center epigraphs (default is flushright)
-\renewcommand{\epigraphflush}{center}
-% Make epigraphs smal
-\renewcommand{\epigraphsize}{\small}
-\setlength{\epigraphwidth}{0.8\textwidth}
-% Convenience command for attribution of quotes
-\NewDocumentCommand\attrib{mmm}{\textsc{#1}, \textit{#2} (#3)}
-
-% Count all the epigraphs (for the Random Stats page)
-\newcounter{epicounter}
-\NewDocumentCommand\epi{mm}{\epigraph{#1}{#2}\stepcounter{epicounter}}
-
-% Space between title elements
-\newlength{\titlevspace}
-\setlength{\titlevspace}{1cm}
-
-\newcommand*{\customtitlepage}{%
-\begin{center}\scshape
-\begin{spacing}{2.0}
-    \vspace{3cm}
-    {\huge But I Digress\ldots} \\
-    \vspace*{\titlevspace}
-    {\large An Ethical Codification for Exactly One Person (Me)} \\
-\end{spacing}
-{\vspace*{\fill}}
-{\large\bfseries Michael Van Wickle} \\
-\end{center}}
-
-\newcommand*{\posttitlepage}{%
-\begin{center}\small
-\begin{spacing}{2.0}
-\vspace*{\stretch{1}}
-\underline{\texttt{Last Compiled: \today}} \\
-\underline{\texttt{Compiled With} \LuaLaTeX}
-\vspace{\stretch{3}}\end{spacing}
-\end{center}}
-
-
-\newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
-
-% Counter for footnotes
-\newcounter{footcounter}
-% Footnote command
-\newcommand{\ftnote}[1]{\footnote{#1}\stepcounter{footcounter}}
-% Step footcounter on citations
-\AtEveryCite{\stepcounter{footcounter}}
-
-% Commentary on this particular section
-\newcounter{commcounter}
-\newcommand{\commcolor}{MidnightBlue}
-\newcommand{\commstyle}{\scshape}
-\newcommand{\margincomm}[1]{\marginnote{\singlespace\commstyle\textcolor{\commcolor}{#1}}\stepcounter{commcounter}}
-% TODO note
-\newcounter{todocounter}
-\newcommand{\todocolor}{red}
-\newcommand{\todostyle}{\bfseries}
-\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{TODO:~#1}}\stepcounter{todocounter}}
-% A last modifed date
-\newcounter{datecounter}
-\newcommand{\datecolor}{Olive}
-\newcommand{\datestyle}{\ttfamily}
-\NewDocumentCommand\fmtdate{mmm}{#1/#2/#3}
-\NewDocumentCommand\fmttime{mmm}{#1:#2 #3}
-\NewDocumentCommand\margindate{mmm}{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{\fmtdate{#1}{#2}{#3}}}\normalmarginpar\stepcounter{datecounter}}
-\NewDocumentCommand\margintime{mmm}{\reversemarginpar\marginnote{\datestyle\textcolor{\datecolor}{\fmttime{#1}{#2}{#3}}}\normalmarginpar\stepcounter{datecounter}}
-% A random thought
-\newcounter{thoughtcounter}
-\newcommand{\thoughtcolor}{Sepia}
-\newcommand{\thoughtstyle}{\itshape}
-\newcommand{\marginthought}[1]{\marginnote{\singlespace\thoughtstyle\textcolor{\thoughtcolor}{#1}}\stepcounter{thoughtcounter}}
-
-% Inserts monospaced text inside <>
-\newcommand{\todobrak}[1]{\texttt{\textcolor{\todocolor}{<{#1}>}}}
-
-\newcommand{\wrt}{w.r.t.}
-
-% Skip between two paragraphs that are relevant enough to be in the same section, but a thematic break is still needed
-\newcommand{\entryskip}{\vspace*{\baselineskip}}
-
-\newcommand{\notescolor}{teal}
-\newenvironment{somenotes}[1]{\par\entryskip\noindent{\Large\centering\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
-
-\NewDocumentCommand\ddate{O{\the\day}O{\the\month}O{\the\year}}{#1/#2/#3}
-
-% Custom sectioning commands which take a date as an input
-\NewDocumentCommand\digsec{mmmmm}{\section{#1}\margindate{#2}{#3}{#4}\label{sec:#5}}
-\NewDocumentCommand\digsubsec{mmmmm}{\subsection{#1}\margindate{#2}{#3}{#4}\label{subsec:#5}}
-\NewDocumentCommand\digsubsubsec{mmmmm}{\subsubsection{#1}\margindate{#2}{#3}{#4}\label{subsubsec:#5}}
