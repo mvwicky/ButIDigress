@@ -349,5 +349,29 @@
         },
         "total": 25008,
         "datetime": "2018-07-16 17:13:22"
+    },
+    {
+        "files": {
+            "appendices\\justrandom.tex": 4053,
+            "introduction.tex": 3739,
+            "sections\\knowledge.tex": 3567,
+            "appendices\\roadtrip.tex": 2906,
+            "sections\\sincerity.tex": 2490,
+            "sections\\thevoid.tex": 1506,
+            "sections\\empathy.tex": 1478,
+            "appendices\\poemsandstuff.tex": 1460,
+            "butidigress.tex": 885,
+            "appendices\\oldnotes.tex": 814,
+            "appendices\\quotations.tex": 787,
+            "sections\\immutable.tex": 605,
+            "appendices\\topten.tex": 566,
+            "sections\\synthetic.tex": 276,
+            "appendices\\narrative.tex": 126,
+            "appendices\\appendix.tex": 123,
+            "defines.tex": 77,
+            "pre.tex": 0
+        },
+        "total": 25458,
+        "datetime": "2018-07-19 17:17:39"
     }
 ]
