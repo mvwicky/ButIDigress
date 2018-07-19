@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 import re
 import shutil
-from subprocess import run, CompletedProcess, PIPE
+import subprocess as sp
 from typing import (
     Text, Dict, Union, List, Tuple, Match, Pattern, Callable, Optional
 )
@@ -52,10 +52,11 @@ if sumatra_exe is None:
 output_dir = 'build'
 
 latexopts: ArgsType = [
-    '-interaction=nonstopmode',
-    '-synctex=1',
+    '--interaction=nonstopmode',
+    '--synctex=1',
     '--output-directory={0}'.format(output_dir),
     '--shell-escape',
+    '--draftmode'
 ]
 biber_opts: List[Text] = ['--output-directory={0}'.format(output_dir)]
 
@@ -66,6 +67,8 @@ def error(msg, return_code=-1):
 
 
 def latex_build(base_name: Text) -> Optional[PathType]:
+    import time
+
     tex_file: PathType = os.path.abspath(base_name + '.tex')
 
     assert lualatex_exe is not None
@@ -84,16 +87,29 @@ def latex_build(base_name: Text) -> Optional[PathType]:
     biber_args.append(base_name)
 
     # First Latex Compile
-    c: CompletedProcess = run(tex_args, shell=True)
+
+    click.echo('First Compile ({0})'.format(' '.join(tex_args)))
+    start_time = time.perf_counter()
+    c: sp.CompletedProcess = sp.run(tex_args, shell=True, stdout=sp.DEVNULL)
 
     # Run Biber
-    c = run(biber_args, shell=True)
+    click.echo('Running Biber ({0})'.format(' '.join(biber_args)))
+    c = sp.run(biber_args, shell=True)
 
     # Second Latex Compile
-    c = run(tex_args, shell=True)
+    click.echo('Second Compile ({0})'.format(' '.join(tex_args)))
+    c = sp.run(tex_args, shell=True, stdout=sp.DEVNULL)
+
+    # Remove '--draftmode' for last run
+    if '--draftmode' in tex_args:
+        tex_args.remove('--draftmode')
 
     # Third Latex Compile
-    c = run(tex_args, shell=True)
+    click.echo('Third Compile ({0})'.format(' '.join(tex_args)))
+    c = sp.run(tex_args, shell=True)
+    end_time = time.perf_counter()
+    click.secho('Compilation Time: {0:.4} seconds'.format(
+        end_time - start_time), fg='green')
 
     out_file = os.path.join(os.path.abspath(output_dir), base_name + '.pdf')
     return out_file if os.path.exists(out_file) else None
@@ -137,7 +153,7 @@ def wc(file: PathType, verbose: bool = False) -> int:
             'running texcount on: {0} --- '.format(file), fg='green', nl=False
         )
     args: ArgsType = ['texcount', file]
-    s: CompletedProcess = run(args, shell=True, stdout=PIPE)
+    s: sp.CompletedProcess = sp.run(args, shell=True, stdout=sp.PIPE)
     res = WORDS_RE.search(s.stdout.decode())
     if not res:
         ret = 0
@@ -313,7 +329,7 @@ def check(path: PathType, linter: str):
 
     ret: int = 0
     for file in find_tex_files(path):
-        s: CompletedProcess = run([exe, file], stdout=PIPE)
+        s: sp.CompletedProcess = sp.run([exe, file], stdout=sp.PIPE)
         if s.stdout:
             click.secho(os.path.relpath(file), fg='blue')
             click.echo(s.stdout.decode())

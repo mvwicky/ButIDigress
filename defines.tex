@@ -58,6 +58,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\tv}[1]{\tvshow{#1}}
 \newcommand{\book}[1]{\textit{#1}}
 \newcommand{\podcast}[1]{\textit{#1}}
+\newcommand{\article}[1]{\textit{#1}}
 
 % Convenience commands for unnumbered divisions
 \newcommand{\unnumchapter}[1]{\cleardoublepage\phantomsection\chapter*{#1}\markright{#1}\addcontentsline{toc}{chapter}{#1}}
@@ -114,7 +115,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\poemauthor}[1]{\nopagebreak{\centering\small\textsc{#1}\par}}
 
-% Margin Stuff
+% Margin Setup
 
 % Set margin note size
 \renewcommand*{\marginfont}{\scriptsize}
@@ -163,7 +164,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
 
 \newcommand{\notescolor}{teal}
-\newenvironment{somenotes}[1]{\par\entryskip\noindent{\Large\centering\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
+\newenvironment{somenotes}[1]{\par\entryskip\noindent{\large\centering\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
 
 \NewDocumentCommand\ddate{O{\the\day}O{\the\month}O{\the\year}}{#1/#2/#3}
 
