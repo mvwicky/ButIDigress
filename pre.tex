@@ -51,10 +51,9 @@ marginparsep=0.1in]{geometry}
 % Provides, inter alia, `\LuaLaTeX` command
 \usepackage{metalogo}
 
-% Provides the displayquote environment
+% Provides the displayquote environment and other quotation tools
+% TODO: replace uses of `\say` with `\enquote`
 \usepackage{csquotes}
-% Provides the \say command
-% \usepackage{dirtytalk}
 
 % Puts the Table of Contents in the ToC
 \usepackage{tocbibind}
@@ -109,5 +108,5 @@ bibstyle=numeric]{biblatex}
 % Package allowing for underlining
 \usepackage[normalem]{ulem}
 
-\usepackage[unicode]{hyperref}
+% \usepackage[unicode]{hyperref}
 \usepackage{bookmark}

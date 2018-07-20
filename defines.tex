@@ -75,6 +75,8 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \renewcommand{\sectionmark}[1]{\markright{#1}}
 \renewcommand{\subsectionmark}[1]{\markright{#1}}
 
+% \newcommand{\chapterbreak}{\clearpage}
+
 % Some Epigraph Stuff
 % Center epigraphs (default is flushright)
 \renewcommand{\epigraphflush}{center}
@@ -175,3 +177,26 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
 \newcommand{\lengthtoinches}[2]{\setlength{#1}{#2 / \real{72.27}}}
 
+% \titleformat{\part}[frame]{\Large}{\filright\enspace{\Large \parttitlename~\thepart}\enspace}{2cm}{\LARGE\bfseries\filcenter}
+
+% Page Header/Footer Formatting/Styling
+\addtolength{\headheight}{\baselineskip}
+\setlength{\footskip}{30pt}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\fancyhf{}
+\renewcommand{\headrule}{}
+\fancyhead{}
+\fancyhead[C]{\nouppercase{\footnotesize\itshape\rightmark}}
+\fancyfoot{}
+\fancyfoot[ER,OL]{\nouppercase{\itshape\leftmark}}
+\fancyfoot[EL,OR]{\thepage}
+\fancyfootoffset{8pt}
+
+\assignpagestyle{\chapter}{fancy}
+
+\pagecolor{WhiteSmoke}
+
+\title{But I Digress\ldots}
+\author{Michael J. Van Wickle}
+\date{Spring 2018}

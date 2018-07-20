@@ -1,32 +1,9 @@
 \include{pre}
 \include{defines}
 
-% Page Header/Footer Formatting/Styling
-\addtolength{\headheight}{\baselineskip}
-\setlength{\footskip}{30pt}
-\renewcommand{\footrulewidth}{0.25pt}
-
-\fancyhf{}
-\renewcommand{\headrule}{}
-\fancyhead{}
-\fancyhead[C]{\nouppercase{\footnotesize\itshape\rightmark}}
-\fancyfoot{}
-\fancyfoot[ER,OL]{\nouppercase{\itshape\leftmark}}
-\fancyfoot[EL,OR]{\thepage}
-\fancyfootoffset{8pt}
-
-\assignpagestyle{\chapter}{fancy}
-
-\pagecolor{WhiteSmoke}
-
-\title{But I Digress\ldots}
-\author{Michael J. Van Wickle}
-\date{Spring 2018}
-
 \begin{document}
 \frontmatter
 \phantomsection
-% \stepcounter{part}
 \markboth{}{Preamble}\addcontentsline{toc}{part}{Preamble}
 
 \pagestyle{empty}
@@ -60,7 +37,7 @@
 \newlength{\headersep}
 \setlength{\headersep}{2em}
 \newcommand{\headerdelim}{}
-\titleformat{\chapter}[frame]{\Large}{\filright\enspace{\Large \chaptertitlename~\thechapter}\enspace}{2cm}{\LARGE\bfseries\filcenter}
+\titleformat{\chapter}[frame]{\Large}{\filright\enspace{\Large \chaptertitlename~\thechapter}\enspace}{1cm}{\LARGE\bfseries\filcenter}
 \titleformat{\section}[block]{\filcenter\Large}{\thesection\headerdelim}{\headersep}{\bfseries}[\rule{\titlewidth}{0.8pt}]
 \titleformat{\subsection}[block]{\filcenter\large}{\thesubsection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.5pt}]
 \titleformat{\subsubsection}[block]{\filcenter\small}{\thesubsubsection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.3pt}]
@@ -82,8 +59,6 @@
 
 \mainmatter
 
-% \phantomsection
-% \markboth{}{But I Digress...}\addcontentsline{toc}{part}{But I Digress...}
 \renewcommand{\headerdelim}{.}
 % Subsection and Subsubsection notation setup
 \renewcommand{\thesection}{\arabic{section}}
@@ -107,8 +82,8 @@
 
 \subfile{sections/synthetic}
 
-\part{Fluidity}
-\subfile{ideaticflow}
+\part{An Ocean of Thought}
+\subfile{sections/ocean/ideaticflow}
 
 \appendix
 \part{Appendices}
