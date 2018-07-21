@@ -240,7 +240,7 @@ def cli():
     '--sort',
     '-s',
     type=click.Choice(_sort_opts),
-    default='mdate',
+    default='wc',
     help='sort rows by column',
 )
 def ls(path: PathType, sort: str):

@@ -32,11 +32,12 @@
 					["lualatex", "-interaction=nonstopmode", "-synctex=1", "--output-directory=$output_directory", "--shell-escape", "--draftmode", "$file_base_name"],
 					["lualatex", "-interaction=nonstopmode", "-synctex=1", "--output-directory=$output_directory", "--shell-escape", "$file_base_name"],
 				]
-			}
+			},
 		},
 		"preview_math_latex_compile_program": "lualatex",
 		"windows": {
 			"keep_focus_delay": 0.25
-		}
+		},
+		"open_pdf_on_build": false
 	}
 }

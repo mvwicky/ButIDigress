@@ -139,7 +139,8 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcounter{todocounter}
 \newcommand{\todocolor}{red}
 \newcommand{\todostyle}{\mdseries}
-\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{\textbf{TODO:}~#1}}\stepcounter{todocounter}}
+\newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{\textbf{TODO:}\\ #1}}\stepcounter{todocounter}}
+\newcommand{\foottodo}[1]{\ftnote{\todostyle\textcolor{\todocolor}{\textbf{TODO:} #1}}\stepcounter{todocounter}}
 
 % A last modifed date
 % TODO: Make this a lot nicer
