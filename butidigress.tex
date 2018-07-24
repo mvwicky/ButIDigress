@@ -39,9 +39,9 @@
 \setlength{\headersep}{2em}
 \newcommand{\headerdelim}{}
 \titleformat{\chapter}[frame]{\Large}{\filright\enspace{\Large \chaptertitlename~\thechapter}\enspace}{1cm}{\LARGE\bfseries\filcenter}
-\titleformat{\section}[block]{\filcenter\Large}{\thesection\headerdelim}{\headersep}{\bfseries}[\rule{\titlewidth}{0.8pt}]
-\titleformat{\subsection}[block]{\filcenter\large}{\thesubsection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.5pt}]
-\titleformat{\subsubsection}[block]{\filcenter\small}{\thesubsubsection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.3pt}]
+\titleformat{\section}[block]{\Large}{\filleft\thesection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.8pt}]
+\titleformat{\subsection}[block]{\large}{\filleft\thesubsection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.5pt}]
+\titleformat{\subsubsection}[block]{\small}{\filleft\thesubsubsection}{\headersep}{\bfseries}[\rule{\titlewidth}{0.3pt}]
 
 
 \tableofcontents
@@ -52,6 +52,7 @@
 \setcounter{footnote}{0}
 \setcounter{section}{1}
 
+\renewcommand{\thechapter}{}
 \renewcommand{\thesection}{}
 \renewcommand{\thesubsection}{}
 \renewcommand{\thesubsubsection}{}
@@ -62,6 +63,7 @@
 
 \renewcommand{\headerdelim}{.}
 % Subsection and Subsubsection notation setup
+\renewcommand{\thechapter}{\arabic{chapter}}
 \renewcommand{\thesection}{\arabic{section}}
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\thesection.\thesubsection.\roman{subsubsection}}

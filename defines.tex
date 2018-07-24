@@ -10,6 +10,11 @@ pdfsubject={philosophy},
 pdfauthor={Michael Van Wickle},
 pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 
+\sisetup{%
+separate-uncertainty=true,
+group-separator={,},
+group-minimum-digits=4}
+
 \graphicspath{{images/}}
 
 \everymath{\displaystyle}
@@ -122,6 +127,9 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 % Set margin note size
 \renewcommand*{\marginfont}{\scriptsize}
 
+\renewcommand{\multfootsep}{,}
+\setlength{\footnotesep}{0.9em}
+
 % Counter for footnotes
 \newcounter{footcounter}
 % Footnote command
@@ -140,7 +148,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\todocolor}{red}
 \newcommand{\todostyle}{\mdseries}
 \newcommand{\margintodo}[1]{\marginnote{\singlespace\todostyle\textcolor{\todocolor}{\textbf{TODO:}\\ #1}}\stepcounter{todocounter}}
-\newcommand{\foottodo}[1]{\ftnote{\todostyle\textcolor{\todocolor}{\textbf{TODO:} #1}}}
+\newcommand{\foottodo}[1]{\textcolor{\todocolor}{\ftnote{\textcolor{\todocolor}{\textbf{TODO:} #1}}}}
 
 % A last modifed date
 % TODO: Make this a lot nicer
@@ -167,7 +175,7 @@ pdfkeywords={philosophy,life,empathy,knowledge,absurdism,sincerity}}
 \newcommand{\entryskip}{\vspace*{\baselineskip}}
 
 \newcommand{\notescolor}{teal}
-\newenvironment{somenotes}[1]{\par\entryskip\noindent{\large\centering\textsc{Some Notes On: #1}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
+\newenvironment{somenotes}[1]{\par\entryskip{\large\centering\noindent\textbf{\textsc{Some Notes On: #1}}}\begin{itemize}[leftmargin=0pt,parsep=1pt,itemsep=1pt]\color{\notescolor}}{\end{itemize}}
 
 \NewDocumentCommand\ddate{O{\the\day}O{\the\month}O{\the\year}}{#1/#2/#3}
 

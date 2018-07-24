@@ -399,5 +399,31 @@
         },
         "total": 25498,
         "datetime": "2018-07-20 17:09:40"
+    },
+    {
+        "files": {
+            "appendices\\justrandom.tex": 4053,
+            "introduction.tex": 3736,
+            "sections\\knowledge.tex": 3583,
+            "appendices\\roadtrip.tex": 2896,
+            "sections\\sincerity.tex": 2473,
+            "sections\\thevoid.tex": 1498,
+            "sections\\empathy.tex": 1473,
+            "appendices\\poemsandstuff.tex": 1460,
+            "appendices\\oldnotes.tex": 814,
+            "appendices\\quotations.tex": 787,
+            "frontmatter.tex": 722,
+            "sections\\immutable.tex": 607,
+            "appendices\\topten.tex": 566,
+            "sections\\ocean\\ideaticflow.tex": 342,
+            "sections\\synthetic.tex": 276,
+            "butidigress.tex": 164,
+            "appendices\\narrative.tex": 126,
+            "appendices\\appendix.tex": 123,
+            "defines.tex": 80,
+            "pre.tex": 0
+        },
+        "total": 25779,
+        "datetime": "2018-07-21 01:17:25"
     }
 ]

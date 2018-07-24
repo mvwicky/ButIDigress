@@ -46,7 +46,7 @@ marginparsep=0.05in]{geometry}
 \usepackage{lmodern}
 \fi
 
-\usepackage[separate-uncertainty=true]{siunitx}
+\usepackage{siunitx}
 
 \usepackage{titling}
 
@@ -65,26 +65,41 @@ marginparsep=0.05in]{geometry}
 backend=biber,
 block=nbpar,
 sorting=ynt,
-citestyle=verbose-ibid,
-loccittracker=true,
+citestyle=verbose-trad1,
+ibidpage=true,
+backref=true,
 bibstyle=numeric]{biblatex}
 \addbibresource{butidigress.bib}
 
 % Makes the first paragraph indented
 \usepackage{indentfirst}
 \usepackage{float}
+\usepackage{setspace}
+% Footnote utilities
 % TODO: Figure out why `multiple' doesn't work
-\usepackage[stable,multiple,bottom]{footmisc}
+\usepackage[%
+stable,     % deals with footnotes in titles
+multiple,   % separates footnotes on the same character
+bottom,     % forces footnotes to the bottom of the page
+flushmargin % puts the footnote marker flush with, but just inside, the margin
+]{footmisc}
 
 % Math Packages
+% ams*: standard American Mathematical Society packages
+% bm: bold text math
+% mathrsfs: provides `\mathscr` command
+% mathtools: misc. math utilities
 \usepackage{amsmath,amsfonts,amssymb,amsthm,bm,mathrsfs,mathtools}
-\usepackage{lengthconvert}
 
+% Provides a bunch of color utilities
 \usepackage[dvipsnames,svgnames]{xcolor}
+% Multicolumn environments
 \usepackage{multicol}
+% Gives the `\nth` command for superscript ordinals
 \usepackage[super,negative]{nth}
-\usepackage{setspace}
+% ?
 \usepackage{textcomp}
+% Image handling (not used as of now)
 \usepackage{graphicx}
 \usepackage{fancyvrb,fancyhdr}
 \usepackage[plain]{fancyref}
@@ -109,6 +124,7 @@ bibstyle=numeric]{biblatex}
 \usepackage{enumitem}
 % Package allowing for underlining
 \usepackage[normalem]{ulem}
+\usepackage{tabu}
 
 % \usepackage[unicode]{hyperref}
 \usepackage{bookmark}
