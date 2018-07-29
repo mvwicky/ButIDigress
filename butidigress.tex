@@ -133,24 +133,29 @@ The large x-height + wide aperture + low contrast design make it legible at comm
 \clearpage
 \markboth{Random Stats}{Random Stats}
 \vspace*{\stretch{1}}
-\begin{center}
-{\Large\textbf{Random Stats}}
+% \begin{center}
+{\Large\textbf{\uline{Random Stats}}}
 
 \entryskip
 
 \begin{minipage}{0.6\textwidth}
 Totals of the various notes we've seen throughout this book.
 Really just added them for fun.
-\begin{description}\scshape\large
-    \item [Commentary Notes] \thecommcounter
-    \item [Todo Notes] \thetodocounter
-    \item [Thought Notes] \thethoughtcounter
-    \item [Date Notes] \thedatecounter
-    \item [Footnotes] \thefootcounter
-    \item [Quotes] \theepicounter
-\end{description}
+
+\entryskip
+
+\renewcommand{\arraystretch}{1.5}
+
+\begingroup\large
+\begin{tabular}{l l}
+\textbf{Date Notes}       & \thedatecounter \\ \hline
+\textbf{Footnotes}        & \thefootcounter \\ \hline
+\textbf{Quotes}           & \theepicounter \\
+\end{tabular}
+\endgroup
+
 \end{minipage}
-\end{center}
+% \end{center}
 \vspace{\stretch{3}}
 
 \end{document}
